@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Migrations
 {

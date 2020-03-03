@@ -2,6 +2,7 @@
 using SimpleStore.Infrastructure.EfCore.HostedService;
 using System;
 using System.Threading.Tasks;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.SqlServer
 {

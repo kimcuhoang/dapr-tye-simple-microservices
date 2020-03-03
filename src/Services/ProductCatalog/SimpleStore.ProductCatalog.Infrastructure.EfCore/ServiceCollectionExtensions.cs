@@ -1,7 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Reflection;
+using FluentValidation;
+using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleStore.Infrastructure.EfCore;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.SqlServer;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.ValidationModel;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
 {
@@ -22,6 +27,14 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
                 var connStringFactory = serviceProvider.GetRequiredService<IConnectionStringFactory>();
                 extendOptionsBuilder.Extend(dbContextOptionBuilder, connStringFactory, string.Empty);
             });
+
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            services
+                .AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>))
+                .AddScoped(typeof(IPipelineBehavior<,>), typeof(PersistenceBehavior<,>));
+
 
             services.AddHostedService<SqlServerMigrationHostedService>();
             

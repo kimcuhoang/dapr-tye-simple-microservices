@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using SimpleStore.Infrastructure.EfCore;
-using System.Reflection;
 
-namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
+namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence
 {
     public class ProductCatalogModelBuilder : ICustomModelBuilder
     {
