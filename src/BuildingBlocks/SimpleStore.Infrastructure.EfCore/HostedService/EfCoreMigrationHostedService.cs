@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SimpleStore.Infrastructure.EfCore.HostedService
 {
-    public abstract class EfCoreMigrationHostedService<TDbContext> : IHostedService where TDbContext : ApplicationDbContextBase
+    public class EfCoreMigrationHostedService : IHostedService
     {
         private readonly IServiceProvider _serviceProvider;
 
-        protected EfCoreMigrationHostedService(IServiceProvider serviceProvider)
+        public EfCoreMigrationHostedService(IServiceProvider serviceProvider)
             => this._serviceProvider = serviceProvider;
 
         #region Implementation of IHostedService
@@ -21,15 +20,13 @@ namespace SimpleStore.Infrastructure.EfCore.HostedService
         {
             using var scope = this._serviceProvider.CreateScope();
 
-            var applicationDbContext = scope.ServiceProvider.GetRequiredService<TDbContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<DbContext>();
 
-            await this.DoMigration(applicationDbContext);
+            await dbContext.Database.MigrateAsync(cancellationToken);
         }
 
         public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
         #endregion
-
-        protected abstract Task DoMigration(TDbContext dbContext);
     }
 }

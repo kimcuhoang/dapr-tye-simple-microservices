@@ -25,8 +25,12 @@ namespace SimpleStore.Infrastructure.EfCore
                 var customModelBuilder = (ICustomModelBuilder)Activator.CreateInstance(builderType);
                 customModelBuilder.Build(builder);
             }
+
+            this.SeedingData(builder);
         }
 
         protected abstract Assembly CurrentAssembly { get; }
+
+        protected virtual void SeedingData(ModelBuilder builder) { }
     }
 }

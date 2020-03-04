@@ -6,6 +6,8 @@ MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{99204373-D893-44B6-9AFA-5919829D95CF}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		docker-compose.override.yml = docker-compose.override.yml
+		docker-compose.yml = docker-compose.yml
 		global.json = global.json
 		README.md = README.md
 	EndProjectSection
@@ -18,15 +20,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{9A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProductCatalog", "ProductCatalog", "{CBDA54EE-5DA6-4C3B-864D-8A302D121CDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStore.ProductCatalogApi", "src\Services\ProductCatalog\SimpleStore.ProductCatalogApi\SimpleStore.ProductCatalogApi.csproj", "{64EBBDD9-25DF-4810-A2EE-1C82094A4C71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.ProductCatalogApi", "src\Services\ProductCatalog\SimpleStore.ProductCatalogApi\SimpleStore.ProductCatalogApi.csproj", "{64EBBDD9-25DF-4810-A2EE-1C82094A4C71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStore.ProductCatalog.Domain", "src\Services\ProductCatalog\SimpleStore.ProductCatalog.Domain\SimpleStore.ProductCatalog.Domain.csproj", "{49763ACE-7184-4FFF-8A8E-A841F9AFEEE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.ProductCatalog.Domain", "src\Services\ProductCatalog\SimpleStore.ProductCatalog.Domain\SimpleStore.ProductCatalog.Domain.csproj", "{49763ACE-7184-4FFF-8A8E-A841F9AFEEE7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.Domain", "src\BuildingBlocks\SimpleStore.Domain\SimpleStore.Domain.csproj", "{0C85986B-D0AE-4838-864E-9DDFF12228B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStore.Infrastructure.EfCore", "src\BuildingBlocks\SimpleStore.Infrastructure.EfCore\SimpleStore.Infrastructure.EfCore.csproj", "{8704D26B-1748-4FCF-9F25-34A4BC91CA24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.Infrastructure.EfCore", "src\BuildingBlocks\SimpleStore.Infrastructure.EfCore\SimpleStore.Infrastructure.EfCore.csproj", "{8704D26B-1748-4FCF-9F25-34A4BC91CA24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStore.ProductCatalog.Infrastructure.EfCore", "src\Services\ProductCatalog\SimpleStore.ProductCatalog.Infrastructure.EfCore\SimpleStore.ProductCatalog.Infrastructure.EfCore.csproj", "{B842ABA3-7E8A-4318-B5B1-F47B834B749C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.ProductCatalog.Infrastructure.EfCore", "src\Services\ProductCatalog\SimpleStore.ProductCatalog.Infrastructure.EfCore\SimpleStore.ProductCatalog.Infrastructure.EfCore.csproj", "{B842ABA3-7E8A-4318-B5B1-F47B834B749C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
