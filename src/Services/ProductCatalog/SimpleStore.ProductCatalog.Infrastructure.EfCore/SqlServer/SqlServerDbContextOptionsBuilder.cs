@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using SimpleStore.Infrastructure.EfCore;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.SqlServer
@@ -16,7 +17,11 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.SqlServer
 
         public DbContextOptionsBuilder Extend(DbContextOptionsBuilder optionsBuilder, IConnectionStringFactory connectionStringFactory, string assemblyName = null)
         {
-            return optionsBuilder.UseSqlServer(this._connectionStringFactory.Create());
+            return optionsBuilder.UseSqlServer(this._connectionStringFactory.Create(), opts =>
+                {
+                    opts.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
+                    opts.EnableRetryOnFailure(maxRetryCount: 3);
+                });
         }
 
         #endregion

@@ -21,24 +21,22 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
 
             services.Configure<SqlServerConfig>(options => configuration.GetSection("DatabaseInformation").Bind(options));
 
-            services.AddSingleton<IConnectionStringFactory, SqlServerConnectionStringFactory>();
-            services.AddSingleton<IExtendDbContextOptionsBuilder, SqlServerDbContextOptionsBuilder>();
-
             services
-                .AddEntityFrameworkSqlServer()
+                .AddSingleton<IConnectionStringFactory, SqlServerConnectionStringFactory>()
+                .AddSingleton<IExtendDbContextOptionsBuilder, SqlServerDbContextOptionsBuilder>()
                 .AddDbContext<ProductCatalogDbContext>((serviceProvider, dbContextOptionBuilder) =>
                 {
                     var extendOptionsBuilder = serviceProvider.GetRequiredService<IExtendDbContextOptionsBuilder>();
                     var connStringFactory = serviceProvider.GetRequiredService<IConnectionStringFactory>();
                     extendOptionsBuilder.Extend(dbContextOptionBuilder, connStringFactory, string.Empty);
-                });
-            services.AddScoped<DbContext>(serviceProvider =>
-                serviceProvider.GetRequiredService<ProductCatalogDbContext>());
+                })
+                .AddScoped<DbContext>(serviceProvider => serviceProvider.GetRequiredService<ProductCatalogDbContext>());
+            
 
-            services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             services
+                .AddMediatR(Assembly.GetExecutingAssembly())
                 .AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>))
                 .AddScoped(typeof(IPipelineBehavior<,>), typeof(PersistenceBehavior<,>));
 
