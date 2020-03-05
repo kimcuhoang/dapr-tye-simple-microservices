@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\SimpleStore.Infrastructure.Common\SimpleStore.Infrastructure.Common.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\SimpleStore.Infrastructure.EfCore\SimpleStore.Infrastructure.EfCore.csproj" />
     <ProjectReference Include="..\SimpleStore.ProductCatalog.Domain\SimpleStore.ProductCatalog.Domain.csproj" />
   </ItemGroup>

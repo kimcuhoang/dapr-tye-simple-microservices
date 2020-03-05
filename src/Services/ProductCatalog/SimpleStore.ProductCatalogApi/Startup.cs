@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SimpleStore.Infrastructure.Common.JsonConverters.IdentityTypes;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore;
 
 namespace SimpleStore.ProductCatalogApi
@@ -18,9 +19,13 @@ namespace SimpleStore.ProductCatalogApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            
-            services.AddSingleton(this.Configuration);
+            services
+                .AddSingleton(this.Configuration)
+                .AddControllers()
+                .AddJsonOptions(configure =>
+                {
+                    configure.JsonSerializerOptions.Converters.Add(new IdentityJsonConverterFactory());
+                });
 
             services
                 .AddEfCore()
