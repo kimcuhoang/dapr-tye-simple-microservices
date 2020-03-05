@@ -4,6 +4,7 @@ using SimpleStore.ProductCatalog.Domain.Models;
 using System.Threading.Tasks;
 using MediatR;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.UseCases.CreateProduct;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.UseCases.UpdateProduct;
 
 namespace SimpleStore.ProductCatalogApi.Controllers
 {
@@ -30,6 +31,13 @@ namespace SimpleStore.ProductCatalogApi.Controllers
 
         [HttpPost]
         public async Task<IActionResult> AddProduct([FromBody] CreateProductRequest request)
+        {
+            await this._mediator.Send(request);
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductRequest request)
         {
             await this._mediator.Send(request);
             return Ok();
