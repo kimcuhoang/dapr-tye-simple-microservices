@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System.IO;
+using Serilog;
 
 namespace SimpleStore.ProductCatalogApi
 {
@@ -9,6 +10,11 @@ namespace SimpleStore.ProductCatalogApi
     {
         public static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .CreateLogger();
+
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -21,8 +27,6 @@ namespace SimpleStore.ProductCatalogApi
                     {
                         configurationBuilder.SetBasePath(Directory.GetCurrentDirectory());
                         configurationBuilder.AddJsonFile("appsettings.json");
-                        configurationBuilder.AddJsonFile($"appsettings.{webHostBuilderContext.HostingEnvironment.EnvironmentName}.json", true);
-                        configurationBuilder.AddEnvironmentVariables();
                     });
                     webBuilder.CaptureStartupErrors(true);
                 })
@@ -30,6 +34,7 @@ namespace SimpleStore.ProductCatalogApi
                 {
                     options.ValidateScopes = context.HostingEnvironment.IsDevelopment();
                     options.ValidateOnBuild = true;
-                });
+                })
+                .UseSerilog();
     }
 }

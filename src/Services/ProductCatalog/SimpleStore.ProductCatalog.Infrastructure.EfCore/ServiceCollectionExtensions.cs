@@ -32,17 +32,28 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
                 })
                 .AddScoped<DbContext>(serviceProvider => serviceProvider.GetRequiredService<ProductCatalogDbContext>());
             
+            return services;
+        }
 
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
+        public static IServiceCollection AddCustomMediatR(this IServiceCollection services)
+        {
             services
                 .AddMediatR(Assembly.GetExecutingAssembly())
                 .AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>))
                 .AddScoped(typeof(IPipelineBehavior<,>), typeof(PersistenceBehavior<,>));
 
+            return services;
+        }
 
+        public static IServiceCollection AddCustomValidators(this IServiceCollection services)
+        {
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            return services;
+        }
+
+        public static IServiceCollection AddCustomHostedServices(this IServiceCollection services)
+        {
             services.AddHostedService<EfCoreMigrationHostedService>();
-            
             return services;
         }
     }
