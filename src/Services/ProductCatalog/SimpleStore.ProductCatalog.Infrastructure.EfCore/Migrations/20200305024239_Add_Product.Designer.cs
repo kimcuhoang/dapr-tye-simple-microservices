@@ -5,14 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SimpleStore.ProductCatalog.Infrastructure.EfCore;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(ProductCatalogDbContext))]
-    [Migration("20200302190803_Add_Product_Table")]
-    partial class Add_Product_Table
+    [Migration("20200305024239_Add_Product")]
+    partial class Add_Product
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,6 +33,23 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Migrations
                     b.HasKey("ProductId");
 
                     b.ToTable("Product");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductId = new Guid("43860c5d-4244-4c8e-b455-be8c58a67d95"),
+                            Name = "Product-1"
+                        },
+                        new
+                        {
+                            ProductId = new Guid("9d90c1b8-623a-4d29-85b5-d24b9ec61d91"),
+                            Name = "Product-2"
+                        },
+                        new
+                        {
+                            ProductId = new Guid("8300d0f7-c54c-420a-b9da-afb1213fef79"),
+                            Name = "Product-3"
+                        });
                 });
 #pragma warning restore 612, 618
         }

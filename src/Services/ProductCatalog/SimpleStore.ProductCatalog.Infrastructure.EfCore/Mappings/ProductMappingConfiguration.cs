@@ -18,6 +18,11 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Mappings
                 .HasColumnName("Id")
                 .UsePropertyAccessMode(PropertyAccessMode.Field)
                 .HasConversion(x => x.Id, id => (ProductId)id);
+
+            builder.HasData(
+                    Product.Create("Product-1"), 
+                    Product.Create("Product-2"), 
+                    Product.Create("Product-3"));
         }
 
         #endregion

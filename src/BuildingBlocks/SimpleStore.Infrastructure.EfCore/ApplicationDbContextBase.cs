@@ -11,8 +11,6 @@ namespace SimpleStore.Infrastructure.EfCore
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
-
             var types = this.CurrentAssembly.DefinedTypes.ToList();
 
             if (types?.Any() != true) return;
@@ -25,12 +23,8 @@ namespace SimpleStore.Infrastructure.EfCore
                 var customModelBuilder = (ICustomModelBuilder)Activator.CreateInstance(builderType);
                 customModelBuilder.Build(builder);
             }
-
-            this.SeedingData(builder);
         }
 
         protected abstract Assembly CurrentAssembly { get; }
-
-        protected virtual void SeedingData(ModelBuilder builder) { }
     }
 }
