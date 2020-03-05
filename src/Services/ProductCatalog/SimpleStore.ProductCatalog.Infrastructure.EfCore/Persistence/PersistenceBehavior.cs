@@ -25,8 +25,9 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence
             try
             {
                 this._logger.LogInformation($"Commit the transaction for {nameof(request)}.");
+                var response = await next();
                 await this._dbContext.SaveChangesAsync(cancellationToken);
-                return await next();
+                return response;
             }
             catch (Exception ex)
             {

@@ -37,8 +37,8 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
 
             services
                 .AddMediatR(Assembly.GetExecutingAssembly())
-                .AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
-                //.AddScoped(typeof(IPipelineBehavior<,>), typeof(PersistenceBehavior<,>));
+                .AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>))
+                .AddScoped(typeof(IPipelineBehavior<,>), typeof(PersistenceBehavior<,>));
 
 
             services.AddHostedService<EfCoreMigrationHostedService>();
