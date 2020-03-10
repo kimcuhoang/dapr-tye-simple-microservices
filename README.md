@@ -17,27 +17,101 @@ dotnet run -p .\src\Services\ProductCatalog\SimpleStore.ProductCatalogApi\Simple
 
 ### Step 3
 
-#### Get all products
-
-- Open browser with url `http://localhost:5000/api/product`
-
-#### Create a new product
-
-- Use `curl` tool to create a POST request like below
-
 ```cmd
-curl -X POST -H "Content-Type:application/json" -d "{\"ProductName\":\"New-Product\"}" http://localhost:5000/api/product
+dotnet run -p .\src\GraphApi\CoolStore.GraphApi\CoolStore.GraphApi.csproj
 ```
 
-#### Update existing product
+### Step 4
 
-- Use `curl` tool to create a PUT request like below
+- Go to `http://localhost:5000`
 
-```cmd
-curl -X PUT -H "Content-Type:application/json" -d "{\"ProductId\":\"8300d0f7-c54c-420a-b9da-afb1213fef79\",\"NewProductName\":\"updated-product\"}" http://localhost:5000/api/product
+#### Query Products
+
+**Query**
+
+```js
+query products($getProductsRequest: GetProductsRequest!){
+    products(request: $getProductsRequest) {
+    products {
+        productId,
+        name
+    },
+    totalOfProducts
+    }
+}
 ```
+
+**Variable**
+
+```js
+{
+  "getProductsRequest": {
+    "pageIndex": 1,
+    "pageSize": 10
+  }
+}
+```
+
+![](assets/graphql_query_products.png)
+
+#### Create new product
+
+**Mutation**
+
+```js
+mutation createProduct($createProductRequest: CreateProductRequest!){
+  CreateProduct(request: $createProductRequest){
+    productId,
+    name
+  }
+}
+```
+
+**Variable**
+```js
+{
+  "createProductRequest":{
+    "productName": "Hello Hello"
+  }
+}
+```
+
+![](assets/graphql_create_product.png)
+
+#### Update Existing Product
+
+**Mutation**
+
+```js
+mutation updateProduct($updateProductRequest: UpdateProductRequest!){
+  UpdateProduct(request: $updateProductRequest){
+    productId,
+    name
+  }
+}
+```
+
+**Variable**
+
+```js
+{
+  "updateProductRequest": {
+    "productId": "07c9d1767d364ce2b18f3c0d19177efe",
+    "newProductName": "This is an updated product"
+  }
+}
+```
+
+![](assets/graphql_update_product.png)
 
 ## Histories
 
 - Add [Serilog.AspNetCore](https://github.com/serilog/serilog-aspnetcore) => see the issue [#1](https://github.com/kimcu-on-thenet/simple-microservices/issues/1)
 - Implement a custom TypeConverter & JsonConverter in order to serve for StronglyType-Id => see the issue [#3](https://github.com/kimcu-on-thenet/simple-microservices/issues/3)
+- Add GraphQL for **ProductCatalog**
+  - Define the following requests:
+    - GetProductsRequest
+    - CreateProductRequest
+    - UpdateProductRequest
+  - Define ObjectTypes, QueryType & MutationTypes
+  - Add StichedSchema functionality
