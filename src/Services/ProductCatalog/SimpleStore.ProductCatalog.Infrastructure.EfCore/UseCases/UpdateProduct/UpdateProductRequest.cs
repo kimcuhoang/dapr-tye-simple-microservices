@@ -1,11 +1,12 @@
 ﻿using MediatR;
-using SimpleStore.ProductCatalog.Domain.Models;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.Dto;
+using System;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.UseCases.UpdateProduct
 {
-    public class UpdateProductRequest : IRequest
+    public class UpdateProductRequest : IRequest<ProductDto>
     {
-        public ProductId ProductId { get; set; }
+        public Guid ProductId { get; set; }
         public string NewProductName { get; set; }
     }
 }

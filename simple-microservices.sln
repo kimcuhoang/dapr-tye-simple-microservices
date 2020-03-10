@@ -30,7 +30,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.Infrastructure.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.ProductCatalog.Infrastructure.EfCore", "src\Services\ProductCatalog\SimpleStore.ProductCatalog.Infrastructure.EfCore\SimpleStore.ProductCatalog.Infrastructure.EfCore.csproj", "{B842ABA3-7E8A-4318-B5B1-F47B834B749C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStore.Infrastructure.Common", "src\BuildingBlocks\SimpleStore.Infrastructure.Common\SimpleStore.Infrastructure.Common.csproj", "{D41CE44F-10B3-474A-B7AA-58FE3C2D0C48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.Infrastructure.Common", "src\BuildingBlocks\SimpleStore.Infrastructure.Common\SimpleStore.Infrastructure.Common.csproj", "{D41CE44F-10B3-474A-B7AA-58FE3C2D0C48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

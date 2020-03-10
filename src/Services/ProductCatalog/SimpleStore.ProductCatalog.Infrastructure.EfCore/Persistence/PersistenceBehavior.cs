@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence
 {
-    public class PersistenceBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest, IRequest<TResponse>
+    public class PersistenceBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
         private readonly ProductCatalogDbContext _dbContext;
         private readonly ILogger<PersistenceBehavior<TRequest, TResponse>> _logger;
