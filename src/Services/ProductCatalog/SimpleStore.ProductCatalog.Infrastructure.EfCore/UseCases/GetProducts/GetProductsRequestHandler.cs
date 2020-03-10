@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SimpleStore.ProductCatalog.Domain.Models;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Dto;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,6 +25,7 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.UseCases.GetProducts
         public async Task<GetProductsResponse> Handle(GetProductsRequest request, CancellationToken cancellationToken)
         {
             var products = await this._dbContext.Set<Product>()
+                .AsNoTracking()
                 .OrderBy(x => x.Name)
                 .Skip((request.PageIndex - 1) * request.PageSize)
                 .Take(request.PageSize)

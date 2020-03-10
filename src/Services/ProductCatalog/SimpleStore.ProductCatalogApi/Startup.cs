@@ -1,27 +1,28 @@
 using HotChocolate;
 using HotChocolate.AspNetCore;
+using HotChocolate.AspNetCore.Playground;
 using HotChocolate.Execution.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SimpleStore.Infrastructure.Common.JsonConverters.IdentityTypes;
+using SimpleStore.Infrastructure.Common;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore;
-using SimpleStore.ProductCatalogApi.GraphQL;
-using System.Threading.Tasks;
-using HotChocolate.AspNetCore.Playground;
-using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Hosting.Server.Features;
 using SimpleStore.ProductCatalogApi.GraphQL.ObjectTypes;
+using SimpleStore.ProductCatalogApi.Options;
+using System.Threading.Tasks;
 
 namespace SimpleStore.ProductCatalogApi
 {
     public class Startup
     {
+        private readonly ServiceOptions _serviceOptions;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            this._serviceOptions = this.Configuration.GetOptions<ServiceOptions>("Services");
         }
 
         public IConfiguration Configuration { get; }
@@ -54,10 +55,7 @@ namespace SimpleStore.ProductCatalogApi
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            var serverFeatures = app.ApplicationServices.GetRequiredService<IServer>().Features;
-            var addresses = serverFeatures.Get<IServerAddressesFeature>().Addresses;
-            addresses.Clear();
-            addresses.Add("http://localhost:5001");
+            app.Listen(this._serviceOptions.ProductCatalogApi);
 
             if (env.IsDevelopment())
             {

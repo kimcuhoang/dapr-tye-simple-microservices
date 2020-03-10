@@ -1,0 +1,12 @@
+{
+  "Services": {
+    "GraphQLApi": {
+      "ServiceName": "graphql_api",
+      "RestUri": "http://localhost:5000"
+    },
+    "ProductCatalogApi": {
+      "ServiceName": "product_catalog_api",
+      "RestUri": "http://localhost:5001" 
+    } 
+  }
+}

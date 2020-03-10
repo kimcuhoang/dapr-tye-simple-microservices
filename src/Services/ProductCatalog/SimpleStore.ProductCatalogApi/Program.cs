@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using System.IO;
 using Serilog;
 
 namespace SimpleStore.ProductCatalogApi
@@ -25,8 +24,15 @@ namespace SimpleStore.ProductCatalogApi
                     webBuilder.UseStartup<Startup>();
                     webBuilder.ConfigureAppConfiguration((webHostBuilderContext, configurationBuilder) =>
                     {
-                        configurationBuilder.SetBasePath(Directory.GetCurrentDirectory());
-                        configurationBuilder.AddJsonFile("appsettings.json");
+                        if (webHostBuilderContext.HostingEnvironment.IsDevelopment())
+                        {
+                            var contentRootPath = webHostBuilderContext.HostingEnvironment.ContentRootPath;
+                            var servicesJson = System.IO.Path.Combine(contentRootPath, "..", "..", "..", "..", "services.json");
+                            configurationBuilder.AddJsonFile(servicesJson, optional: true);
+                        }
+                        configurationBuilder
+                            .AddJsonFile("appsettings.json")
+                            .AddJsonFile("services.json", optional: true);
                     });
                     webBuilder.CaptureStartupErrors(true);
                 })
