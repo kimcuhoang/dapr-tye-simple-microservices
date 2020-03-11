@@ -6,8 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.ValidationModel
 {
-    public class RequestValidationBehavior<TRequest,TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest, IRequest<TResponse>
+    public class RequestValidationBehavior<TRequest,TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
         private readonly IValidator<TRequest> _validator;
         private readonly ILogger<RequestValidationBehavior<TRequest, TResponse>> _logger;

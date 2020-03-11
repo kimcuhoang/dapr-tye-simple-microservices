@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
-namespace SimpleStore.ProductCatalogApi
+namespace SimpleStore.GraphQLApi
 {
     public class Program
     {

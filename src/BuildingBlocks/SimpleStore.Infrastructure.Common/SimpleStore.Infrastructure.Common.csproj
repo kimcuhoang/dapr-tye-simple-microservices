@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SimpleStore.Domain\SimpleStore.Domain.csproj" />
   </ItemGroup>
 

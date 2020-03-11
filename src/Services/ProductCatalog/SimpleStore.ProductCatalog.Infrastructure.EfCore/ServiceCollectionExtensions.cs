@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,8 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
                     extendOptionsBuilder.Extend(dbContextOptionBuilder, connStringFactory, string.Empty);
                 })
                 .AddScoped<DbContext>(serviceProvider => serviceProvider.GetRequiredService<ProductCatalogDbContext>());
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             
             return services;
         }

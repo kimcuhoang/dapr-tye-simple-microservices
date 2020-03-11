@@ -4,19 +4,25 @@ using SimpleStore.Domain;
 using SimpleStore.ProductCatalog.Domain.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.Dto;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.UseCases.UpdateProduct
 {
-    public class UpdateProductHandler : AsyncRequestHandler<UpdateProductRequest>
+    public class UpdateProductHandler : IRequestHandler<UpdateProductRequest, ProductDto>
     {
         private readonly DbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public UpdateProductHandler(DbContext dbContext)
-            => this._dbContext = dbContext;
+        public UpdateProductHandler(DbContext dbContext, IMapper mapper)
+        {
+            this._dbContext = dbContext;
+            this._mapper = mapper;
+        } 
 
-        #region Overrides of AsyncRequestHandler<UpdateProductRequest>
+        #region Implementation of IRequestHandler<in UpdateProductRequest,ProductDto>
 
-        protected override async Task Handle(UpdateProductRequest request, CancellationToken cancellationToken)
+        public async Task<ProductDto> Handle(UpdateProductRequest request, CancellationToken cancellationToken)
         {
             var productDbSet = this._dbContext.Set<Product>();
             var product = await productDbSet.SingleOrDefaultAsync(x => x.ProductId == request.ProductId, cancellationToken: cancellationToken);
@@ -26,9 +32,11 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.UseCases.UpdateProduc
                 throw CoreException.NotFound(request.ProductId.ToString());
             }
 
-            product = product.ChangeName(request.NewProductName);
+            product.ChangeName(request.NewProductName);
 
-            productDbSet.Update(product);
+            var entity = productDbSet.Update(product);
+
+            return this._mapper.Map<ProductDto>(entity.Entity);
         }
 
         #endregion

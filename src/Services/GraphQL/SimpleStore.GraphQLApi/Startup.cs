@@ -1,19 +1,19 @@
 using HotChocolate;
 using HotChocolate.AspNetCore;
 using HotChocolate.AspNetCore.Playground;
-using HotChocolate.Execution.Configuration;
+using HotChocolate.AspNetCore.Subscriptions;
+using HotChocolate.Stitching;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SimpleStore.GraphQLApi.Options;
 using SimpleStore.Infrastructure.Common;
-using SimpleStore.ProductCatalog.Infrastructure.EfCore;
-using SimpleStore.ProductCatalogApi.GraphQL.ObjectTypes;
-using SimpleStore.ProductCatalogApi.Options;
+using System;
 using System.Threading.Tasks;
 
-namespace SimpleStore.ProductCatalogApi
+namespace SimpleStore.GraphQLApi
 {
     public class Startup
     {
@@ -27,53 +27,41 @@ namespace SimpleStore.ProductCatalogApi
 
         public IConfiguration Configuration { get; }
 
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddSingleton(this.Configuration);
-
-            services
-                .AddEfCore()
-                .AddCustomMediatR()
-                .AddCustomValidators()
-                .AddCustomHostedServices();
-
-            services
-                .AddGraphQL(sp => Schema.Create(cfg =>
+                .AddHttpContextAccessor()
+                .AddHttpClient(this._serviceOptions.ProductCatalogApi.ServiceName, (sp, client) =>
                 {
-                    cfg.RegisterServiceProvider(sp);
-                    cfg.RegisterQueryType<QueryType>();
-                    cfg.RegisterMutationType<MutationType>();
-                }), new QueryExecutionOptions
-                {
-                    IncludeExceptionDetails = true,
-                    TracingPreference = TracingPreference.Always
+                    client.BaseAddress = new Uri($"{this._serviceOptions.ProductCatalogApi.RestUri}/graphql");
                 });
+
+            services
+                .AddGraphQLSubscriptions()
+                .AddStitchedSchema(stitchingBuilder =>
+                    stitchingBuilder.AddSchemaFromHttp(this._serviceOptions.ProductCatalogApi.ServiceName));
+
+            
         }
 
-        
-
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.Listen(this._serviceOptions.ProductCatalogApi);
+            app.Listen(this._serviceOptions.GraphQLApi);
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            //In order to run our server we now just have to add the middleware.
+            
             app.UseGraphQL("/graphql");
-
-            //In order to write queries and execute them it would be practical if our server also serves up Playground
             app.UsePlayground(new PlaygroundOptions
             {
                 QueryPath = "/graphql",
                 Path = "/playground",
             });
-
             app.UseRouting();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet("/", context =>
