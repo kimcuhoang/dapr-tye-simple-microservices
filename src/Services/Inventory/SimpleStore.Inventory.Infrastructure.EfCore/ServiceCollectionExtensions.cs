@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Reflection;
+using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -6,10 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.Infrastructure.EfCore;
 using SimpleStore.Infrastructure.EfCore.Persistence;
-using SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence;
-using System.Reflection;
+using SimpleStore.Inventory.Infrastructure.EfCore.Persistence;
 
-namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
+namespace SimpleStore.Inventory.Infrastructure.EfCore
 {
     public static class ServiceCollectionExtensions
     {
@@ -17,13 +17,13 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
         {
             services
                 .AddEfCore()
-                .AddDbContext<ProductCatalogDbContext>((serviceProvider, dbContextOptionBuilder) =>
+                .AddDbContext<InventoryDbContext>((serviceProvider, dbContextOptionBuilder) =>
                 {
                     var extendOptionsBuilder = serviceProvider.GetRequiredService<IExtendDbContextOptionsBuilder>();
                     var connStringFactory = serviceProvider.GetRequiredService<IConnectionStringFactory>();
                     extendOptionsBuilder.Extend(dbContextOptionBuilder, connStringFactory, Assembly.GetExecutingAssembly().GetName().Name);
                 })
-                .AddScoped<DbContext>(serviceProvider => serviceProvider.GetRequiredService<ProductCatalogDbContext>())
+                .AddScoped<DbContext>(serviceProvider => serviceProvider.GetRequiredService<InventoryDbContext>())
                 .AddCustomHostedServices();
 
             services
