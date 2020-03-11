@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.ValidationModel
+namespace SimpleStore.Infrastructure.Common.Validation.Models
 {
     public class ValidationException : Exception
     {

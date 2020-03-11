@@ -1,8 +1,8 @@
-﻿using FluentValidation;
+﻿using System.Threading.Tasks;
+using FluentValidation;
 using FluentValidation.Results;
-using System.Threading.Tasks;
 
-namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.ValidationModel
+namespace SimpleStore.Infrastructure.Common.Validation.Models
 {
     /// <summary>
     /// Ref https://www.jerriepelser.com/blog/validation-response-aspnet-core-webapi

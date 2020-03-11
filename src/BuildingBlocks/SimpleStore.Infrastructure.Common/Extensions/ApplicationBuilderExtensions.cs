@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleStore.Infrastructure.Common.Options;
 
-namespace SimpleStore.Infrastructure.Common
+namespace SimpleStore.Infrastructure.Common.Extensions
 {
     public static class ApplicationBuilderExtensions
     {

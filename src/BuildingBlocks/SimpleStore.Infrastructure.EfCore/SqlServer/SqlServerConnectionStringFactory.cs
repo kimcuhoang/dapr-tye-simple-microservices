@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
-using SimpleStore.Infrastructure.EfCore;
+using SimpleStore.Infrastructure.EfCore.Persistence;
 
-namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.SqlServer
+namespace SimpleStore.Infrastructure.EfCore.SqlServer
 {
     public class SqlServerConnectionStringFactory : IConnectionStringFactory
     {

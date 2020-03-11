@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using SimpleStore.Infrastructure.EfCore;
+using SimpleStore.Infrastructure.EfCore.Persistence;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence
 {

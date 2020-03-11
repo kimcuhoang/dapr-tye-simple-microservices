@@ -1,4 +1,4 @@
-﻿namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.SqlServer
+﻿namespace SimpleStore.Infrastructure.EfCore.SqlServer
 {
     public class SqlServerConfig
     {

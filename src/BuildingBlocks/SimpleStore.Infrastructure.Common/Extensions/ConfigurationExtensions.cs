@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace SimpleStore.Infrastructure.Common
+namespace SimpleStore.Infrastructure.Common.Extensions
 {
     public static class ConfigurationExtensions
     {

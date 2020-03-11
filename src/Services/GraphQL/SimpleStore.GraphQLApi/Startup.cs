@@ -12,6 +12,7 @@ using SimpleStore.GraphQLApi.Options;
 using SimpleStore.Infrastructure.Common;
 using System;
 using System.Threading.Tasks;
+using SimpleStore.Infrastructure.Common.Extensions;
 
 namespace SimpleStore.GraphQLApi
 {

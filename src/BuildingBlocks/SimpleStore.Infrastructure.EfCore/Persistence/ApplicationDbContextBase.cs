@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 
-namespace SimpleStore.Infrastructure.EfCore
+namespace SimpleStore.Infrastructure.EfCore.Persistence
 {
     public abstract class ApplicationDbContextBase : DbContext
     {

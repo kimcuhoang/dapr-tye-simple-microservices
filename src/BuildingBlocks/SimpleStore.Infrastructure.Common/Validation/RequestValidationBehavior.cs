@@ -3,8 +3,9 @@ using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using SimpleStore.Infrastructure.Common.Validation.Models;
 
-namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.ValidationModel
+namespace SimpleStore.Infrastructure.Common.Validation
 {
     public class RequestValidationBehavior<TRequest,TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {

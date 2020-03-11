@@ -1,4 +1,4 @@
-﻿namespace SimpleStore.Infrastructure.EfCore
+﻿namespace SimpleStore.Infrastructure.EfCore.Persistence
 {
     public interface IConnectionStringFactory
     {

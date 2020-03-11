@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.Infrastructure.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GraphQL", "GraphQL", "{DF2BBD4C-74F3-4D37-9039-E573510D35D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStore.GraphQLApi", "src\Services\GraphQL\SimpleStore.GraphQLApi\SimpleStore.GraphQLApi.csproj", "{854E0803-7119-4500-8C55-A31105967BEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.GraphQLApi", "src\Services\GraphQL\SimpleStore.GraphQLApi\SimpleStore.GraphQLApi.csproj", "{854E0803-7119-4500-8C55-A31105967BEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

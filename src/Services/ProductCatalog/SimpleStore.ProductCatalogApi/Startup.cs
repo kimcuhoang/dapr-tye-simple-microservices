@@ -12,6 +12,7 @@ using SimpleStore.ProductCatalog.Infrastructure.EfCore;
 using SimpleStore.ProductCatalogApi.GraphQL.ObjectTypes;
 using SimpleStore.ProductCatalogApi.Options;
 using System.Threading.Tasks;
+using SimpleStore.Infrastructure.Common.Extensions;
 
 namespace SimpleStore.ProductCatalogApi
 {
@@ -30,13 +31,8 @@ namespace SimpleStore.ProductCatalogApi
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddSingleton(this.Configuration);
-
-            services
-                .AddEfCore()
-                .AddCustomMediatR()
-                .AddCustomValidators()
-                .AddCustomHostedServices();
+                .AddSingleton(this.Configuration)
+                .AddCustomInfrastructure();
 
             services
                 .AddGraphQL(sp => Schema.Create(cfg =>
@@ -50,8 +46,6 @@ namespace SimpleStore.ProductCatalogApi
                     TracingPreference = TracingPreference.Always
                 });
         }
-
-        
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

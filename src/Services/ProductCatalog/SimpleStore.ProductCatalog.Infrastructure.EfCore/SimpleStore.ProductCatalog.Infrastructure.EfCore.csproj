@@ -17,4 +17,8 @@
     <ProjectReference Include="..\SimpleStore.ProductCatalog.Domain\SimpleStore.ProductCatalog.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

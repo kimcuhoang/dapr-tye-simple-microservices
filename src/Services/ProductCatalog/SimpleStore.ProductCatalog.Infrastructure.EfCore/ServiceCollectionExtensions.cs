@@ -1,62 +1,39 @@
-﻿using System.Reflection;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SimpleStore.Infrastructure.EfCore;
-using SimpleStore.Infrastructure.EfCore.HostedService;
+using SimpleStore.Infrastructure.EfCore.Persistence;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence;
-using SimpleStore.ProductCatalog.Infrastructure.EfCore.SqlServer;
-using SimpleStore.ProductCatalog.Infrastructure.EfCore.ValidationModel;
+using System.Reflection;
+using SimpleStore.Infrastructure.EfCore;
+using SimpleStore.Infrastructure.Common;
+using SimpleStore.Infrastructure.Common.Extensions;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddEfCore(this IServiceCollection services)
+        public static IServiceCollection AddCustomInfrastructure(this IServiceCollection services)
         {
-            var provider = services.BuildServiceProvider();
-            var configuration = provider.GetRequiredService<IConfiguration>();
-
-            services.Configure<SqlServerConfig>(options => configuration.GetSection("DatabaseInformation").Bind(options));
-
             services
-                .AddSingleton<IConnectionStringFactory, SqlServerConnectionStringFactory>()
-                .AddSingleton<IExtendDbContextOptionsBuilder, SqlServerDbContextOptionsBuilder>()
+                .AddEfCore()
                 .AddDbContext<ProductCatalogDbContext>((serviceProvider, dbContextOptionBuilder) =>
                 {
                     var extendOptionsBuilder = serviceProvider.GetRequiredService<IExtendDbContextOptionsBuilder>();
                     var connStringFactory = serviceProvider.GetRequiredService<IConnectionStringFactory>();
-                    extendOptionsBuilder.Extend(dbContextOptionBuilder, connStringFactory, string.Empty);
+                    extendOptionsBuilder.Extend(dbContextOptionBuilder, connStringFactory, Assembly.GetExecutingAssembly().GetName().Name);
                 })
-                .AddScoped<DbContext>(serviceProvider => serviceProvider.GetRequiredService<ProductCatalogDbContext>());
+                .AddScoped<DbContext>(serviceProvider => serviceProvider.GetRequiredService<ProductCatalogDbContext>())
+                .AddCustomHostedServices();
 
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            
-            return services;
-        }
-
-        public static IServiceCollection AddCustomMediatR(this IServiceCollection services)
-        {
             services
+                .AddAutoMapper(Assembly.GetExecutingAssembly())
                 .AddMediatR(Assembly.GetExecutingAssembly())
-                .AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>))
-                .AddScoped(typeof(IPipelineBehavior<,>), typeof(PersistenceBehavior<,>));
+                .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-            return services;
-        }
+            services.AddCustomRequestValidation();
 
-        public static IServiceCollection AddCustomValidators(this IServiceCollection services)
-        {
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            return services;
-        }
-
-        public static IServiceCollection AddCustomHostedServices(this IServiceCollection services)
-        {
-            services.AddHostedService<EfCoreMigrationHostedService>();
             return services;
         }
     }

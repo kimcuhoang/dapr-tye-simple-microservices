@@ -1,17 +1,18 @@
-﻿using MediatR;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
-namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence
+namespace SimpleStore.Infrastructure.EfCore.Persistence
 {
     public class PersistenceBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
-        private readonly ProductCatalogDbContext _dbContext;
+        private readonly DbContext _dbContext;
         private readonly ILogger<PersistenceBehavior<TRequest, TResponse>> _logger;
 
-        public PersistenceBehavior(ProductCatalogDbContext dbContext, ILogger<PersistenceBehavior<TRequest, TResponse>> logger)
+        public PersistenceBehavior(DbContext dbContext, ILogger<PersistenceBehavior<TRequest, TResponse>> logger)
         {
             this._dbContext = dbContext;
             this._logger = logger;

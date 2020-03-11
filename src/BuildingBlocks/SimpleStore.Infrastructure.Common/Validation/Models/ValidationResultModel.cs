@@ -1,10 +1,10 @@
-﻿using FluentValidation.Results;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
+using FluentValidation.Results;
 
-namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.ValidationModel
+namespace SimpleStore.Infrastructure.Common.Validation.Models
 {
     public class ValidationResultModel
     {

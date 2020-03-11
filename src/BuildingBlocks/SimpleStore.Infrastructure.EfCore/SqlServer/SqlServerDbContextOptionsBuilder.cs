@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using SimpleStore.Infrastructure.EfCore;
+using SimpleStore.Infrastructure.EfCore.Persistence;
 
-namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.SqlServer
+namespace SimpleStore.Infrastructure.EfCore.SqlServer
 {
     public class SqlServerDbContextOptionsBuilder : IExtendDbContextOptionsBuilder
     {
@@ -19,7 +19,7 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.SqlServer
         {
             return optionsBuilder.UseSqlServer(this._connectionStringFactory.Create(), opts =>
                 {
-                    opts.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
+                    opts.MigrationsAssembly(assemblyName);
                     opts.EnableRetryOnFailure(maxRetryCount: 3);
                 });
         }
