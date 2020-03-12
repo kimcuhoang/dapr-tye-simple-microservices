@@ -1,0 +1,46 @@
+﻿using AutoMapper;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using SimpleStore.Inventory.Infrastructure.EfCore.Dto;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace SimpleStore.Inventory.Infrastructure.EfCore.UseCases.GetInventories
+{
+    public class RequestHandler : IRequestHandler<GetInventoriesRequest, GetInventoriesResponse>
+    {
+        private readonly DbContext _dbContext;
+        private readonly IMapper _mapper;
+
+        public RequestHandler(DbContext dbContext, IMapper mapper)
+        {
+            this._dbContext = dbContext;
+            this._mapper = mapper;
+        }
+
+        #region Implementation of IRequestHandler<in GetInventoriesRequest,GetInventoriesResponse>
+
+        public async Task<GetInventoriesResponse> Handle(GetInventoriesRequest request, CancellationToken cancellationToken)
+        {
+            var query = this._dbContext.Set<Domain.Models.Inventory>();
+
+            var totalOfInventories = await query.CountAsync(cancellationToken);
+
+            var inventories = await query.AsNoTracking().OrderBy(x => x.Name)
+                .Skip((request.PageIndex - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToListAsync(cancellationToken);
+
+            var inventoryDtos = inventories.Select(x => this._mapper.Map<InventoryDto>(x));
+
+            return new GetInventoriesResponse
+            {
+                Inventories = inventoryDtos,
+                TotalRecords = totalOfInventories
+            };
+        }
+
+        #endregion
+    }
+}
