@@ -23,13 +23,15 @@ To exit the interactive mode use `Ctrl + C`
 dotnet run -p .\src\Services\ProductCatalog\SimpleStore.ProductCatalogApi\SimpleStore.ProductCatalogApi.csproj
 ```
 
-### Step 3
-
 ```cmd
-dotnet run -p .\src\GraphApi\CoolStore.GraphApi\CoolStore.GraphApi.csproj
+dotnet run -p .\src\Services\Inventory\SimpleStore.InventoryApi\SimpleStore.InventoryApi.csproj
 ```
 
-### Step 4
+```cmd
+dotnet run -p .\src\Services\GraphQL\SimpleStore.GraphQLApi\SimpleStore.GraphQLApi.csproj
+```
+
+### Step 3
 
 - Go to `http://localhost:5000`
 
@@ -114,20 +116,22 @@ mutation updateProduct($updateProductRequest: UpdateProductRequest!){
 
 ## Histories
 
-### Common
-- Add [Serilog.AspNetCore](https://github.com/serilog/serilog-aspnetcore) => see the issue [#1](https://github.com/kimcu-on-thenet/simple-microservices/issues/1)
+1. [Resolve Issue #1](https://github.com/kimcu-on-thenet/simple-microservices/issues/1)
+- Add [Serilog.AspNetCore](https://github.com/serilog/serilog-aspnetcore)
 - Implement a custom TypeConverter & JsonConverter in order to serve for StronglyType-Id => see the issue [#3](https://github.com/kimcu-on-thenet/simple-microservices/issues/3)
 
-### GraphQL => see the issue [#6](https://github.com/kimcu-on-thenet/simple-microservices/issues/6)
-1. ProductCatalog
-  - Define the following requests:
-    - GetProductsRequest
-    - CreateProductRequest
-    - UpdateProductRequest
-  - Define `InputObject`, `ObjectType`, `QueryType` & `MutationType` classes
-2. GraphQL
-    - Use **StitchedSchema** functionality
-3. Use sharing Settings by following the [blog](https://andrewlock.net/sharing-appsettings-json-configuration-files-between-projects-in-asp-net-core/)
+2. [Resolve Issue #6](https://github.com/kimcu-on-thenet/simple-microservices/issues/6) => Enable GraphQL for **ProductCatalogApi** and define **GraphQLApi**
+  - ProductCatalog
+    - Define the following requests:
+      - GetProductsRequest
+      - CreateProductRequest
+      - UpdateProductRequest
+    - Define `InputObject`, `ObjectType`, `QueryType` & `MutationType` classes
+  - GraphQL
+      - Use **StitchedSchema** functionality
+  - Use sharing Settings by following the [blog](https://andrewlock.net/sharing-appsettings-json-configuration-files-between-projects-in-asp-net-core/)
+3. [Resolve Issue #8](https://github.com/kimcu-on-thenet/simple-microservices/issues/8)
+  - Define **InventoryApi**
 
 ## Notes
 
