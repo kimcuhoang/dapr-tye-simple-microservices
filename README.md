@@ -24,7 +24,7 @@ dotnet run -p .\src\Services\ProductCatalog\SimpleStore.ProductCatalogApi\Simple
 ```
 
 ```cmd
-dotnet run -p .\src\Services\Inventory\SimpleStore.InventoryApi\SimpleStore.InventoryApi.csproj
+dotnet run -p .\src\Services\Inventories\SimpleStore.InventoriesApi\SimpleStore.InventoriesApi.csproj
 ```
 
 ```cmd

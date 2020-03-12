@@ -8,8 +8,8 @@
       "ServiceName": "product_catalog_api",
       "RestUri": "http://localhost:5001"
     },
-    "InventoryApi": {
-      "ServiceName": "inventory_api",
+    "InventoriesApi": {
+      "ServiceName": "inventories_api",
       "RestUri": "http://localhost:5002"
     } 
   }

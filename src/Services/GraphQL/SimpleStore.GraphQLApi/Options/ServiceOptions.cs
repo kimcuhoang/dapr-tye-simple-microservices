@@ -6,6 +6,6 @@ namespace SimpleStore.GraphQLApi.Options
     {
         public ServiceConfig GraphQLApi { get; set; }
         public ServiceConfig ProductCatalogApi { get; set; }
-        public ServiceConfig InventoryApi { get; set; }
+        public ServiceConfig InventoriesApi { get; set; }
     }
 }
