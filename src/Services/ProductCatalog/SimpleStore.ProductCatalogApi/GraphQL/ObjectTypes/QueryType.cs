@@ -1,4 +1,5 @@
 ﻿using HotChocolate.Types;
+using SimpleStore.ProductCatalogApi.GraphQL.InputObjects;
 using SimpleStore.ProductCatalogApi.GraphQL.Objects;
 
 namespace SimpleStore.ProductCatalogApi.GraphQL.ObjectTypes

@@ -1,7 +1,7 @@
 ﻿using HotChocolate.Types;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.UseCases.GetProducts;
 
-namespace SimpleStore.ProductCatalogApi.GraphQL.ObjectTypes
+namespace SimpleStore.ProductCatalogApi.GraphQL.InputObjects
 {
     public class GetProductsRequestType : InputObjectType<GetProductsRequest>
     {
