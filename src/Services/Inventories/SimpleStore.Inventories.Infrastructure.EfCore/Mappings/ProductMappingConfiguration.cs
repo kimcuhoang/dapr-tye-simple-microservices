@@ -4,25 +4,25 @@ using SimpleStore.Inventories.Domain.Models;
 
 namespace SimpleStore.Inventories.Infrastructure.EfCore.Mappings
 {
-    public class InventoryMappingConfiguration : IEntityTypeConfiguration<Domain.Models.Inventory>
+    public class ProductMappingConfiguration : IEntityTypeConfiguration<Product>
     {
-        #region Implementation of IEntityTypeConfiguration<Inventory>
+        #region Implementation of IEntityTypeConfiguration<Product>
 
-        public void Configure(EntityTypeBuilder<Domain.Models.Inventory> builder)
+        public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.HasKey(x => x.InventoryId);
+            builder.HasKey(x => x.ProductId);
 
             builder
-                .Property(x => x.InventoryId)
+                .Property(x => x.ProductId)
                 .HasField("Id")
                 .HasColumnName("Id")
                 .UsePropertyAccessMode(PropertyAccessMode.Field)
-                .HasConversion(x => x.Id, id => (InventoryId)id);
+                .HasConversion(x => x.Id, id => (ProductId)id);
 
             builder
-                .HasMany(x => x.Products)
+                .HasMany(x => x.Inventories)
                 .WithOne()
-                .HasForeignKey(x => x.InventoryId)
+                .HasForeignKey(x => x.ProductId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         }
