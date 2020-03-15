@@ -13,7 +13,12 @@ namespace SimpleStore.InventoriesApi.GraphQL.ObjectTypes
             descriptor
                 .Field(x => x.GetInventories(default)).Type<GetInventoriesResponseType>()
                 .Argument("request", arg => arg.Type<NonNullType<GetInventoriesRequestType>>())
-                .Name("inventories");
+                .Name(nameof(QueryInventories.GetInventories));
+
+            descriptor
+                .Field(x => x.GetProducts(default)).Type<GetProductsResponseType>()
+                .Argument("request", arg => arg.Type<NonNullType<GetProductsRequestType>>())
+                .Name(nameof(QueryInventories.GetProducts));
         }
 
         #endregion

@@ -2,6 +2,7 @@
 using MediatR;
 using SimpleStore.Inventories.Infrastructure.EfCore.Dto;
 using SimpleStore.Inventories.Infrastructure.EfCore.UseCases.CreateInventory;
+using SimpleStore.Inventories.Infrastructure.EfCore.UseCases.CreateProduct;
 
 namespace SimpleStore.InventoriesApi.GraphQL.Objects
 {
@@ -13,6 +14,9 @@ namespace SimpleStore.InventoriesApi.GraphQL.Objects
             => this._mediator = mediator;
 
         public async Task<InventoryDto> CreateInventory(CreateInventoryRequest request)
+            => await this._mediator.Send(request);
+
+        public async Task<CreateProductResponse> CreateProduct(CreateProductRequest request)
             => await this._mediator.Send(request);
     }
 }

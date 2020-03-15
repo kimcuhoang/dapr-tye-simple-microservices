@@ -1,11 +1,12 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SimpleStore.Inventories.Domain.Models;
 using SimpleStore.Inventories.Infrastructure.EfCore.Dto;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SimpleStore.Inventories.Infrastructure.EfCore.UseCases.GetInventories
 {
@@ -34,13 +35,12 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.UseCases.GetInventories
                 .OrderBy(x => x.Name)
                 .Skip((request.PageIndex - 1) * request.PageSize)
                 .Take(request.PageSize)
+                .ProjectTo<InventoryDto>(this._mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
-
-            var inventoryDtos = inventories.Select(x => this._mapper.Map<InventoryDto>(x));
 
             return new GetInventoriesResponse
             {
-                Inventories = inventoryDtos,
+                Inventories = inventories,
                 TotalRecords = totalOfInventories
             };
         }

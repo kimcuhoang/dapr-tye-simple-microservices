@@ -13,7 +13,12 @@ namespace SimpleStore.InventoriesApi.GraphQL.ObjectTypes
             descriptor
                 .Field(x => x.CreateInventory(default)).Type<InventoryType>()
                 .Argument("request", arg => arg.Type<NonNullType<CreateInventoryRequestType>>())
-                .Name("CreateInventory");
+                .Name(nameof(InventoryMutation.CreateInventory));
+
+            descriptor
+                .Field(x => x.CreateProduct(default)).Type<CreateProductResponseType>()
+                .Argument("request", arg => arg.Type<NonNullType<CreateProductRequestType>>())
+                .Name(nameof(InventoryMutation.CreateProduct));
         }
 
         #endregion
