@@ -11,6 +11,7 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Mappings
         public void Configure(EntityTypeBuilder<ProductInventory> builder)
         {
             builder.HasKey(x => x.ProductInventoryId);
+
             builder
                 .Property(x => x.ProductInventoryId)
                 .HasField("Id")
@@ -18,14 +19,18 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Mappings
                 .HasConversion(x => x.Id, id => (ProductInventoryId)id);
 
             builder
-                .Property(x => x.ProductId)
-                .IsRequired()
-                .HasConversion(x => x.Id, id => (ProductId)id);
+                .HasOne(x => x.Product)
+                .WithMany(x => x.Inventories)
+                .HasForeignKey("ProductId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
 
             builder
-                .Property(x => x.InventoryId)
-                .IsRequired()
-                .HasConversion(x => x.Id, id => (InventoryId)id);
+                .HasOne(x => x.Inventory)
+                .WithMany(x => x.Products)
+                .HasForeignKey("InventoryId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
         }
 
         #endregion

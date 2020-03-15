@@ -11,7 +11,7 @@ namespace SimpleStore.Inventories.Domain.Models
 
         public string Code { get; private set; }
 
-        private List<ProductInventory> _inventories = new List<ProductInventory>();
+        private readonly List<ProductInventory> _inventories = new List<ProductInventory>();
 
         public IEnumerable<ProductInventory> Inventories => this._inventories;
 
@@ -42,29 +42,21 @@ namespace SimpleStore.Inventories.Domain.Models
 
         #region Behaviors
 
-        public Product AssignToInventory(InventoryId inventoryId, int quantity, bool canPurchase = true)
+        public ProductInventory WithInventory(Inventory inventory, int quantity, bool canPurchase = true)
         {
-            if (this._inventories.Any(x => x.InventoryId == inventoryId))
+            if (inventory == null)
             {
-                throw new CoreException($"Product-{this.ProductId} has been assigned to Inventory-{inventoryId}.");
+                throw CoreException.NullOrEmptyArgument(nameof(inventory));
             }
 
-            var productInventory = ProductInventory.Create(this.ProductId, inventoryId, quantity, canPurchase);
+            if (this._inventories.Any(x => x.Inventory == inventory))
+            {
+                throw new CoreException($"{this} is existing in {inventory}");
+            }
+
+            var productInventory = ProductInventory.Create(this, inventory, quantity, canPurchase);
             this._inventories.Add(productInventory);
-            return this;
-        }
-
-        public Product RevokeFromInventory(InventoryId inventoryId)
-        {
-            var productInventory = this._inventories.SingleOrDefault(x => x.InventoryId == inventoryId);
-
-            if (productInventory == null)
-            {
-                throw new CoreException($"Product-{this.ProductId} has not been assigned to Inventory-{inventoryId}.");
-            }
-
-            this._inventories = this._inventories.Where(x => x.InventoryId != inventoryId).ToList();
-            return this;
+            return productInventory;
         }
 
         #endregion

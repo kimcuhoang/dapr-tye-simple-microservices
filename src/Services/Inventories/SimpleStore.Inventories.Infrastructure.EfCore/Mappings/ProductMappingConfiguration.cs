@@ -19,12 +19,16 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Mappings
                 .UsePropertyAccessMode(PropertyAccessMode.Field)
                 .HasConversion(x => x.Id, id => (ProductId)id);
 
-            builder
-                .HasMany(x => x.Inventories)
-                .WithOne()
-                .HasForeignKey(x => x.ProductId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.Metadata
+                .FindNavigation(nameof(Product.Inventories))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
+
+            //builder
+            //    .HasMany(x => x.Inventories)
+            //    .WithOne(x => x.Product)
+            //    .HasForeignKey(x => x.ProductId)
+            //    .IsRequired()
+            //    .OnDelete(DeleteBehavior.Cascade);
         }
 
         #endregion

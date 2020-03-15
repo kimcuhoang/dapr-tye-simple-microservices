@@ -10,8 +10,8 @@ using SimpleStore.Inventories.Infrastructure.EfCore.Persistence;
 namespace SimpleStore.Inventories.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    [Migration("20200313093614_Init_Database")]
-    partial class Init_Database
+    [Migration("20200315054809_Init_DB")]
+    partial class Init_DB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,19 +40,19 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Migrations
                     b.HasData(
                         new
                         {
-                            InventoryId = new Guid("3b709167-9e2f-44cb-961e-9d7bcf77d91b"),
+                            InventoryId = new Guid("7aa9115d-00d9-4215-98fa-cbd9aceb0744"),
                             Location = "Inventory-1-Location",
                             Name = "Inventory-1"
                         },
                         new
                         {
-                            InventoryId = new Guid("8ba6e9b7-950f-47ca-abd2-39bf58f09b1f"),
+                            InventoryId = new Guid("db9af98a-2a0e-4888-9cab-2b9d018bdf88"),
                             Location = "Inventory-2-Location",
                             Name = "Inventory-2"
                         },
                         new
                         {
-                            InventoryId = new Guid("b11291e8-6366-4a50-8ae2-816c80cb11da"),
+                            InventoryId = new Guid("2bd3355c-e658-4973-9c30-008f85d103bb"),
                             Location = "Inventory-3-Location",
                             Name = "Inventory-3"
                         });
@@ -74,17 +74,17 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Migrations
                     b.HasData(
                         new
                         {
-                            ProductId = new Guid("b166e6e6-c0fb-45d4-8aa0-b5749800c706"),
+                            ProductId = new Guid("15f110f6-38e8-4a21-a344-e5f164f233d6"),
                             Code = "PRD-1"
                         },
                         new
                         {
-                            ProductId = new Guid("e3766653-91dd-4cac-8a83-c736b2d6b349"),
+                            ProductId = new Guid("3d7c9d9b-d889-40f0-963c-643f9ec28d0c"),
                             Code = "PRD-2"
                         },
                         new
                         {
-                            ProductId = new Guid("cf9dfebe-8cd8-4356-9edd-04e74d4618a3"),
+                            ProductId = new Guid("cc04b8ae-01cb-4233-8c82-73e77b21e980"),
                             Code = "PRD-3"
                         });
                 });
@@ -113,17 +113,67 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductInventory");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductInventoryId = new Guid("b1abf910-c741-48b1-b04a-70268b4e45cf"),
+                            CanPurchase = true,
+                            InventoryId = new Guid("7aa9115d-00d9-4215-98fa-cbd9aceb0744"),
+                            ProductId = new Guid("15f110f6-38e8-4a21-a344-e5f164f233d6"),
+                            Quantity = 10
+                        },
+                        new
+                        {
+                            ProductInventoryId = new Guid("b6209206-0c3c-42f0-b3c2-8bf4e4e26478"),
+                            CanPurchase = true,
+                            InventoryId = new Guid("7aa9115d-00d9-4215-98fa-cbd9aceb0744"),
+                            ProductId = new Guid("cc04b8ae-01cb-4233-8c82-73e77b21e980"),
+                            Quantity = 5
+                        },
+                        new
+                        {
+                            ProductInventoryId = new Guid("bc05daab-f814-4871-9cfa-6e524a75c456"),
+                            CanPurchase = true,
+                            InventoryId = new Guid("db9af98a-2a0e-4888-9cab-2b9d018bdf88"),
+                            ProductId = new Guid("15f110f6-38e8-4a21-a344-e5f164f233d6"),
+                            Quantity = 3
+                        },
+                        new
+                        {
+                            ProductInventoryId = new Guid("d6f271eb-94fd-4baf-a426-2a0700ddf053"),
+                            CanPurchase = true,
+                            InventoryId = new Guid("db9af98a-2a0e-4888-9cab-2b9d018bdf88"),
+                            ProductId = new Guid("3d7c9d9b-d889-40f0-963c-643f9ec28d0c"),
+                            Quantity = 1
+                        },
+                        new
+                        {
+                            ProductInventoryId = new Guid("6c7e3fbe-c255-4f8e-884f-077516240d97"),
+                            CanPurchase = true,
+                            InventoryId = new Guid("2bd3355c-e658-4973-9c30-008f85d103bb"),
+                            ProductId = new Guid("3d7c9d9b-d889-40f0-963c-643f9ec28d0c"),
+                            Quantity = 9
+                        },
+                        new
+                        {
+                            ProductInventoryId = new Guid("48493d82-dd28-4c9e-ac19-53d7b5bba198"),
+                            CanPurchase = true,
+                            InventoryId = new Guid("2bd3355c-e658-4973-9c30-008f85d103bb"),
+                            ProductId = new Guid("cc04b8ae-01cb-4233-8c82-73e77b21e980"),
+                            Quantity = 8
+                        });
                 });
 
             modelBuilder.Entity("SimpleStore.Inventories.Domain.Models.ProductInventory", b =>
                 {
-                    b.HasOne("SimpleStore.Inventories.Domain.Models.Inventory", null)
+                    b.HasOne("SimpleStore.Inventories.Domain.Models.Inventory", "Inventory")
                         .WithMany("Products")
                         .HasForeignKey("InventoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SimpleStore.Inventories.Domain.Models.Product", null)
+                    b.HasOne("SimpleStore.Inventories.Domain.Models.Product", "Product")
                         .WithMany("Inventories")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)

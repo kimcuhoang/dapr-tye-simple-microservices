@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SimpleStore.Inventories.Infrastructure.EfCore.Migrations
 {
-    public partial class Init_Database : Migration
+    public partial class Init_DB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -37,10 +37,10 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Migrations
                 columns: table => new
                 {
                     ProductInventoryId = table.Column<Guid>(nullable: false),
-                    ProductId = table.Column<Guid>(nullable: false),
-                    InventoryId = table.Column<Guid>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    CanPurchase = table.Column<bool>(nullable: false)
+                    CanPurchase = table.Column<bool>(nullable: false),
+                    ProductId = table.Column<Guid>(nullable: false),
+                    InventoryId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,9 +64,9 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Migrations
                 columns: new[] { "Id", "Location", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("3b709167-9e2f-44cb-961e-9d7bcf77d91b"), "Inventory-1-Location", "Inventory-1" },
-                    { new Guid("8ba6e9b7-950f-47ca-abd2-39bf58f09b1f"), "Inventory-2-Location", "Inventory-2" },
-                    { new Guid("b11291e8-6366-4a50-8ae2-816c80cb11da"), "Inventory-3-Location", "Inventory-3" }
+                    { new Guid("7aa9115d-00d9-4215-98fa-cbd9aceb0744"), "Inventory-1-Location", "Inventory-1" },
+                    { new Guid("db9af98a-2a0e-4888-9cab-2b9d018bdf88"), "Inventory-2-Location", "Inventory-2" },
+                    { new Guid("2bd3355c-e658-4973-9c30-008f85d103bb"), "Inventory-3-Location", "Inventory-3" }
                 });
 
             migrationBuilder.InsertData(
@@ -74,9 +74,22 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Migrations
                 columns: new[] { "Id", "Code" },
                 values: new object[,]
                 {
-                    { new Guid("b166e6e6-c0fb-45d4-8aa0-b5749800c706"), "PRD-1" },
-                    { new Guid("e3766653-91dd-4cac-8a83-c736b2d6b349"), "PRD-2" },
-                    { new Guid("cf9dfebe-8cd8-4356-9edd-04e74d4618a3"), "PRD-3" }
+                    { new Guid("15f110f6-38e8-4a21-a344-e5f164f233d6"), "PRD-1" },
+                    { new Guid("3d7c9d9b-d889-40f0-963c-643f9ec28d0c"), "PRD-2" },
+                    { new Guid("cc04b8ae-01cb-4233-8c82-73e77b21e980"), "PRD-3" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ProductInventory",
+                columns: new[] { "ProductInventoryId", "CanPurchase", "InventoryId", "ProductId", "Quantity" },
+                values: new object[,]
+                {
+                    { new Guid("b1abf910-c741-48b1-b04a-70268b4e45cf"), true, new Guid("7aa9115d-00d9-4215-98fa-cbd9aceb0744"), new Guid("15f110f6-38e8-4a21-a344-e5f164f233d6"), 10 },
+                    { new Guid("bc05daab-f814-4871-9cfa-6e524a75c456"), true, new Guid("db9af98a-2a0e-4888-9cab-2b9d018bdf88"), new Guid("15f110f6-38e8-4a21-a344-e5f164f233d6"), 3 },
+                    { new Guid("d6f271eb-94fd-4baf-a426-2a0700ddf053"), true, new Guid("db9af98a-2a0e-4888-9cab-2b9d018bdf88"), new Guid("3d7c9d9b-d889-40f0-963c-643f9ec28d0c"), 1 },
+                    { new Guid("6c7e3fbe-c255-4f8e-884f-077516240d97"), true, new Guid("2bd3355c-e658-4973-9c30-008f85d103bb"), new Guid("3d7c9d9b-d889-40f0-963c-643f9ec28d0c"), 9 },
+                    { new Guid("b6209206-0c3c-42f0-b3c2-8bf4e4e26478"), true, new Guid("7aa9115d-00d9-4215-98fa-cbd9aceb0744"), new Guid("cc04b8ae-01cb-4233-8c82-73e77b21e980"), 5 },
+                    { new Guid("48493d82-dd28-4c9e-ac19-53d7b5bba198"), true, new Guid("2bd3355c-e658-4973-9c30-008f85d103bb"), new Guid("cc04b8ae-01cb-4233-8c82-73e77b21e980"), 8 }
                 });
 
             migrationBuilder.CreateIndex(

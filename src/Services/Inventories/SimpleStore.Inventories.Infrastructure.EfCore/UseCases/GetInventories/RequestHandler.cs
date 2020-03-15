@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using SimpleStore.Inventories.Domain.Models;
 using SimpleStore.Inventories.Infrastructure.EfCore.Dto;
 
 namespace SimpleStore.Inventories.Infrastructure.EfCore.UseCases.GetInventories
@@ -23,11 +24,14 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.UseCases.GetInventories
 
         public async Task<GetInventoriesResponse> Handle(GetInventoriesRequest request, CancellationToken cancellationToken)
         {
-            var query = this._dbContext.Set<Domain.Models.Inventory>();
+            var query = this._dbContext.Set<Inventory>();
 
             var totalOfInventories = await query.CountAsync(cancellationToken);
 
-            var inventories = await query.AsNoTracking().OrderBy(x => x.Name)
+            var inventories = await query.AsNoTracking()
+                .Include(x => x.Products)
+                .ThenInclude(x => x.Product)
+                .OrderBy(x => x.Name)
                 .Skip((request.PageIndex - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ToListAsync(cancellationToken);

@@ -8,7 +8,7 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Mappings
     {
         #region Implementation of IEntityTypeConfiguration<Inventory>
 
-        public void Configure(EntityTypeBuilder<Domain.Models.Inventory> builder)
+        public void Configure(EntityTypeBuilder<Inventory> builder)
         {
             builder.HasKey(x => x.InventoryId);
 
@@ -19,12 +19,16 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Mappings
                 .UsePropertyAccessMode(PropertyAccessMode.Field)
                 .HasConversion(x => x.Id, id => (InventoryId)id);
 
-            builder
-                .HasMany(x => x.Products)
-                .WithOne()
-                .HasForeignKey(x => x.InventoryId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.Metadata
+                .FindNavigation(nameof(Inventory.Products))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
+
+            //builder
+            //    .HasMany(x => x.Products)
+            //    .WithOne(x => x.Inventory)
+            //    .HasForeignKey(x => x.InventoryId)
+            //    .IsRequired()
+            //    .OnDelete(DeleteBehavior.Cascade);
         }
 
         #endregion
