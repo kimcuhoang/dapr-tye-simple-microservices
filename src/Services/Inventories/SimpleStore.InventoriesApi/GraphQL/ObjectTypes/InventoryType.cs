@@ -9,7 +9,7 @@ namespace SimpleStore.InventoriesApi.GraphQL.ObjectTypes
 
         protected override void Configure(IObjectTypeDescriptor<InventoryDto> descriptor)
         {
-            
+
         }
 
         #endregion

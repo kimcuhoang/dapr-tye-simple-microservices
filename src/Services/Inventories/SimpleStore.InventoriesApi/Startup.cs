@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using HotChocolate;
 using HotChocolate.AspNetCore;
 using HotChocolate.AspNetCore.Playground;
@@ -8,21 +7,20 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.Inventories.Infrastructure.EfCore;
 using SimpleStore.InventoriesApi.GraphQL.Objects;
 using SimpleStore.InventoriesApi.Options;
+using System.Threading.Tasks;
 
 namespace SimpleStore.InventoriesApi
 {
     public class Startup
     {
-        private readonly ServiceOptions _serviceOptions;
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            this._serviceOptions = this.Configuration.GetOptions<ServiceOptions>("Services");
         }
 
         public IConfiguration Configuration { get; }
@@ -32,6 +30,8 @@ namespace SimpleStore.InventoriesApi
             services
                 .AddSingleton(this.Configuration)
                 .AddCustomInfrastructure();
+
+            services.Configure<ServiceOptions>(this.Configuration.GetSection("Services"));
 
             services
                 .AddGraphQL(sp => Schema.Create(cfg =>
@@ -46,9 +46,10 @@ namespace SimpleStore.InventoriesApi
                 });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOptionsMonitor<ServiceOptions> optionsAccessor)
         {
-            app.Listen(this._serviceOptions.InventoriesApi);
+            app.Listen(optionsAccessor.CurrentValue.InventoriesApi);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

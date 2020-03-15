@@ -1,10 +1,10 @@
 ﻿using HotChocolate.Types;
 using Microsoft.Extensions.Options;
-using SimpleStore.ProductCatalog.Domain.Models;
-using SimpleStore.ProductCatalog.Infrastructure.EfCore.Dto;
-using SimpleStore.ProductCatalogApi.Options;
+using SimpleStore.Inventories.Domain.Models;
+using SimpleStore.Inventories.Infrastructure.EfCore.Dto;
+using SimpleStore.InventoriesApi.Options;
 
-namespace SimpleStore.ProductCatalogApi.GraphQL.ObjectTypes
+namespace SimpleStore.InventoriesApi.GraphQL.ObjectTypes
 {
     public class ProductType : ObjectType<ProductDto>
     {
@@ -13,11 +13,11 @@ namespace SimpleStore.ProductCatalogApi.GraphQL.ObjectTypes
         public ProductType(IOptions<ServiceOptions> serviceOptions)
             => this._serviceOptions = serviceOptions.Value;
 
-        #region Overrides of ObjectType<Product>
+        #region Overrides of ObjectType<ProductDto>
 
         protected override void Configure(IObjectTypeDescriptor<ProductDto> descriptor)
         {
-            descriptor.Name($"{this._serviceOptions.ProductCatalogApi.ServiceName}_{nameof(Product)}");
+            descriptor.Name($"{this._serviceOptions.InventoriesApi.ServiceName}_{nameof(Product)}");
         }
 
         #endregion
