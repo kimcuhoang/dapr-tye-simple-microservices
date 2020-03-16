@@ -40,14 +40,14 @@ dotnet run -p .\src\Services\GraphQL\SimpleStore.GraphQLApi\SimpleStore.GraphQLA
 **Query**
 
 ```js
-query products($getProductsRequest: GetProductsRequest!){
-    products(request: $getProductsRequest) {
+query getProductsInCatalog($request: product_catalog_api_GetProductsRequest!) {
+  product_catalog_api_GetProducts(request: $request) {
+    totalOfProducts,
     products {
-        productId,
-        name
-    },
-    totalOfProducts
+      productId, 
+      name
     }
+  }
 }
 ```
 
@@ -55,7 +55,7 @@ query products($getProductsRequest: GetProductsRequest!){
 
 ```js
 {
-  "getProductsRequest": {
+  "request": {
     "pageIndex": 1,
     "pageSize": 10
   }
