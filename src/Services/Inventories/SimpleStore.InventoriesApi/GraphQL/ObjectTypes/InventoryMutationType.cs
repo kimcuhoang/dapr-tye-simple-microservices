@@ -26,6 +26,11 @@ namespace SimpleStore.InventoriesApi.GraphQL.ObjectTypes
                 .Field(x => x.CreateProduct(default)).Type<CreateProductResponseType>()
                 .Argument("request", arg => arg.Type<NonNullType<CreateProductRequestType>>())
                 .Name($"{this._serviceOptions.InventoriesApi.ServiceName}_{nameof(InventoryMutation.CreateProduct)}");
+
+            descriptor
+                .Field(x => x.AddProductToInventory(default)).Type<AddProductToInventoryResponseType>()
+                .Argument("request", arg => arg.Type<NonNullType<AddProductToInventoryRequestType>>())
+                .Name($"{this._serviceOptions.InventoriesApi.ServiceName}_{nameof(InventoryMutation.AddProductToInventory)}");
         }
 
         #endregion

@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{99204373-D893-
 		docker-compose.override.yml = docker-compose.override.yml
 		docker-compose.yml = docker-compose.yml
 		global.json = global.json
+		QueriesAndMutations.md = QueriesAndMutations.md
 		README.md = README.md
 		services.json = services.json
 	EndProjectSection
