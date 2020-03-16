@@ -1,6 +1,5 @@
 ﻿using HotChocolate.Types;
 using Microsoft.Extensions.Options;
-using SimpleStore.Inventories.Domain.Models;
 using SimpleStore.Inventories.Infrastructure.EfCore.Dto;
 using SimpleStore.InventoriesApi.Options;
 
@@ -17,7 +16,7 @@ namespace SimpleStore.InventoriesApi.GraphQL.ObjectTypes
 
         protected override void Configure(IObjectTypeDescriptor<ProductDto> descriptor)
         {
-            descriptor.Name($"{this._serviceOptions.InventoriesApi.ServiceName}_{nameof(Product)}");
+            descriptor.Name($"{this._serviceOptions.InventoriesApi.ServiceName}_{nameof(ProductDto)}");
         }
 
         #endregion

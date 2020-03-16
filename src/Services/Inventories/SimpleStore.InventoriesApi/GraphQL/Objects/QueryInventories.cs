@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using SimpleStore.Inventories.Infrastructure.EfCore.UseCases.GetInventories;
 using SimpleStore.Inventories.Infrastructure.EfCore.UseCases.GetProducts;
+using System.Threading.Tasks;
 
 namespace SimpleStore.InventoriesApi.GraphQL.Objects
 {
