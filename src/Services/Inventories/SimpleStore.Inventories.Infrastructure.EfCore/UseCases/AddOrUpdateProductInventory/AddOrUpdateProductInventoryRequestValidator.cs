@@ -1,16 +1,15 @@
-﻿using FluentValidation;
-using System;
+﻿using System;
+using FluentValidation;
 
-namespace SimpleStore.Inventories.Infrastructure.EfCore.UseCases.AddProductToInventory
+namespace SimpleStore.Inventories.Infrastructure.EfCore.UseCases.AddOrUpdateProductInventory
 {
-    public class AddProductToInventoryRequestValidator : AbstractValidator<AddProductToInventoryRequest>
+    public class AddOrUpdateProductInventoryRequestValidator : AbstractValidator<AddOrdUpdateProductInventoryRequest>
     {
-        public AddProductToInventoryRequestValidator()
+        public AddOrUpdateProductInventoryRequestValidator()
         {
             RuleFor(x => x.ProductId)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotNull().NotEqual(Guid.Empty);
-
             RuleFor(x => x.InventoryId)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotNull().NotEqual(Guid.Empty);

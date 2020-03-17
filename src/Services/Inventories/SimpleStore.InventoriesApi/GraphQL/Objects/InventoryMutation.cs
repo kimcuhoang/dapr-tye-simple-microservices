@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
 using SimpleStore.Inventories.Infrastructure.EfCore.Dto;
-using SimpleStore.Inventories.Infrastructure.EfCore.UseCases.AddProductToInventory;
+using SimpleStore.Inventories.Infrastructure.EfCore.UseCases.AddOrUpdateProductInventory;
 using SimpleStore.Inventories.Infrastructure.EfCore.UseCases.CreateInventory;
 using SimpleStore.Inventories.Infrastructure.EfCore.UseCases.CreateProduct;
 
@@ -20,7 +20,7 @@ namespace SimpleStore.InventoriesApi.GraphQL.Objects
         public async Task<CreateProductResponse> CreateProduct(CreateProductRequest request)
             => await this._mediator.Send(request);
 
-        public async Task<AddProductToInventoryResponse> AddProductToInventory(AddProductToInventoryRequest request)
+        public async Task<AddOrUpdateProductInventoryResponse> AddOrUpdateProductInventory(AddOrdUpdateProductInventoryRequest request)
             => await this._mediator.Send(request);
     }
 }
