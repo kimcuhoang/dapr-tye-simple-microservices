@@ -200,9 +200,14 @@ mutation createProductInInventory($request: CreateProductRequestInput) {
 ## Mutation
 
 ```js
-mutation addProductToInventory($request: AddProductToInventoryRequestInput){
+mutation addorUpdateProductInventory($request: AddOrdUpdateProductInventoryRequestInput){
   addProductToInventory(request: $request) {
-    productInventoryId
+    inventoryId,
+    productId,
+    code,
+    inventoryName,
+    quantity,
+    canPurchase
   }
 }
 ```
@@ -213,7 +218,12 @@ mutation addProductToInventory($request: AddProductToInventoryRequestInput){
 {
   "data": {
     "addProductToInventory": {
-      "productInventoryId": "0b1b4ca6-0a7e-4203-8206-d7d396a8119b"
+      "inventoryId": "7aa9115d-00d9-4215-98fa-cbd9aceb0744",
+      "productId": "037c18cd-f95b-46f3-b7c3-e47fa7639e23",
+      "code": "NEWPRD1",
+      "inventoryName": "Inventory-1",
+      "quantity": 1,
+      "canPurchase": true
     }
   }
 }

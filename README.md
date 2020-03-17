@@ -1,5 +1,13 @@
 # simple-microservices
+
 An example of building micro-services by .NET Core
+
+## Business Rules
+
+1. Create a **Product** in **ProductCatalog** context => `ProductId`
+2. Then create a **Product** in **Inventories** context by consuming the `ProductId`
+3. Create a **Inventory** in **Inventories** context => `InventoryId`
+4. Assign **Product** to **Inventory** with `Quantity` and `CanPurchase`
 
 ## Getting started
 
@@ -34,85 +42,8 @@ dotnet run -p .\src\Services\GraphQL\SimpleStore.GraphQLApi\SimpleStore.GraphQLA
 ### Step 3
 
 - Go to `http://localhost:5000`
+- [Queries and Mutations](QueriesAndMutations.md)
 
-#### Query Products
-
-**Query**
-
-```js
-query getProductsInCatalog($request: product_catalog_api_GetProductsRequest!) {
-  product_catalog_api_GetProducts(request: $request) {
-    totalOfProducts,
-    products {
-      productId, 
-      name
-    }
-  }
-}
-```
-
-**Variable**
-
-```js
-{
-  "request": {
-    "pageIndex": 1,
-    "pageSize": 10
-  }
-}
-```
-
-![](assets/graphql_query_products.png)
-
-#### Create new product
-
-**Mutation**
-
-```js
-mutation createProduct($createProductRequest: CreateProductRequest!){
-  CreateProduct(request: $createProductRequest){
-    productId,
-    name
-  }
-}
-```
-
-**Variable**
-```js
-{
-  "createProductRequest":{
-    "productName": "Hello Hello"
-  }
-}
-```
-
-![](assets/graphql_create_product.png)
-
-#### Update Existing Product
-
-**Mutation**
-
-```js
-mutation updateProduct($updateProductRequest: UpdateProductRequest!){
-  UpdateProduct(request: $updateProductRequest){
-    productId,
-    name
-  }
-}
-```
-
-**Variable**
-
-```js
-{
-  "updateProductRequest": {
-    "productId": "07c9d1767d364ce2b18f3c0d19177efe",
-    "newProductName": "This is an updated product"
-  }
-}
-```
-
-![](assets/graphql_update_product.png)
 
 ## Histories
 
@@ -146,7 +77,7 @@ Add-Migration Add_Product -Project src\Services\ProductCatalog\SimpleStore.Produ
 2. Via dotnet ef cli
 
 ```cmd
-dotnet ef migrations add Add_Product --project src\Services\ProductCatalog\SimpleStore.ProductCatalog.Infrastructure.EfCore --startup-project src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
+dotnet ef migrations add Init_DB --project src\Services\ProductCatalog\SimpleStore.ProductCatalog.Infrastructure.EfCore --startup-project src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
 ```
 
 3. Resources
