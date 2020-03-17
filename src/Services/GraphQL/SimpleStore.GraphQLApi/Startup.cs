@@ -31,17 +31,23 @@ namespace SimpleStore.GraphQLApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddHttpContextAccessor()
-                .AddHttpClient(this._serviceOptions.ProductCatalogApi.ServiceName, (sp, client) =>
+            services.AddHttpContextAccessor();
+
+            services.AddHttpClient(this._serviceOptions.ProductCatalogApi.ServiceName, (sp, client) =>
                 {
                     client.BaseAddress = new Uri($"{this._serviceOptions.ProductCatalogApi.RestUri}/graphql");
-                });
+                }); 
+            services.AddHttpClient(this._serviceOptions.InventoriesApi.ServiceName, (sp, client) =>
+                {
+                    client.BaseAddress = new Uri($"{this._serviceOptions.InventoriesApi.RestUri}/graphql");
+                }); ;
 
             services
                 .AddGraphQLSubscriptions()
                 .AddStitchedSchema(stitchingBuilder =>
-                    stitchingBuilder.AddSchemaFromHttp(this._serviceOptions.ProductCatalogApi.ServiceName));
+                    stitchingBuilder
+                        .AddSchemaFromHttp(this._serviceOptions.ProductCatalogApi.ServiceName)
+                        .AddSchemaFromHttp(this._serviceOptions.InventoriesApi.ServiceName));
 
             
         }

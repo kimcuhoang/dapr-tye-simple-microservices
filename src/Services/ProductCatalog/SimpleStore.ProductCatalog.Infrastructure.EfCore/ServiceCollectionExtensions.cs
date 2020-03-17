@@ -3,12 +3,11 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using SimpleStore.Infrastructure.Common.Extensions;
+using SimpleStore.Infrastructure.EfCore;
 using SimpleStore.Infrastructure.EfCore.Persistence;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence;
 using System.Reflection;
-using SimpleStore.Infrastructure.EfCore;
-using SimpleStore.Infrastructure.Common;
-using SimpleStore.Infrastructure.Common.Extensions;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
 {

@@ -13,19 +13,15 @@
   <ItemGroup>
     <PackageReference Include="HotChocolate.AspNetCore" Version="10.3.6" />
     <PackageReference Include="HotChocolate.AspNetCore.Playground" Version="10.3.6" />
-    <PackageReference Include="MediatR" Version="8.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\SimpleStore.Domain\SimpleStore.Domain.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\SimpleStore.Infrastructure.Common\SimpleStore.Infrastructure.Common.csproj" />
-    <ProjectReference Include="..\SimpleStore.ProductCatalog.Domain\SimpleStore.ProductCatalog.Domain.csproj" />
     <ProjectReference Include="..\SimpleStore.ProductCatalog.Infrastructure.EfCore\SimpleStore.ProductCatalog.Infrastructure.EfCore.csproj" />
   </ItemGroup>
 

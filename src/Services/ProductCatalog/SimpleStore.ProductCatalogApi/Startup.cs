@@ -7,23 +7,20 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SimpleStore.Infrastructure.Common;
+using Microsoft.Extensions.Options;
+using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore;
 using SimpleStore.ProductCatalogApi.GraphQL.ObjectTypes;
 using SimpleStore.ProductCatalogApi.Options;
 using System.Threading.Tasks;
-using SimpleStore.Infrastructure.Common.Extensions;
 
 namespace SimpleStore.ProductCatalogApi
 {
     public class Startup
     {
-        private readonly ServiceOptions _serviceOptions;
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            this._serviceOptions = this.Configuration.GetOptions<ServiceOptions>("Services");
         }
 
         public IConfiguration Configuration { get; }
@@ -33,6 +30,8 @@ namespace SimpleStore.ProductCatalogApi
             services
                 .AddSingleton(this.Configuration)
                 .AddCustomInfrastructure();
+
+            services.Configure<ServiceOptions>(this.Configuration.GetSection("Services"));
 
             services
                 .AddGraphQL(sp => Schema.Create(cfg =>
@@ -47,9 +46,9 @@ namespace SimpleStore.ProductCatalogApi
                 });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOptionsMonitor<ServiceOptions> optionsAccessor)
         {
-            app.Listen(this._serviceOptions.ProductCatalogApi);
+            app.Listen(optionsAccessor.CurrentValue.ProductCatalogApi);
 
             if (env.IsDevelopment())
             {

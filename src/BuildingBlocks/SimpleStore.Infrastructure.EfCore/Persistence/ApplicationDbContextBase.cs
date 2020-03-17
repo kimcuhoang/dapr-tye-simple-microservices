@@ -23,6 +23,8 @@ namespace SimpleStore.Infrastructure.EfCore.Persistence
                 var customModelBuilder = (ICustomModelBuilder)Activator.CreateInstance(builderType);
                 customModelBuilder.Build(builder);
             }
+
+            base.OnModelCreating(builder);
         }
 
         protected abstract Assembly CurrentAssembly { get; }

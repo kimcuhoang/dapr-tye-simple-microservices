@@ -1,5 +1,13 @@
 # simple-microservices
+
 An example of building micro-services by .NET Core
+
+## Business Rules
+
+1. Create a **Product** in **ProductCatalog** context => `ProductId`
+2. Then create a **Product** in **Inventories** context by consuming the `ProductId`
+3. Create a **Inventory** in **Inventories** context => `InventoryId`
+4. Assign **Product** to **Inventory** with `Quantity` and `CanPurchase`
 
 ## Getting started
 
@@ -23,111 +31,38 @@ To exit the interactive mode use `Ctrl + C`
 dotnet run -p .\src\Services\ProductCatalog\SimpleStore.ProductCatalogApi\SimpleStore.ProductCatalogApi.csproj
 ```
 
-### Step 3
+```cmd
+dotnet run -p .\src\Services\Inventories\SimpleStore.InventoriesApi\SimpleStore.InventoriesApi.csproj
+```
 
 ```cmd
-dotnet run -p .\src\GraphApi\CoolStore.GraphApi\CoolStore.GraphApi.csproj
+dotnet run -p .\src\Services\GraphQL\SimpleStore.GraphQLApi\SimpleStore.GraphQLApi.csproj
 ```
 
-### Step 4
+### Step 3
 
 - Go to `http://localhost:5000`
+- [Queries and Mutations](QueriesAndMutations.md)
 
-#### Query Products
-
-**Query**
-
-```js
-query products($getProductsRequest: GetProductsRequest!){
-    products(request: $getProductsRequest) {
-    products {
-        productId,
-        name
-    },
-    totalOfProducts
-    }
-}
-```
-
-**Variable**
-
-```js
-{
-  "getProductsRequest": {
-    "pageIndex": 1,
-    "pageSize": 10
-  }
-}
-```
-
-![](assets/graphql_query_products.png)
-
-#### Create new product
-
-**Mutation**
-
-```js
-mutation createProduct($createProductRequest: CreateProductRequest!){
-  CreateProduct(request: $createProductRequest){
-    productId,
-    name
-  }
-}
-```
-
-**Variable**
-```js
-{
-  "createProductRequest":{
-    "productName": "Hello Hello"
-  }
-}
-```
-
-![](assets/graphql_create_product.png)
-
-#### Update Existing Product
-
-**Mutation**
-
-```js
-mutation updateProduct($updateProductRequest: UpdateProductRequest!){
-  UpdateProduct(request: $updateProductRequest){
-    productId,
-    name
-  }
-}
-```
-
-**Variable**
-
-```js
-{
-  "updateProductRequest": {
-    "productId": "07c9d1767d364ce2b18f3c0d19177efe",
-    "newProductName": "This is an updated product"
-  }
-}
-```
-
-![](assets/graphql_update_product.png)
 
 ## Histories
 
-### Common
-- Add [Serilog.AspNetCore](https://github.com/serilog/serilog-aspnetcore) => see the issue [#1](https://github.com/kimcu-on-thenet/simple-microservices/issues/1)
+1. [Resolve Issue #1](https://github.com/kimcu-on-thenet/simple-microservices/issues/1)
+- Add [Serilog.AspNetCore](https://github.com/serilog/serilog-aspnetcore)
 - Implement a custom TypeConverter & JsonConverter in order to serve for StronglyType-Id => see the issue [#3](https://github.com/kimcu-on-thenet/simple-microservices/issues/3)
 
-### GraphQL => see the issue [#6](https://github.com/kimcu-on-thenet/simple-microservices/issues/6)
-1. ProductCatalog
-  - Define the following requests:
-    - GetProductsRequest
-    - CreateProductRequest
-    - UpdateProductRequest
-  - Define `InputObject`, `ObjectType`, `QueryType` & `MutationType` classes
-2. GraphQL
-    - Use **StitchedSchema** functionality
-3. Use sharing Settings by following the [blog](https://andrewlock.net/sharing-appsettings-json-configuration-files-between-projects-in-asp-net-core/)
+2. [Resolve Issue #6](https://github.com/kimcu-on-thenet/simple-microservices/issues/6) => Enable GraphQL for **ProductCatalogApi** and define **GraphQLApi**
+  - ProductCatalog
+    - Define the following requests:
+      - GetProductsRequest
+      - CreateProductRequest
+      - UpdateProductRequest
+    - Define `InputObject`, `ObjectType`, `QueryType` & `MutationType` classes
+  - GraphQL
+      - Use **StitchedSchema** functionality
+  - Use sharing Settings by following the [blog](https://andrewlock.net/sharing-appsettings-json-configuration-files-between-projects-in-asp-net-core/)
+3. [Resolve Issue #8](https://github.com/kimcu-on-thenet/simple-microservices/issues/8)
+  - Define **InventoryApi**
 
 ## Notes
 
@@ -142,7 +77,7 @@ Add-Migration Add_Product -Project src\Services\ProductCatalog\SimpleStore.Produ
 2. Via dotnet ef cli
 
 ```cmd
-dotnet ef migrations add Add_Product --project src\Services\ProductCatalog\SimpleStore.ProductCatalog.Infrastructure.EfCore --startup-project src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
+dotnet ef migrations add Init_DB --project src\Services\ProductCatalog\SimpleStore.ProductCatalog.Infrastructure.EfCore --startup-project src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
 ```
 
 3. Resources

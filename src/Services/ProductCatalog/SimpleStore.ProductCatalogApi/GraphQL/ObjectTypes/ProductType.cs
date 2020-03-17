@@ -1,24 +1,22 @@
-﻿using System;
-using HotChocolate.Types;
-using SimpleStore.Domain.Models;
-using SimpleStore.ProductCatalog.Domain.Models;
+﻿using HotChocolate.Types;
+using Microsoft.Extensions.Options;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Dto;
+using SimpleStore.ProductCatalogApi.Options;
 
 namespace SimpleStore.ProductCatalogApi.GraphQL.ObjectTypes
 {
     public class ProductType : ObjectType<ProductDto>
     {
+        private readonly ServiceOptions _serviceOptions;
+
+        public ProductType(IOptions<ServiceOptions> serviceOptions)
+            => this._serviceOptions = serviceOptions.Value;
+
         #region Overrides of ObjectType<Product>
 
         protected override void Configure(IObjectTypeDescriptor<ProductDto> descriptor)
         {
-            descriptor
-                .Field(x => x.ProductId)
-                .Type<IdType>();
-
-            descriptor
-                .Field(x => x.Name)
-                .Type<StringType>();
+            descriptor.Name($"{this._serviceOptions.ProductCatalogApi.ServiceName}_{nameof(ProductDto)}");
         }
 
         #endregion

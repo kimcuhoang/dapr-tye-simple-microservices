@@ -6,7 +6,11 @@
     },
     "ProductCatalogApi": {
       "ServiceName": "product_catalog_api",
-      "RestUri": "http://localhost:5001" 
+      "RestUri": "http://localhost:5001"
+    },
+    "InventoriesApi": {
+      "ServiceName": "inventories_api",
+      "RestUri": "http://localhost:5002"
     } 
   }
 }
