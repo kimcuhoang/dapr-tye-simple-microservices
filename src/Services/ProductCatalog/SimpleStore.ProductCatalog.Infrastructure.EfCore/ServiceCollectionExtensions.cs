@@ -32,6 +32,7 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
                 .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             services.AddCustomRequestValidation();
+            services.AddDomainEventDispatcher();
 
             return services;
         }

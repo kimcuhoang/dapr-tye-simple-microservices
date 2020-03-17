@@ -4,12 +4,14 @@ using SimpleStore.Inventories.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using SimpleStore.Domain.Models;
 
 namespace SimpleStore.Inventories.Infrastructure.EfCore.Persistence
 {
     public class InventoryDbContext : ApplicationDbContextBase
     {
-        public InventoryDbContext(DbContextOptions<InventoryDbContext> dbContextOptions) : base(dbContextOptions) { }
+        public InventoryDbContext(DbContextOptions<InventoryDbContext> dbContextOptions, IDomainEventDispatcher domainEventDispatcher) 
+            : base(dbContextOptions, domainEventDispatcher) { }
 
         protected override Assembly CurrentAssembly => Assembly.GetExecutingAssembly();
 
