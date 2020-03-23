@@ -8,12 +8,15 @@ using SimpleStore.Infrastructure.EfCore;
 using SimpleStore.Infrastructure.EfCore.Persistence;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence;
 using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using SimpleStore.Infra.RedisPubSub.Extensions;
+
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCustomInfrastructure(this IServiceCollection services)
+        public static IServiceCollection AddCustomInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services
                 .AddEfCore()
@@ -32,7 +35,9 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
                 .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             services.AddCustomRequestValidation();
+            
             services.AddDomainEventDispatcher();
+            services.AddRedisPubSub(configuration);
 
             return services;
         }

@@ -3,17 +3,20 @@ using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SimpleStore.Infra.RedisPubSub.Extensions;
 using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.Infrastructure.EfCore;
 using SimpleStore.Infrastructure.EfCore.Persistence;
 using SimpleStore.Inventories.Infrastructure.EfCore.Persistence;
+using SimpleStore.Inventories.Infrastructure.EfCore.PubSub;
 
 namespace SimpleStore.Inventories.Infrastructure.EfCore
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCustomInfrastructure(this IServiceCollection services)
+        public static IServiceCollection AddCustomInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services
                 .AddEfCore()
@@ -32,6 +35,11 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore
                 .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             services.AddCustomRequestValidation();
+
+            services
+                .AddDomainEventDispatcher()
+                .AddRedisPubSub(configuration)
+                .AddHostedService<SubscriberHostedService>();
 
             return services;
         }

@@ -11,6 +11,10 @@
     "InventoriesApi": {
       "ServiceName": "inventories_api",
       "RestUri": "http://localhost:5002"
-    } 
-  }
+    }
+  },
+  "Redis": {
+    "RedisAddress": "localhost:6379",
+    "RedisSecret": ""
+  } 
 }

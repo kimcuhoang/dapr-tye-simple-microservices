@@ -1,6 +1,6 @@
 ﻿using SimpleStore.Infrastructure.Common.Options;
 
-namespace SimpleStore.ProductCatalogApi.Options
+namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Options
 {
     public class ServiceOptions
     {

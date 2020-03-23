@@ -10,8 +10,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.Options;
 using SimpleStore.ProductCatalogApi.GraphQL.ObjectTypes;
-using SimpleStore.ProductCatalogApi.Options;
 using System.Threading.Tasks;
 
 namespace SimpleStore.ProductCatalogApi
@@ -29,7 +29,7 @@ namespace SimpleStore.ProductCatalogApi
         {
             services
                 .AddSingleton(this.Configuration)
-                .AddCustomInfrastructure();
+                .AddCustomInfrastructure(this.Configuration);
 
             services.Configure<ServiceOptions>(this.Configuration.GetSection("Services"));
 

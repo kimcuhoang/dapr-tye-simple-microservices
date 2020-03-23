@@ -21,7 +21,13 @@ namespace SimpleStore.ProductCatalog.Domain.Models
             this.Name = productName;
         }
 
-        private Product(string productName) : this(IdentityFactory.Create<ProductId>(), productName) { }
+        private Product(string productName) : this(IdentityFactory.Create<ProductId>(), productName)
+        {
+            this.AddUncommittedEvent(new ProductCreated
+            {
+                ProductId = this.ProductId
+            });
+        }
 
         private Product() { }
 
