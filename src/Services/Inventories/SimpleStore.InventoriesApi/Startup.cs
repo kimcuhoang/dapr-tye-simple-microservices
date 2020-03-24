@@ -27,6 +27,8 @@ namespace SimpleStore.InventoriesApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+
             services
                 .AddSingleton(this.Configuration)
                 .AddCustomInfrastructure(this.Configuration);
@@ -74,6 +76,7 @@ namespace SimpleStore.InventoriesApi
                     context.Response.Redirect("/playground");
                     return Task.CompletedTask;
                 });
+                endpoints.MapControllers();
             });
         }
     }

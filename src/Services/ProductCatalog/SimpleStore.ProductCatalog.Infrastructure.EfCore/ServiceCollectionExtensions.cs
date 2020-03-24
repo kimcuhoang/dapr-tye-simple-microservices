@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,8 @@ using SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using SimpleStore.Infra.RedisPubSub.Extensions;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.Options;
 
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
@@ -38,6 +41,12 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
             
             services.AddDomainEventDispatcher();
             services.AddRedisPubSub(configuration);
+
+            services.AddHttpClient<InventoriesGateway>((provider, client) =>
+            {
+                var serviceOptions = provider.GetRequiredService<ServiceOptions>();
+                client.BaseAddress = new Uri(serviceOptions.InventoriesApi.RestUri, UriKind.Absolute);
+            });
 
             return services;
         }
