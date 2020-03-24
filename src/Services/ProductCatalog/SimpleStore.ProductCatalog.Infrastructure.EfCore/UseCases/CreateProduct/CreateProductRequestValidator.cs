@@ -10,6 +10,11 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.UseCases.CreateProduc
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotNull()
                 .NotEmpty();
+
+            RuleFor(request => request.ProductCode)
+                .Cascade(CascadeMode.StopOnFirstFailure)
+                .NotNull()
+                .NotEmpty();
         }
     }
 }

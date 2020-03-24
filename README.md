@@ -4,9 +4,9 @@ An example of building micro-services by .NET Core
 
 ## Business Rules
 
-1. Create a **Product** in **ProductCatalog** context => `ProductId`
-2. Then create a **Product** in **Inventories** context by consuming the `ProductId`
-3. Create a **Inventory** in **Inventories** context => `InventoryId`
+1. Create a **Inventory** in **Inventories** context => `InventoryId`
+2. Create a **Product** in **ProductCatalog** context => `ProductId`
+  - By using **Domain Event** within **Publish Subscribe Pattern** and Redis Pub/Sub; it's going to create a **Product** in **Inventories** context automatically
 4. Assign **Product** to **Inventory** with `Quantity` and `CanPurchase`
 
 ## Getting started

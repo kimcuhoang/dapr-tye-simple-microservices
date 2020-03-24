@@ -116,7 +116,8 @@ query getInventories($request: GetInventoriesRequestInput) {
 ```json
 {
   "request": {
-    "productName": "New Product"
+    "productName": "New Product - 4",
+    "productCode": "N-PRD-4"
   }
 }
 ```
@@ -127,43 +128,7 @@ query getInventories($request: GetInventoriesRequestInput) {
 mutation createProductInCatalog($request: product_catalog_api_CreateProductRequest!){
   product_catalog_api_CreateProduct(request:$request){
     productId,
-    name
-  }
-}
-```
-
-## Result
-
-```json
-{
-  "data": {
-    "product_catalog_api_CreateProduct": {
-      "productId": "98dd4f6c-bc3b-4a4c-abaf-4edb83aecceb",
-      "name": "New Product"
-    }
-  }
-}
-```
-
-# Create Product in Inventory
-
-## Variable
-
-```json
-{
-  "request": {
-    "productCode": "NEWPRD",
-    "productId": "98dd4f6c-bc3b-4a4c-abaf-4edb83aecceb"
-  }
-}
-```
-
-## Mutation
-
-```js
-mutation createProductInInventory($request: CreateProductRequestInput) {
-  createProduct(request: $request) {
-    productId,
+    name,
     code
   }
 }
@@ -174,9 +139,10 @@ mutation createProductInInventory($request: CreateProductRequestInput) {
 ```json
 {
   "data": {
-    "createProduct": {
-      "productId": "98dd4f6c-bc3b-4a4c-abaf-4edb83aecceb",
-      "code": "NEWPRD"
+    "product_catalog_api_CreateProduct": {
+      "productId": "b1bdfa34-3fa2-4314-89be-52b671039c47",
+      "name": "New Product - 4",
+      "code": "N-PRD-4"
     }
   }
 }
@@ -189,7 +155,7 @@ mutation createProductInInventory($request: CreateProductRequestInput) {
 ```json
 {
   "request": {
-    "productId": "98dd4f6c-bc3b-4a4c-abaf-4edb83aecceb",
+    "productId": "b1bdfa34-3fa2-4314-89be-52b671039c47",
     "inventoryId": "7aa9115d-00d9-4215-98fa-cbd9aceb0744",
     "quantity": 5,
     "canPurchase": true
@@ -200,8 +166,8 @@ mutation createProductInInventory($request: CreateProductRequestInput) {
 ## Mutation
 
 ```js
-mutation addorUpdateProductInventory($request: AddOrdUpdateProductInventoryRequestInput){
-  addProductToInventory(request: $request) {
+mutation addOrUpdateProductInventory($request: AddOrdUpdateProductInventoryRequestInput){
+  addOrUpdateProductInventory(request: $request) {
     inventoryId,
     productId,
     code,
@@ -217,12 +183,12 @@ mutation addorUpdateProductInventory($request: AddOrdUpdateProductInventoryReque
 ```json
 {
   "data": {
-    "addProductToInventory": {
+    "addOrUpdateProductInventory": {
       "inventoryId": "7aa9115d-00d9-4215-98fa-cbd9aceb0744",
-      "productId": "037c18cd-f95b-46f3-b7c3-e47fa7639e23",
-      "code": "NEWPRD1",
+      "productId": "b1bdfa34-3fa2-4314-89be-52b671039c47",
+      "code": "N-PRD-4",
       "inventoryName": "Inventory-1",
-      "quantity": 1,
+      "quantity": 5,
       "canPurchase": true
     }
   }

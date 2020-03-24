@@ -9,23 +9,32 @@ namespace SimpleStore.ProductCatalog.Domain.Models
 
         public string Name { get; private set; }
 
+        public string Code { get; private set; }
+
         #region Constructors
 
-        private Product(ProductId productId, string productName) : base(productId)
+        private Product(ProductId productId, string productCode, string productName) : base(productId)
         {
+            if (string.IsNullOrWhiteSpace(productCode))
+            {
+                throw CoreException.NullOrEmptyArgument(nameof(productCode));
+            }
+
             if (string.IsNullOrWhiteSpace(productName))
             {
                 throw CoreException.NullOrEmptyArgument(nameof(productName));
             }
 
             this.Name = productName;
+            this.Code = productCode;
         }
 
-        private Product(string productName) : this(IdentityFactory.Create<ProductId>(), productName)
+        private Product(string productCode, string productName) : this(IdentityFactory.Create<ProductId>(), productCode, productName)
         {
             this.AddUncommittedEvent(new ProductCreated
             {
-                ProductId = this.ProductId
+                ProductId = this.ProductId,
+                ProductCode = this.Code
             });
         }
 
@@ -35,7 +44,7 @@ namespace SimpleStore.ProductCatalog.Domain.Models
 
         #region Creations
 
-        public static Product Create(string productName) => new Product(productName);
+        public static Product Create(string productCode, string productName) => new Product(productCode, productName);
 
         #endregion
 

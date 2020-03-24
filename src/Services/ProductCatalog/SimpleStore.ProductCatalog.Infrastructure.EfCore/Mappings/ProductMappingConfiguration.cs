@@ -20,9 +20,9 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Mappings
                 .HasConversion(x => x.Id, id => (ProductId)id);
 
             builder.HasData(
-                    Product.Create("Product-1"), 
-                    Product.Create("Product-2"), 
-                    Product.Create("Product-3"));
+                    Product.Create("PRD-1", "Product-1"), 
+                    Product.Create("PRD-2", "Product-2"), 
+                    Product.Create("PRD-3","Product-3"));
         }
 
         #endregion

@@ -6,5 +6,6 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Dto
     {
         public Guid ProductId { get; set; }
         public string Name { get; set; }
+        public string Code { get; set; }
     }
 }

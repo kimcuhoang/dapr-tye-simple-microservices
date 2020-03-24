@@ -13,6 +13,6 @@ namespace SimpleStore.ProductCatalog.Domain.Models
 
         public Guid ProductId { get; set; }
 
-        public string ProductCode { get; set; } = "PRODUCT";
+        public string ProductCode { get; set; }
     }
 }

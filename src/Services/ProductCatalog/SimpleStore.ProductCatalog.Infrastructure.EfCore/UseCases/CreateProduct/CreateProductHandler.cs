@@ -23,7 +23,7 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.UseCases.CreateProduc
 
         public async Task<ProductDto> Handle(CreateProductRequest request, CancellationToken cancellationToken)
         {
-            var product = Product.Create(request.ProductName);
+            var product = Product.Create(request.ProductCode, request.ProductName);
 
             var entity = await this._dbContext.Set<Product>().AddAsync(product, cancellationToken);
 

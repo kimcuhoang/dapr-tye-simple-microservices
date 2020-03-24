@@ -12,7 +12,8 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Code = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -21,18 +22,18 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Migrations
 
             migrationBuilder.InsertData(
                 table: "Product",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { new Guid("075fd9eb-c9f2-4822-ad94-0cf95607ecd7"), "Product-1" });
+                columns: new[] { "Id", "Code", "Name" },
+                values: new object[] { new Guid("4a2abe51-e895-49be-878a-0729535ba92e"), "PRD-1", "Product-1" });
 
             migrationBuilder.InsertData(
                 table: "Product",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { new Guid("bb44b328-3506-445c-9db8-4a7f6ebfb0a5"), "Product-2" });
+                columns: new[] { "Id", "Code", "Name" },
+                values: new object[] { new Guid("1d250f1d-1546-47f3-92d2-31fbf87a3511"), "PRD-2", "Product-2" });
 
             migrationBuilder.InsertData(
                 table: "Product",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { new Guid("116333c2-b017-40b8-a442-697bdc70e1d9"), "Product-3" });
+                columns: new[] { "Id", "Code", "Name" },
+                values: new object[] { new Guid("4012d62c-2bea-42eb-9e64-d7b22185c4f0"), "PRD-3", "Product-3" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -6,5 +6,6 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.UseCases.CreateProduc
     public class CreateProductRequest : IRequest<ProductDto>
     {
         public string ProductName { get; set; }
+        public string ProductCode { get; set; }
     }
 }
