@@ -5,6 +5,7 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{99204373-D893-44B6-9AFA-5919829D95CF}"
 	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
 		.gitignore = .gitignore
 		docker-compose.override.yml = docker-compose.override.yml
 		docker-compose.yml = docker-compose.yml
@@ -46,7 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.Inventories.Dom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.InventoriesApi", "src\Services\Inventories\SimpleStore.InventoriesApi\SimpleStore.InventoriesApi.csproj", "{38DB0FFE-0E0F-4A67-807B-200397527806}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStore.Infra.RedisPubSub", "src\BuildingBlocks\SimpleStore.Infra.RedisPubSub\SimpleStore.Infra.RedisPubSub.csproj", "{227407D2-6CC2-4DC6-BA8F-F7628AE4420C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.Infra.RedisPubSub", "src\BuildingBlocks\SimpleStore.Infra.RedisPubSub\SimpleStore.Infra.RedisPubSub.csproj", "{227407D2-6CC2-4DC6-BA8F-F7628AE4420C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
