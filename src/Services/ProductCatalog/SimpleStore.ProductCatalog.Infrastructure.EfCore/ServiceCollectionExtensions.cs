@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -8,12 +9,18 @@ using SimpleStore.Infrastructure.EfCore;
 using SimpleStore.Infrastructure.EfCore.Persistence;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence;
 using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using SimpleStore.Infra.RedisPubSub.Extensions;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.Options;
+
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCustomInfrastructure(this IServiceCollection services)
+        public static IServiceCollection AddCustomInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services
                 .AddEfCore()
@@ -32,6 +39,16 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
                 .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             services.AddCustomRequestValidation();
+            
+            services.AddDomainEventDispatcher();
+            services.AddRedisPubSub(configuration);
+
+            services.AddHttpClient<InventoriesGateway>((provider, client) =>
+            {
+                var serviceOptions = provider.GetRequiredService<IOptions<ServiceOptions>>();
+                client.BaseAddress = new Uri(serviceOptions.Value.InventoriesApi.RestUri, UriKind.Absolute);
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
 
             return services;
         }

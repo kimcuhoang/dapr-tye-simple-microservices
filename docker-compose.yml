@@ -2,12 +2,18 @@ version: "3.7"
 
 services:
 
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    restart: on-failure
-    networks:
-      - simple-microservices
+    sqlserver:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        restart: on-failure
+        networks:
+            - simple-microservices
+
+    redis:
+        image: bitnami/redis:5.0.5-debian-9-r124
+        restart: on-failure
+        networks:
+            - simple-microservices
 
 networks:
-  simple-microservices:
-    name: simple-microservices-network
+    simple-microservices:
+        name: simple-microservices-network

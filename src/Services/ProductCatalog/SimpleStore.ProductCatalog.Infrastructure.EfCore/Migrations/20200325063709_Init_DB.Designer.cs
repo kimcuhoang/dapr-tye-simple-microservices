@@ -10,8 +10,8 @@ using SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence;
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(ProductCatalogDbContext))]
-    [Migration("20200311090544_Add_Product")]
-    partial class Add_Product
+    [Migration("20200325063709_Init_DB")]
+    partial class Init_DB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,6 +27,9 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Migrations
                         .HasColumnName("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -37,17 +40,20 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Migrations
                     b.HasData(
                         new
                         {
-                            ProductId = new Guid("075fd9eb-c9f2-4822-ad94-0cf95607ecd7"),
+                            ProductId = new Guid("4a2abe51-e895-49be-878a-0729535ba92e"),
+                            Code = "PRD-1",
                             Name = "Product-1"
                         },
                         new
                         {
-                            ProductId = new Guid("bb44b328-3506-445c-9db8-4a7f6ebfb0a5"),
+                            ProductId = new Guid("1d250f1d-1546-47f3-92d2-31fbf87a3511"),
+                            Code = "PRD-2",
                             Name = "Product-2"
                         },
                         new
                         {
-                            ProductId = new Guid("116333c2-b017-40b8-a442-697bdc70e1d9"),
+                            ProductId = new Guid("4012d62c-2bea-42eb-9e64-d7b22185c4f0"),
+                            Code = "PRD-3",
                             Name = "Product-3"
                         });
                 });

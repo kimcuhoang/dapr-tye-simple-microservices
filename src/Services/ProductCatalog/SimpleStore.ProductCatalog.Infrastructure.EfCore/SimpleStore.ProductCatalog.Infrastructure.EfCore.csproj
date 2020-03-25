@@ -5,20 +5,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Subscribes\**" />
+    <EmbeddedResource Remove="Subscribes\**" />
+    <None Remove="Subscribes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="8.6.2" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\SimpleStore.Infra.RedisPubSub\SimpleStore.Infra.RedisPubSub.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\SimpleStore.Infrastructure.Common\SimpleStore.Infrastructure.Common.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\SimpleStore.Infrastructure.EfCore\SimpleStore.Infrastructure.EfCore.csproj" />
     <ProjectReference Include="..\SimpleStore.ProductCatalog.Domain\SimpleStore.ProductCatalog.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

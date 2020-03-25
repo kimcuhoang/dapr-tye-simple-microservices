@@ -1,13 +1,22 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SimpleStore.Domain.Models;
 
 namespace SimpleStore.Infrastructure.EfCore.Persistence
 {
     public abstract class ApplicationDbContextBase : DbContext
     {
-        protected ApplicationDbContextBase(DbContextOptions dbContextOptions) : base(dbContextOptions) { }
+        private readonly IDomainEventDispatcher _domainEventDispatcher;
+
+        protected ApplicationDbContextBase(DbContextOptions dbContextOptions, IDomainEventDispatcher domainEventDispatcher) 
+            : base(dbContextOptions)
+        {
+            this._domainEventDispatcher = domainEventDispatcher;
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -27,6 +36,51 @@ namespace SimpleStore.Infrastructure.EfCore.Persistence
             base.OnModelCreating(builder);
         }
 
+        #region Overrides of DbContext
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            var result = await base.SaveChangesAsync(cancellationToken);
+            DispatchDomainEvents();
+            return result;
+        }
+
+        public override int SaveChanges()
+        {
+            var result = base.SaveChanges();
+            DispatchDomainEvents();
+            return result;
+        }
+
+        #endregion
+
         protected abstract Assembly CurrentAssembly { get; }
+
+        private void DispatchDomainEvents()
+        {
+            var entities = ChangeTracker.Entries().Select(e => e.Entity);
+
+            var aggregateRoots = entities.Where(IsAggregateRoot)
+                                                        .Cast<AggregateRoot>()
+                                                        .ToList();
+
+            foreach (var aggregateRoot in aggregateRoots)
+            {
+                var uncommittedEvents = aggregateRoot.UncommittedEvents;
+
+                foreach (var @event in uncommittedEvents)
+                {
+                    this._domainEventDispatcher.Dispatch(@event);
+                }
+
+                aggregateRoot.ClearUncommittedEvents();
+            }
+        }
+
+        private bool IsAggregateRoot(object obj)
+        {
+            var memberInfo = obj.GetType().BaseType;
+            return memberInfo != null && (!memberInfo.IsGenericType && obj is AggregateRoot);
+        }
     }
 }

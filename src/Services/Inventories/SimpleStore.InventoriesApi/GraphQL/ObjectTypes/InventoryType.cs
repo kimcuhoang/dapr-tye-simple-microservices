@@ -1,7 +1,7 @@
 ﻿using HotChocolate.Types;
 using Microsoft.Extensions.Options;
 using SimpleStore.Inventories.Infrastructure.EfCore.Dto;
-using SimpleStore.InventoriesApi.Options;
+using SimpleStore.Inventories.Infrastructure.EfCore.Options;
 
 namespace SimpleStore.InventoriesApi.GraphQL.ObjectTypes
 {

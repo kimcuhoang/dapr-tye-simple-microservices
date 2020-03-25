@@ -4,10 +4,12 @@ An example of building micro-services by .NET Core
 
 ## Business Rules
 
-1. Create a **Product** in **ProductCatalog** context => `ProductId`
-2. Then create a **Product** in **Inventories** context by consuming the `ProductId`
-3. Create a **Inventory** in **Inventories** context => `InventoryId`
-4. Assign **Product** to **Inventory** with `Quantity` and `CanPurchase`
+1. Create a **Inventory** in **Inventories** context => `InventoryId` by using _GraphQL Mutation_
+2. Create a **Product** in **ProductCatalog** context => `ProductId` by using _GraphQL Mutation_
+  - By using **Domain Event** within **Publish Subscribe Pattern** and Redis Pub/Sub; it's going to create a **Product** in **Inventories** context automatically
+4. Assign **Product** to **Inventory** with `Quantity` and `CanPurchase` by using _GraphQL Mutation_
+5. Ability to retrieve all products in **ProductCatalog** within the **Inventories** that they've been assigned which can be retrieved from **Inventories** context
+  - Since we're developing microservices; the integration must be accomplished by Restful (communicate over HTTP protocol)
 
 ## Getting started
 
@@ -61,8 +63,15 @@ dotnet run -p .\src\Services\GraphQL\SimpleStore.GraphQLApi\SimpleStore.GraphQLA
   - GraphQL
       - Use **StitchedSchema** functionality
   - Use sharing Settings by following the [blog](https://andrewlock.net/sharing-appsettings-json-configuration-files-between-projects-in-asp-net-core/)
+
 3. [Resolve Issue #8](https://github.com/kimcu-on-thenet/simple-microservices/issues/8)
   - Define **InventoryApi**
+
+4. [Resolve Issue #10](https://github.com/kimcu-on-thenet/simple-microservices/issues/10)
+
+    - Integration between **ProductCatalog** and **Inventories**
+      - Create a **Product** in **ProductCatalog** also create a **Product** in **Inventories** context => Pub/Sub
+      - When retrieves Products from **ProductCatalog**, it also includes their assignments in **Inventories** context => Gateway
 
 ## Notes
 
@@ -70,16 +79,36 @@ dotnet run -p .\src\Services\GraphQL\SimpleStore.GraphQLApi\SimpleStore.GraphQLA
 
 1. Via **Package Manager Console**
 
-```powershell
-Add-Migration Add_Product -Project src\Services\ProductCatalog\SimpleStore.ProductCatalog.Infrastructure.EfCore -StartupProject src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
-```
+- For Product Catalog
+
+    ```powershell
+    Add-Migration Init_DB -Project src\Services\ProductCatalog\SimpleStore.ProductCatalog.Infrastructure.EfCore -StartupProject src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
+    ```
+
+- For Inventories
+
+    ```powershell
+    Add-Migration Init_DB -Project src\Services\Inventories\SimpleStore.Inventories.Infrastructure.EfCore -StartupProject src\Services\Inventories\SimpleStore.InventoriesApi
+    ```
 
 2. Via dotnet ef cli
 
-```cmd
-dotnet ef migrations add Init_DB --project src\Services\ProductCatalog\SimpleStore.ProductCatalog.Infrastructure.EfCore --startup-project src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
-```
+- For Product Catalog
+
+    ```cmd
+    dotnet ef migrations add Init_DB --project src\Services\ProductCatalog\SimpleStore.ProductCatalog.Infrastructure.EfCore --startup-project src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
+    ```
+
+- For Inventories
+
+    ```cmd
+    dotnet ef migrations add Init_DB --project src\Services\Inventories\SimpleStore.Inventories.Infrastructure.EfCore --startup-project src\Services\Inventories\SimpleStore.InventoriesApi
+    ```
 
 3. Resources
 
 - [Entity Framework Core tools reference - Package Manager Console in Visual Studio](https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/powershell)
+
+### How to use IHttpClientFactory
+
+- [HttpClientFactory .NET Core 2.1](https://danieldonbavand.com/httpclientfactory-net-core-2-1/)

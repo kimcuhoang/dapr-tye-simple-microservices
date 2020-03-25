@@ -1,7 +1,7 @@
 ﻿using HotChocolate.Types;
 using Microsoft.Extensions.Options;
+using SimpleStore.Inventories.Infrastructure.EfCore.Options;
 using SimpleStore.Inventories.Infrastructure.EfCore.UseCases.GetProducts;
-using SimpleStore.InventoriesApi.Options;
 
 namespace SimpleStore.InventoriesApi.GraphQL.InputTypes
 {

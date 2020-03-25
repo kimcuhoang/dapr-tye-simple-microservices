@@ -10,8 +10,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.Inventories.Infrastructure.EfCore;
+using SimpleStore.Inventories.Infrastructure.EfCore.Options;
 using SimpleStore.InventoriesApi.GraphQL.Objects;
-using SimpleStore.InventoriesApi.Options;
 using System.Threading.Tasks;
 
 namespace SimpleStore.InventoriesApi
@@ -27,9 +27,11 @@ namespace SimpleStore.InventoriesApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+
             services
                 .AddSingleton(this.Configuration)
-                .AddCustomInfrastructure();
+                .AddCustomInfrastructure(this.Configuration);
 
             services.Configure<ServiceOptions>(this.Configuration.GetSection("Services"));
 
@@ -74,6 +76,7 @@ namespace SimpleStore.InventoriesApi
                     context.Response.Redirect("/playground");
                     return Task.CompletedTask;
                 });
+                endpoints.MapControllers();
             });
         }
     }

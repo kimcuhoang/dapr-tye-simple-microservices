@@ -1,4 +1,4 @@
-# Get the current inventories
+# Get inventories
 
 ## Variable
 
@@ -109,6 +109,122 @@ query getInventories($request: GetInventoriesRequestInput) {
 }
 ```
 
+# Get Products from Catalog
+
+## Variables
+
+```json
+{
+  "request": {
+    "pageIndex":1,
+    "pageSize": 100
+  }
+}
+```
+
+## Query
+
+```js
+query getProductsInCatalog($request: product_catalog_api_GetProductsRequest!) {
+  product_catalog_api_GetProducts(request: $request) {
+    totalOfProducts,
+    products {
+      productId, 
+      name,
+      code,
+      totalAvailability,
+      inventories {
+        inventoryId,
+        name,
+        location,
+        quantity,
+        canPurchase
+      }
+    }
+  }
+}
+```
+
+## Result
+
+```json
+{
+  "data": {
+    "product_catalog_api_GetProducts": {
+      "totalOfProducts": 3,
+      "products": [
+        {
+          "productId": "4a2abe51-e895-49be-878a-0729535ba92e",
+          "name": "Product-1",
+          "code": "PRD-1",
+          "totalAvailability": 13,
+          "inventories": [
+            {
+              "inventoryId": "8481c547-5c86-4ab0-9b1d-feca5f83dc50",
+              "name": "Inventory-1",
+              "location": "Inventory-1-Location",
+              "quantity": 10,
+              "canPurchase": true
+            },
+            {
+              "inventoryId": "3cc932b6-30e2-49ae-81be-8e60fbd2d099",
+              "name": "Inventory-2",
+              "location": "Inventory-2-Location",
+              "quantity": 3,
+              "canPurchase": true
+            }
+          ]
+        },
+        {
+          "productId": "1d250f1d-1546-47f3-92d2-31fbf87a3511",
+          "name": "Product-2",
+          "code": "PRD-2",
+          "totalAvailability": 10,
+          "inventories": [
+            {
+              "inventoryId": "3cc932b6-30e2-49ae-81be-8e60fbd2d099",
+              "name": "Inventory-2",
+              "location": "Inventory-2-Location",
+              "quantity": 1,
+              "canPurchase": true
+            },
+            {
+              "inventoryId": "6312e285-4ddf-49f1-bb48-748cf0007f8f",
+              "name": "Inventory-3",
+              "location": "Inventory-3-Location",
+              "quantity": 9,
+              "canPurchase": true
+            }
+          ]
+        },
+        {
+          "productId": "4012d62c-2bea-42eb-9e64-d7b22185c4f0",
+          "name": "Product-3",
+          "code": "PRD-3",
+          "totalAvailability": 13,
+          "inventories": [
+            {
+              "inventoryId": "8481c547-5c86-4ab0-9b1d-feca5f83dc50",
+              "name": "Inventory-1",
+              "location": "Inventory-1-Location",
+              "quantity": 5,
+              "canPurchase": true
+            },
+            {
+              "inventoryId": "6312e285-4ddf-49f1-bb48-748cf0007f8f",
+              "name": "Inventory-3",
+              "location": "Inventory-3-Location",
+              "quantity": 8,
+              "canPurchase": true
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+```
+
 # Create Product in Catalog
 
 ## Variable
@@ -116,7 +232,8 @@ query getInventories($request: GetInventoriesRequestInput) {
 ```json
 {
   "request": {
-    "productName": "New Product"
+    "productName": "New Product - 4",
+    "productCode": "N-PRD-4"
   }
 }
 ```
@@ -127,43 +244,7 @@ query getInventories($request: GetInventoriesRequestInput) {
 mutation createProductInCatalog($request: product_catalog_api_CreateProductRequest!){
   product_catalog_api_CreateProduct(request:$request){
     productId,
-    name
-  }
-}
-```
-
-## Result
-
-```json
-{
-  "data": {
-    "product_catalog_api_CreateProduct": {
-      "productId": "98dd4f6c-bc3b-4a4c-abaf-4edb83aecceb",
-      "name": "New Product"
-    }
-  }
-}
-```
-
-# Create Product in Inventory
-
-## Variable
-
-```json
-{
-  "request": {
-    "productCode": "NEWPRD",
-    "productId": "98dd4f6c-bc3b-4a4c-abaf-4edb83aecceb"
-  }
-}
-```
-
-## Mutation
-
-```js
-mutation createProductInInventory($request: CreateProductRequestInput) {
-  createProduct(request: $request) {
-    productId,
+    name,
     code
   }
 }
@@ -174,9 +255,10 @@ mutation createProductInInventory($request: CreateProductRequestInput) {
 ```json
 {
   "data": {
-    "createProduct": {
-      "productId": "98dd4f6c-bc3b-4a4c-abaf-4edb83aecceb",
-      "code": "NEWPRD"
+    "product_catalog_api_CreateProduct": {
+      "productId": "b1bdfa34-3fa2-4314-89be-52b671039c47",
+      "name": "New Product - 4",
+      "code": "N-PRD-4"
     }
   }
 }
@@ -189,7 +271,7 @@ mutation createProductInInventory($request: CreateProductRequestInput) {
 ```json
 {
   "request": {
-    "productId": "98dd4f6c-bc3b-4a4c-abaf-4edb83aecceb",
+    "productId": "b1bdfa34-3fa2-4314-89be-52b671039c47",
     "inventoryId": "7aa9115d-00d9-4215-98fa-cbd9aceb0744",
     "quantity": 5,
     "canPurchase": true
@@ -200,8 +282,8 @@ mutation createProductInInventory($request: CreateProductRequestInput) {
 ## Mutation
 
 ```js
-mutation addorUpdateProductInventory($request: AddOrdUpdateProductInventoryRequestInput){
-  addProductToInventory(request: $request) {
+mutation addOrUpdateProductInventory($request: AddOrdUpdateProductInventoryRequestInput){
+  addOrUpdateProductInventory(request: $request) {
     inventoryId,
     productId,
     code,
@@ -217,14 +299,15 @@ mutation addorUpdateProductInventory($request: AddOrdUpdateProductInventoryReque
 ```json
 {
   "data": {
-    "addProductToInventory": {
+    "addOrUpdateProductInventory": {
       "inventoryId": "7aa9115d-00d9-4215-98fa-cbd9aceb0744",
-      "productId": "037c18cd-f95b-46f3-b7c3-e47fa7639e23",
-      "code": "NEWPRD1",
+      "productId": "b1bdfa34-3fa2-4314-89be-52b671039c47",
+      "code": "N-PRD-4",
       "inventoryName": "Inventory-1",
-      "quantity": 1,
+      "quantity": 5,
       "canPurchase": true
     }
   }
 }
 ```
+
