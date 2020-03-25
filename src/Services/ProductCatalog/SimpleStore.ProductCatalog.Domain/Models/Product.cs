@@ -44,6 +44,8 @@ namespace SimpleStore.ProductCatalog.Domain.Models
 
         #region Creations
 
+        public static Product Create(ProductId productId, string productCode, string productName) => new Product(productId, productCode, productName);
+
         public static Product Create(string productCode, string productName) => new Product(productCode, productName);
 
         #endregion

@@ -14,7 +14,7 @@ namespace SimpleStore.InventoriesApi.Controllers
         public InventoriesController(IMediator mediator)
             => this._mediator = mediator;
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> GetInventories(GetInventoriesRequest request)
         {
             var result = await this._mediator.Send(request);

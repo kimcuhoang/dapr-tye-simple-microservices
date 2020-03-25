@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways.Models;
+using System.Linq;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Dto
 {
@@ -9,6 +9,8 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Dto
         public Guid ProductId { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
-        public IEnumerable<Inventory> Inventories { get; set; }
+        public IEnumerable<InventoryDto> Inventories { get; set; }
+
+        public int TotalAvailability => this.Inventories?.Where(x => x.CanPurchase).Sum(x => x.Quantity) ?? 0;
     }
 }

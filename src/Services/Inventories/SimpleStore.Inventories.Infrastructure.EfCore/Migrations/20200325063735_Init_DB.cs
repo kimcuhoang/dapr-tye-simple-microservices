@@ -64,9 +64,9 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Migrations
                 columns: new[] { "Id", "Location", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("7aa9115d-00d9-4215-98fa-cbd9aceb0744"), "Inventory-1-Location", "Inventory-1" },
-                    { new Guid("db9af98a-2a0e-4888-9cab-2b9d018bdf88"), "Inventory-2-Location", "Inventory-2" },
-                    { new Guid("2bd3355c-e658-4973-9c30-008f85d103bb"), "Inventory-3-Location", "Inventory-3" }
+                    { new Guid("8481c547-5c86-4ab0-9b1d-feca5f83dc50"), "Inventory-1-Location", "Inventory-1" },
+                    { new Guid("3cc932b6-30e2-49ae-81be-8e60fbd2d099"), "Inventory-2-Location", "Inventory-2" },
+                    { new Guid("6312e285-4ddf-49f1-bb48-748cf0007f8f"), "Inventory-3-Location", "Inventory-3" }
                 });
 
             migrationBuilder.InsertData(
@@ -74,9 +74,9 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Migrations
                 columns: new[] { "Id", "Code" },
                 values: new object[,]
                 {
-                    { new Guid("15f110f6-38e8-4a21-a344-e5f164f233d6"), "PRD-1" },
-                    { new Guid("3d7c9d9b-d889-40f0-963c-643f9ec28d0c"), "PRD-2" },
-                    { new Guid("cc04b8ae-01cb-4233-8c82-73e77b21e980"), "PRD-3" }
+                    { new Guid("4a2abe51-e895-49be-878a-0729535ba92e"), "PRD-1" },
+                    { new Guid("1d250f1d-1546-47f3-92d2-31fbf87a3511"), "PRD-2" },
+                    { new Guid("4012d62c-2bea-42eb-9e64-d7b22185c4f0"), "PRD-3" }
                 });
 
             migrationBuilder.InsertData(
@@ -84,12 +84,12 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Migrations
                 columns: new[] { "ProductInventoryId", "CanPurchase", "InventoryId", "ProductId", "Quantity" },
                 values: new object[,]
                 {
-                    { new Guid("b1abf910-c741-48b1-b04a-70268b4e45cf"), true, new Guid("7aa9115d-00d9-4215-98fa-cbd9aceb0744"), new Guid("15f110f6-38e8-4a21-a344-e5f164f233d6"), 10 },
-                    { new Guid("bc05daab-f814-4871-9cfa-6e524a75c456"), true, new Guid("db9af98a-2a0e-4888-9cab-2b9d018bdf88"), new Guid("15f110f6-38e8-4a21-a344-e5f164f233d6"), 3 },
-                    { new Guid("d6f271eb-94fd-4baf-a426-2a0700ddf053"), true, new Guid("db9af98a-2a0e-4888-9cab-2b9d018bdf88"), new Guid("3d7c9d9b-d889-40f0-963c-643f9ec28d0c"), 1 },
-                    { new Guid("6c7e3fbe-c255-4f8e-884f-077516240d97"), true, new Guid("2bd3355c-e658-4973-9c30-008f85d103bb"), new Guid("3d7c9d9b-d889-40f0-963c-643f9ec28d0c"), 9 },
-                    { new Guid("b6209206-0c3c-42f0-b3c2-8bf4e4e26478"), true, new Guid("7aa9115d-00d9-4215-98fa-cbd9aceb0744"), new Guid("cc04b8ae-01cb-4233-8c82-73e77b21e980"), 5 },
-                    { new Guid("48493d82-dd28-4c9e-ac19-53d7b5bba198"), true, new Guid("2bd3355c-e658-4973-9c30-008f85d103bb"), new Guid("cc04b8ae-01cb-4233-8c82-73e77b21e980"), 8 }
+                    { new Guid("82165589-744e-46fe-9262-3fd9c4d150d8"), true, new Guid("8481c547-5c86-4ab0-9b1d-feca5f83dc50"), new Guid("4a2abe51-e895-49be-878a-0729535ba92e"), 10 },
+                    { new Guid("e7404688-e264-4276-9053-a83650637dc6"), true, new Guid("3cc932b6-30e2-49ae-81be-8e60fbd2d099"), new Guid("4a2abe51-e895-49be-878a-0729535ba92e"), 3 },
+                    { new Guid("f7d9408b-adf3-4b92-ae9a-f08f1fa50f11"), true, new Guid("3cc932b6-30e2-49ae-81be-8e60fbd2d099"), new Guid("1d250f1d-1546-47f3-92d2-31fbf87a3511"), 1 },
+                    { new Guid("17ff10f9-8bb3-4467-8265-f1018c7c4748"), true, new Guid("6312e285-4ddf-49f1-bb48-748cf0007f8f"), new Guid("1d250f1d-1546-47f3-92d2-31fbf87a3511"), 9 },
+                    { new Guid("54da83c1-978f-4486-906a-04a292513c43"), true, new Guid("8481c547-5c86-4ab0-9b1d-feca5f83dc50"), new Guid("4012d62c-2bea-42eb-9e64-d7b22185c4f0"), 5 },
+                    { new Guid("4ae132f8-c42f-4d2a-be63-68f3346e51a3"), true, new Guid("6312e285-4ddf-49f1-bb48-748cf0007f8f"), new Guid("4012d62c-2bea-42eb-9e64-d7b22185c4f0"), 8 }
                 });
 
             migrationBuilder.CreateIndex(

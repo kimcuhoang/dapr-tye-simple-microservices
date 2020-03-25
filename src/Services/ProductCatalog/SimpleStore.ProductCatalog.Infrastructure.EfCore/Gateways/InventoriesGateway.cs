@@ -1,5 +1,6 @@
 ﻿using SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways.Models;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -11,12 +12,17 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways
 
         public InventoriesGateway(HttpClient httpClient)
             => this._httpClient = httpClient;
+            
 
         public async Task<GetInventoriesResponse> GetInventories(GetInventoriesRequest request)
         {
-            var response = await this._httpClient.GetAsync("/inventories");
+            var content = JsonSerializer.Serialize(request);
+            
+            var response = await this._httpClient.PostAsync("api/inventories", new StringContent(content, Encoding.UTF8, "application/json"));
+
             var result = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<GetInventoriesResponse>(result);
+
+            return JsonSerializer.Deserialize<GetInventoriesResponse>(result, new JsonSerializerOptions{PropertyNameCaseInsensitive = true});
         }
     }
 }

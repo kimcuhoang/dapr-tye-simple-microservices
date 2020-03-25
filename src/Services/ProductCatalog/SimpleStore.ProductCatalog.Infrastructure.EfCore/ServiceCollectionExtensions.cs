@@ -10,6 +10,7 @@ using SimpleStore.Infrastructure.EfCore.Persistence;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using SimpleStore.Infra.RedisPubSub.Extensions;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Options;
@@ -44,8 +45,9 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
 
             services.AddHttpClient<InventoriesGateway>((provider, client) =>
             {
-                var serviceOptions = provider.GetRequiredService<ServiceOptions>();
-                client.BaseAddress = new Uri(serviceOptions.InventoriesApi.RestUri, UriKind.Absolute);
+                var serviceOptions = provider.GetRequiredService<IOptions<ServiceOptions>>();
+                client.BaseAddress = new Uri(serviceOptions.Value.InventoriesApi.RestUri, UriKind.Absolute);
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
             });
 
             return services;

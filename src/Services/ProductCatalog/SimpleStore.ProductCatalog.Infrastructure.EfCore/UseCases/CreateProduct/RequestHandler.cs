@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.UseCases.CreateProduct
 {
-    public class CreateProductHandler : IRequestHandler<CreateProductRequest, ProductDto>
+    public class RequestHandler : IRequestHandler<CreateProductRequest, ProductDto>
     {
         private readonly DbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public CreateProductHandler(DbContext dbContext, IMapper mapper)
+        public RequestHandler(DbContext dbContext, IMapper mapper)
         {
             this._dbContext = dbContext;
             this._mapper = mapper;

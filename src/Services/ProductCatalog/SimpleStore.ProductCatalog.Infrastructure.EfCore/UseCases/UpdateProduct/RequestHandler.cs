@@ -9,12 +9,12 @@ using SimpleStore.ProductCatalog.Infrastructure.EfCore.Dto;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.UseCases.UpdateProduct
 {
-    public class UpdateProductHandler : IRequestHandler<UpdateProductRequest, ProductDto>
+    public class RequestHandler : IRequestHandler<UpdateProductRequest, ProductDto>
     {
         private readonly DbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public UpdateProductHandler(DbContext dbContext, IMapper mapper)
+        public RequestHandler(DbContext dbContext, IMapper mapper)
         {
             this._dbContext = dbContext;
             this._mapper = mapper;
