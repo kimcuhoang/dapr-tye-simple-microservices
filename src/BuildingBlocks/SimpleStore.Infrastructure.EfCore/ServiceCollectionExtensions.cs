@@ -1,32 +1,35 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using SimpleStore.Infrastructure.EfCore.HostedService;
 using SimpleStore.Infrastructure.EfCore.Persistence;
 using SimpleStore.Infrastructure.EfCore.SqlServer;
+using System.Reflection;
 
 namespace SimpleStore.Infrastructure.EfCore
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddEfCore(this IServiceCollection services)
+        public static IServiceCollection AddEfCore<TDbContext>(this IServiceCollection services, IConfiguration configuration, Assembly fromAssembly) where TDbContext : DbContext
         {
-            var provider = services.BuildServiceProvider();
-            var configuration = provider.GetRequiredService<IConfiguration>();
-
-            services.Configure<SqlServerConfig>(options => configuration.GetSection("DatabaseInformation").Bind(options));
-
             services
-                .AddSingleton<IConnectionStringFactory, SqlServerConnectionStringFactory>()
-                .AddSingleton<IExtendDbContextOptionsBuilder, SqlServerDbContextOptionsBuilder>()
+                .Configure<SqlServerConfig>(configuration.GetSection("DatabaseInformation"));
+            
+            services
+                .AddDbContext<DbContext, TDbContext>((provider, opts) =>
+                    {
+                        var sqlServerConfig = provider.GetRequiredService<IOptions<SqlServerConfig>>()?.Value;
+                        opts.UseSqlServer(sqlServerConfig.ConnectionStrings, context =>
+                        {
+                            context.MigrationsAssembly(fromAssembly.GetName().Name);
+                            context.EnableRetryOnFailure(maxRetryCount: 3);
+                        });
+                    })
+                .AddHostedService<EfCoreMigrationHostedService>()
                 .AddScoped(typeof(IPipelineBehavior<,>), typeof(PersistenceBehavior<,>));
 
-            return services;
-        }
-
-        public static IServiceCollection AddCustomHostedServices(this IServiceCollection services)
-        {
-            services.AddHostedService<EfCoreMigrationHostedService>();
             return services;
         }
     }

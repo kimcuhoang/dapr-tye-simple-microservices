@@ -1,19 +1,17 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentValidation;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using SimpleStore.Infrastructure.Common.Extensions;
-using SimpleStore.Infrastructure.EfCore;
-using SimpleStore.Infrastructure.EfCore.Persistence;
-using SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence;
-using System.Reflection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SimpleStore.Infra.RedisPubSub.Extensions;
+using SimpleStore.Infrastructure.Common.Extensions;
+using SimpleStore.Infrastructure.EfCore;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Options;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence;
+using System;
+using System.Reflection;
 
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
@@ -22,16 +20,7 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
     {
         public static IServiceCollection AddCustomInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services
-                .AddEfCore()
-                .AddDbContext<ProductCatalogDbContext>((serviceProvider, dbContextOptionBuilder) =>
-                {
-                    var extendOptionsBuilder = serviceProvider.GetRequiredService<IExtendDbContextOptionsBuilder>();
-                    var connStringFactory = serviceProvider.GetRequiredService<IConnectionStringFactory>();
-                    extendOptionsBuilder.Extend(dbContextOptionBuilder, connStringFactory, Assembly.GetExecutingAssembly().GetName().Name);
-                })
-                .AddScoped<DbContext>(serviceProvider => serviceProvider.GetRequiredService<ProductCatalogDbContext>())
-                .AddCustomHostedServices();
+            services.AddEfCore<ProductCatalogDbContext>(configuration, Assembly.GetExecutingAssembly());
 
             services
                 .AddAutoMapper(Assembly.GetExecutingAssembly())
@@ -43,6 +32,7 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
             services.AddDomainEventDispatcher();
             services.AddRedisPubSub(configuration);
 
+            services.Configure<ServiceOptions>(configuration.GetSection("Services"));
             services.AddHttpClient<InventoriesGateway>((provider, client) =>
             {
                 var serviceOptions = provider.GetRequiredService<IOptions<ServiceOptions>>();

@@ -14,6 +14,39 @@ services:
         networks:
             - simple-microservices
 
+    simplestore-productcatalog:
+        image: simplestore-productcatalog:dev
+        build:
+            context: .
+            dockerfile: src/Services/ProductCatalog/SimpleStore.ProductCatalogApi/Dockerfile
+        networks:
+            - simple-microservices
+        depends_on:
+            - sqlserver
+            - redis
+
+    simplestore-inventories:
+        image: simplestore-inventories:dev
+        build:
+            context: .
+            dockerfile: src/Services/Inventories/SimpleStore.InventoriesApi/Dockerfile
+        networks:
+            - simple-microservices
+        depends_on:
+            - sqlserver
+            - redis
+
+    simplestore-graphql:
+        image: simplestore-graphql:dev
+        build:
+            context: .
+            dockerfile: src/Services/GraphQL/SimpleStore.GraphQLApi/Dockerfile
+        networks:
+            - simple-microservices
+        depends_on:
+            - simplestore-productcatalog
+            - simplestore-inventories
+
 networks:
     simple-microservices:
         name: simple-microservices-network
