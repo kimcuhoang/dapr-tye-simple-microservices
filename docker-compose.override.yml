@@ -18,32 +18,36 @@ services:
 
     simplestore-productcatalog:
         ports:
-            - "5001:5001" #http
+            - "5011:5011" #http
         restart: on-failure
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
-            - Services_GraphQLApi_RestUri=http://localhost:5000
-            - Services_ProductCatalogApi_RestUri=http://simplestore-productcatalog:5001
-            - Services_InventoriesApi_RestUri=http://simplestore-inventories:5002
-            - DatabaseInformation_Server=sqlserver
+            - ASPNETCORE__ENVIRONMENT=Production
+            - Services__GraphQLApi__RestUri=http://simplestore-graphql:5010
+            - Services__ProductCatalogApi__RestUri=http://simplestore-productcatalog:5011
+            - Services__InventoriesApi__RestUri=http://simplestore-inventories:5012
+            - Redis__RedisAddress=redis:6379
+            - DatabaseInformation__Server=sqlserver
+            - DatabaseInformation__AccountPassword=P@ssword
 
     simplestore-inventories:
         ports:
-            - "5002:5002" #http
+            - "5012:5012" #http
         restart: on-failure
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
-            - Services_GraphQLApi_RestUri=http://localhost:5000
-            - Services_ProductCatalogApi_RestUri=http://simplestore-productcatalog:5001
-            - Services_InventoriesApi_RestUri=http://simplestore-inventories:5002
-            - DatabaseInformation_Server=sqlserver
+            - ASPNETCORE__ENVIRONMENT=Production
+            - Services__GraphQLApi__RestUri=http://simplestore-graphql:5010
+            - Services__ProductCatalogApi__RestUri=http://simplestore-productcatalog:5011
+            - Services__InventoriesApi__RestUri=http://simplestore-inventories:5012
+            - Redis__RedisAddress=redis:6379
+            - DatabaseInformation__Server=sqlserver
+            - DatabaseInformation__AccountPassword=P@ssword
 
     simplestore-graphql:
         ports:
-            - "5000:5000" #http
+            - "5010:5010" #http
         restart: on-failure
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Production
-            - Services__GraphQLApi__RestUri=http://localhost:5000
-            - Services__ProductCatalogApi__RestUri=http://simplestore-productcatalog:5001
-            - Services__InventoriesApi__RestUri=http://simplestore-inventories:5002
+            - ASPNETCORE__ENVIRONMENT=Production
+            - Services__GraphQLApi__RestUri=http://simplestore-graphql:5010
+            - Services__ProductCatalogApi__RestUri=http://simplestore-productcatalog:5011
+            - Services__InventoriesApi__RestUri=http://simplestore-inventories:5012

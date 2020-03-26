@@ -31,8 +31,6 @@ namespace SimpleStore.ProductCatalogApi
                 .AddSingleton(this.Configuration)
                 .AddCustomInfrastructure(this.Configuration);
 
-            services.Configure<ServiceOptions>(this.Configuration.GetSection("Services"));
-
             services
                 .AddGraphQL(sp => Schema.Create(cfg =>
                 {

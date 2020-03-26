@@ -1,8 +1,7 @@
 ﻿FROM mcr.microsoft.com/dotnet/core/aspnet:3.1.1-alpine3.10 AS base
 WORKDIR /app
-EXPOSE 80 5000
-RUN apk add icu-libs
-# https://www.abhith.net/blog/docker-sql-error-on-aspnet-core-alpine/
+# https://github.com/dotnet/efcore/issues/18025
+RUN apk add --no-cache icu-libs
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1.101-alpine3.10 AS build
@@ -30,10 +29,10 @@ COPY ./src .
 
 WORKDIR "/src/Services/GraphQL/SimpleStore.GraphQLApi"
 
-RUN dotnet build "SimpleStore.GraphQLApi.csproj" -c Release -o /app/build
+RUN dotnet build "SimpleStore.GraphQLApi.csproj" --nologo --no-restore -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "SimpleStore.GraphQLApi.csproj" -c Release -o /app/publish
+RUN dotnet publish "SimpleStore.GraphQLApi.csproj" --nologo --no-restore -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app

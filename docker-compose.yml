@@ -37,7 +37,7 @@ services:
             - redis
 
     simplestore-graphql:
-        image: simplestore_graphql:dev
+        image: simplestore-graphql:dev
         build:
             context: .
             dockerfile: src/Services/GraphQL/SimpleStore.GraphQLApi/Dockerfile

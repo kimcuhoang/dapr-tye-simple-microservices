@@ -10,7 +10,7 @@ using SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence;
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(ProductCatalogDbContext))]
-    [Migration("20200325063709_Init_DB")]
+    [Migration("20200326101450_Init_DB")]
     partial class Init_DB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

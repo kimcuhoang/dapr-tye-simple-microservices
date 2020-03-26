@@ -112,3 +112,17 @@ dotnet run -p .\src\Services\GraphQL\SimpleStore.GraphQLApi\SimpleStore.GraphQLA
 ### How to use IHttpClientFactory
 
 - [HttpClientFactory .NET Core 2.1](https://danieldonbavand.com/httpclientfactory-net-core-2-1/)
+
+### Some useful docker commands
+
+1. Remove un-tagged images
+
+```powershell
+docker images | ConvertFrom-String | where {$_.P2 -eq "<none>"} | % { docker rmi $_.P3 -f}
+```
+
+2. Remove all images of **simplestore**
+
+```powershell
+docker images --format "{{.ID}}\t{{.Repository}}" | ConvertFrom-String | where { $_.P2 -match 'simplestore-' } | % { docker rmi $_.P1 }
+```

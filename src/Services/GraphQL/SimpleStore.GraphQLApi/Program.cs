@@ -24,15 +24,17 @@ namespace SimpleStore.GraphQLApi
                     webBuilder.UseStartup<Startup>();
                     webBuilder.ConfigureAppConfiguration((webHostBuilderContext, configurationBuilder) =>
                     {
-                        if (webHostBuilderContext.HostingEnvironment.IsDevelopment())
-                        {
-                            var contentRootPath = webHostBuilderContext.HostingEnvironment.ContentRootPath;
-                            var servicesJson = System.IO.Path.Combine(contentRootPath, "..", "..", "..", "..", "services.json");
-                            configurationBuilder.AddJsonFile(servicesJson, optional: true);
-                        }
                         configurationBuilder
                             .AddJsonFile("appsettings.json")
-                            .AddJsonFile("services.json", optional: true);
+                            .AddJsonFile($"appsettings.{webHostBuilderContext.HostingEnvironment.EnvironmentName}.json", optional: true)
+                            .AddJsonFile("services.json", optional: true)
+                            .AddEnvironmentVariables();
+
+                        if (!webHostBuilderContext.HostingEnvironment.IsDevelopment()) return;
+
+                        var contentRootPath = webHostBuilderContext.HostingEnvironment.ContentRootPath;
+                        var servicesJson = System.IO.Path.Combine(contentRootPath, "..", "..", "..", "..", "services.json");
+                        configurationBuilder.AddJsonFile(servicesJson, optional: true);
                     });
                     webBuilder.CaptureStartupErrors(true);
                 })
