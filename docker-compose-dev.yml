@@ -13,16 +13,16 @@ services:
         ports:
             - "14333:1433"
 
-    redis:
-        image: bitnami/redis:5.0.5-debian-9-r124
-        restart: on-failure
-        networks:
-            - simple-microservices
-        environment:
-            REDIS_PASSWORD: ""
-            ALLOW_EMPTY_PASSWORD: "yes"
-        ports:
-            - "6379:6379"
+    # redis:
+    #     image: bitnami/redis:5.0.5-debian-9-r124
+    #     restart: on-failure
+    #     networks:
+    #         - simple-microservices
+    #     environment:
+    #         REDIS_PASSWORD: ""
+    #         ALLOW_EMPTY_PASSWORD: "yes"
+    #     ports:
+    #         - "6379:6379"
 
 networks:
     simple-microservices:

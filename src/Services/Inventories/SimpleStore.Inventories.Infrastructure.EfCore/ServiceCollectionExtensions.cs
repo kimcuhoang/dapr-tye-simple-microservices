@@ -3,13 +3,11 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SimpleStore.Infra.RedisPubSub.Extensions;
 using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.Infrastructure.EfCore;
-using SimpleStore.Inventories.Infrastructure.EfCore.Persistence;
-using SimpleStore.Inventories.Infrastructure.EfCore.PubSub;
-using System.Reflection;
 using SimpleStore.Inventories.Infrastructure.EfCore.Options;
+using SimpleStore.Inventories.Infrastructure.EfCore.Persistence;
+using System.Reflection;
 
 namespace SimpleStore.Inventories.Infrastructure.EfCore
 {
@@ -18,19 +16,14 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore
         public static IServiceCollection AddCustomInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<ServiceOptions>(configuration.GetSection("Services"));
-            services.AddEfCore<InventoryDbContext>(configuration, Assembly.GetExecutingAssembly());
 
             services
+                .AddEfCore<InventoryDbContext>(configuration, Assembly.GetExecutingAssembly())
                 .AddAutoMapper(Assembly.GetExecutingAssembly())
                 .AddMediatR(Assembly.GetExecutingAssembly())
-                .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
-            services.AddCustomRequestValidation();
-
-            services
-                .AddDomainEventDispatcher()
-                .AddRedisPubSub(configuration)
-                .AddHostedService<SubscriberHostedService>();
+                .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
+                .AddCustomRequestValidation()
+                .AddDomainEventDispatcher();
 
             return services;
         }

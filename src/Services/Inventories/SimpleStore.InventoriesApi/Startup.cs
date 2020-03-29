@@ -1,3 +1,5 @@
+using System.Text;
+using System.Text.Json;
 using HotChocolate;
 using HotChocolate.AspNetCore;
 using HotChocolate.AspNetCore.Playground;
@@ -13,6 +15,9 @@ using SimpleStore.Inventories.Infrastructure.EfCore;
 using SimpleStore.Inventories.Infrastructure.EfCore.Options;
 using SimpleStore.InventoriesApi.GraphQL.Objects;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using SimpleStore.InventoriesApi.Controllers;
+using CloudNative.CloudEvents;
 
 namespace SimpleStore.InventoriesApi
 {
@@ -27,13 +32,12 @@ namespace SimpleStore.InventoriesApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services
+                .AddControllers(opts => { opts.InputFormatters.Insert(0, new CloudEventJsonInputFormatter()); });
 
             services
                 .AddSingleton(this.Configuration)
                 .AddCustomInfrastructure(this.Configuration);
-
-            
 
             services
                 .AddGraphQL(sp => Schema.Create(cfg =>
@@ -75,6 +79,13 @@ namespace SimpleStore.InventoriesApi
                 {
                     context.Response.Redirect("/playground");
                     return Task.CompletedTask;
+                });
+                endpoints.MapGet("/dapr/subscribe", async context =>
+                {
+                    var channels = new[] { nameof(ProductController.ProductCreated) };
+                    var toJson = JsonSerializer.Serialize(channels);
+                    context.Response.ContentType = "application/json";
+                    await context.Response.WriteAsync(toJson);
                 });
                 endpoints.MapControllers();
             });

@@ -1,8 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using SimpleStore.Infrastructure.Common;
-using SimpleStore.ProductCatalog.Infrastructure.EfCore.Options;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,14 +10,12 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.PubSub
     public class DomainEventNotificationPublishHandler : INotificationHandler<DomainEventNotification>
     {
         private readonly ILogger<DomainEventNotificationPublishHandler> _logger;
-        private readonly ServiceOptions _serviceOptions;
-        private readonly IEventBus _eventBus;
+        private readonly DaprPublisher _daprPublisher;
 
-        public DomainEventNotificationPublishHandler(ILogger<DomainEventNotificationPublishHandler> logger, IOptions<ServiceOptions> serviceOptions, IEventBus eventBus)
+        public DomainEventNotificationPublishHandler(ILogger<DomainEventNotificationPublishHandler> logger, DaprPublisher daprPublisher)
         {
             this._logger = logger;
-            this._serviceOptions = serviceOptions.Value;
-            this._eventBus = eventBus;
+            this._daprPublisher = daprPublisher;
         }
 
         #region Implementation of INotificationHandler<in DomainEventNotification>
@@ -28,8 +24,8 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.PubSub
         {
             var toJson = JsonSerializer.Serialize(notification);
 
-            await this._eventBus.PublishAsync(notification, this._serviceOptions.ProductCatalogApi.ServiceName);
-            
+            await this._daprPublisher.Publish(notification.DomainEvent, cancellationToken);
+
             this._logger.LogInformation($"[{nameof(DomainEventNotificationPublishHandler)}]: Published notification - {notification}");
         }
 

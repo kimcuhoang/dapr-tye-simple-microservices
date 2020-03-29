@@ -36,7 +36,7 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.PubSub
         {
             var productCatalogChannel = this._serviceOptions.ProductCatalogApi.ServiceName;
 
-            this._hostApplicationLifetime.ApplicationStarted.Register(async () =>
+            this._hostApplicationLifetime.ApplicationStarted.Register(() =>
             {
                 this._logger.LogInformation($"{nameof(SubscriberHostedService)} - OnStarted has been called.");
 
@@ -44,7 +44,7 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.PubSub
                 {
                     this._logger.LogInformation($"{nameof(SubscriberHostedService)} - receive {message}");
 
-                    var msg = JsonSerializer.Deserialize<CreateProductRequest>((string) message);
+                    var msg = JsonSerializer.Deserialize<CreateProductRequest>((string)message);
 
                     using var scope = this._serviceProvider.CreateScope();
                     var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();

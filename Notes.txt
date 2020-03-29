@@ -1,0 +1,7 @@
+Commands:
+
+dapr run --app-id graphql-api --app-port 5000 dotnet run
+
+dapr run --app-id product-catalog-api --app-port 5001 dotnet run
+
+dapr run --app-id inventories-api --app-port 5002 dotnet run

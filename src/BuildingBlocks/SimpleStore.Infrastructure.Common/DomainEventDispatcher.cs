@@ -21,6 +21,7 @@ namespace SimpleStore.Infrastructure.Common
         public async Task Dispatch(IDomainEvent @event)
         {
             this._logger.LogInformation($"Dispatching domain event: {@event.GetType().Name}");
+
             await this._mediator.Publish(new DomainEventNotification
             {
                 DomainEvent = @event
