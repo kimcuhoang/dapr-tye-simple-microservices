@@ -7,7 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{99204373-D893-
 	ProjectSection(SolutionItems) = preProject
 		.dockerignore = .dockerignore
 		.gitignore = .gitignore
-		docker-compose-deploy.yml = docker-compose-deploy.yml
 		docker-compose-dev.yml = docker-compose-dev.yml
 		docker-compose.yml = docker-compose.yml
 		global.json = global.json
@@ -48,8 +47,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.Inventories.Domain", "src\Services\Inventories\SimpleStore.Inventories.Domain\SimpleStore.Inventories.Domain.csproj", "{1A749C1D-9189-4070-8DF5-F9474F8B7A49}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.InventoriesApi", "src\Services\Inventories\SimpleStore.InventoriesApi\SimpleStore.InventoriesApi.csproj", "{38DB0FFE-0E0F-4A67-807B-200397527806}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.Infra.RedisPubSub", "src\BuildingBlocks\SimpleStore.Infra.RedisPubSub\SimpleStore.Infra.RedisPubSub.csproj", "{227407D2-6CC2-4DC6-BA8F-F7628AE4420C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -181,18 +178,6 @@ Global
 		{38DB0FFE-0E0F-4A67-807B-200397527806}.Release|x64.Build.0 = Release|Any CPU
 		{38DB0FFE-0E0F-4A67-807B-200397527806}.Release|x86.ActiveCfg = Release|Any CPU
 		{38DB0FFE-0E0F-4A67-807B-200397527806}.Release|x86.Build.0 = Release|Any CPU
-		{227407D2-6CC2-4DC6-BA8F-F7628AE4420C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{227407D2-6CC2-4DC6-BA8F-F7628AE4420C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{227407D2-6CC2-4DC6-BA8F-F7628AE4420C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{227407D2-6CC2-4DC6-BA8F-F7628AE4420C}.Debug|x64.Build.0 = Debug|Any CPU
-		{227407D2-6CC2-4DC6-BA8F-F7628AE4420C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{227407D2-6CC2-4DC6-BA8F-F7628AE4420C}.Debug|x86.Build.0 = Debug|Any CPU
-		{227407D2-6CC2-4DC6-BA8F-F7628AE4420C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{227407D2-6CC2-4DC6-BA8F-F7628AE4420C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{227407D2-6CC2-4DC6-BA8F-F7628AE4420C}.Release|x64.ActiveCfg = Release|Any CPU
-		{227407D2-6CC2-4DC6-BA8F-F7628AE4420C}.Release|x64.Build.0 = Release|Any CPU
-		{227407D2-6CC2-4DC6-BA8F-F7628AE4420C}.Release|x86.ActiveCfg = Release|Any CPU
-		{227407D2-6CC2-4DC6-BA8F-F7628AE4420C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -213,7 +198,6 @@ Global
 		{8D0FE625-C529-4A53-A9AA-49D6E2E82797} = {0647EE83-E87F-4267-B5BC-31F2CD3304A7}
 		{1A749C1D-9189-4070-8DF5-F9474F8B7A49} = {0647EE83-E87F-4267-B5BC-31F2CD3304A7}
 		{38DB0FFE-0E0F-4A67-807B-200397527806} = {0647EE83-E87F-4267-B5BC-31F2CD3304A7}
-		{227407D2-6CC2-4DC6-BA8F-F7628AE4420C} = {2F296899-0470-43D7-8CBF-4B84ECBC22DB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E3D2E771-CC56-4708-9928-FA63422D75D7}
