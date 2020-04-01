@@ -14,7 +14,11 @@
     }
   },
   "Redis": {
+    "Enabled": false,
     "RedisAddress": "localhost:6379",
     "RedisSecret": ""
+  },
+  "Dapr": {
+    "Enabled": true
   } 
 }
