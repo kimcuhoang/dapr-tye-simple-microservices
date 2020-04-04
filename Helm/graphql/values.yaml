@@ -1,0 +1,21 @@
+# Default values for graphql.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: simplestore-graphql:dev
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: LoadBalancer
+  port: 5100
+
+services:
+  productcatalog: "http://product-catalog-api:5101"
+  inventories: "http://inventories-api:5102"

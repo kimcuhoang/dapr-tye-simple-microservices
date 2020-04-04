@@ -1,0 +1,21 @@
+# Default values for product-catalog-api.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: simplestore-productcatalog:dev
+  pullPolicy: Never
+
+service:
+  type: ClusterIP
+  port: 5101
+
+services:
+  graphql: "http://graphql:5100"
+  inventories: "http://inventories-api:5102"
+
+database:
+  server: "simplestore-sqlserver"
+  password: "P@ssword"
