@@ -13,7 +13,6 @@ WORKDIR /src
 
 COPY ["src/BuildingBlocks/SimpleStore.Domain/SimpleStore.Domain.csproj", "BuildingBlocks/SimpleStore.Domain/SimpleStore.Domain.csproj"]
 COPY ["src/BuildingBlocks/SimpleStore.Infrastructure.Common/SimpleStore.Infrastructure.Common.csproj", "BuildingBlocks/SimpleStore.Infrastructure.Common/SimpleStore.Infrastructure.Common.csproj"]
-COPY ["src/BuildingBlocks/SimpleStore.Infra.RedisPubSub/SimpleStore.Infra.RedisPubSub.csproj", "BuildingBlocks/SimpleStore.Infra.RedisPubSub/SimpleStore.Infra.RedisPubSub.csproj"]
 COPY ["src/BuildingBlocks/SimpleStore.Infrastructure.EfCore/SimpleStore.Infrastructure.EfCore.csproj", "BuildingBlocks/SimpleStore.Infrastructure.EfCore/SimpleStore.Infrastructure.EfCore.csproj"]
 
 COPY ["src/Services/ProductCatalog/SimpleStore.ProductCatalog.Domain/SimpleStore.ProductCatalog.Domain.csproj", "Services/ProductCatalog/SimpleStore.ProductCatalog.Domain/SimpleStore.ProductCatalog.Domain.csproj"]

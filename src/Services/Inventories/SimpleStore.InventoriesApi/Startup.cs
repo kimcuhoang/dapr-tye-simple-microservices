@@ -1,23 +1,21 @@
-using System.Text;
-using System.Text.Json;
+using CloudNative.CloudEvents;
 using HotChocolate;
 using HotChocolate.AspNetCore;
 using HotChocolate.AspNetCore.Playground;
 using HotChocolate.Execution.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.Inventories.Infrastructure.EfCore;
 using SimpleStore.Inventories.Infrastructure.EfCore.Options;
-using SimpleStore.InventoriesApi.GraphQL.Objects;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using SimpleStore.InventoriesApi.Controllers;
-using CloudNative.CloudEvents;
+using SimpleStore.InventoriesApi.GraphQL.Objects;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace SimpleStore.InventoriesApi
 {
@@ -54,8 +52,6 @@ namespace SimpleStore.InventoriesApi
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOptionsMonitor<ServiceOptions> optionsAccessor)
         {
-            app.Listen(optionsAccessor.CurrentValue.InventoriesApi);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
