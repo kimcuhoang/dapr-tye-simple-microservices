@@ -15,7 +15,7 @@ An example of building micro-services by .NET Core
 
 If you liked this project or if it helped you, please give a star :star: for this repository. Thank you!!!
 
-## Getting started
+## Starting from local with Dapr Cli
 
 ### Step 1
 
@@ -50,68 +50,10 @@ dotnet run -p .\src\Services\GraphQL\SimpleStore.GraphQLApi\SimpleStore.GraphQLA
 - Go to `http://localhost:5000`
 - Then use the examples at [Queries and Mutations](QueriesAndMutations.md)
 
-## Use docker-compose to spin up images
 
-### Step 1
+## Deploy to Kubernetes
 
-1. Build images
-
-```cmd
-docker-compose -f docker-compose.yml build
-```
-
-2. Starting containers
-
-```cmd
-docker-compose -f docker-compose.yml -f docker-compose-deploy.yml up -d
-```
-
-3. View the logs until all containers start successfully
-
-```cmd
-docker-compose -f docker-compose.yml -f docker-compose-deploy.yml logs -f
-```
-
-4. Exit the interactive mode by using `Ctrl + C` combination keys
-
-### Step 2
-
-- Let play with GraphQL by going to `http://localhost:5010`
-- Then use the examples at [Queries and Mutations](QueriesAndMutations.md)
-
-## Histories
-
-1. [Resolve Issue #1](https://github.com/kimcu-on-thenet/simple-microservices/issues/1)
-    - Add [Serilog.AspNetCore](https://github.com/serilog/serilog-aspnetcore)
-    - Implement a custom TypeConverter & JsonConverter in order to serve for StronglyType-Id => see the issue [#3](https://github.com/kimcu-on-thenet/simple-microservices/issues/3)
-
-2. [Resolve Issue #6](https://github.com/kimcu-on-thenet/simple-microservices/issues/6) => Enable GraphQL for **ProductCatalogApi** and define **GraphQLApi**
-    - ProductCatalog
-        - Define the following requests:
-          - GetProductsRequest
-          - CreateProductRequest
-          - UpdateProductRequest
-        - Define `InputObject`, `ObjectType`, `QueryType` & `MutationType` classes
-    - GraphQL
-        - Use **StitchedSchema** functionality
-    - Use sharing Settings by following the [blog](https://andrewlock.net/sharing-appsettings-json-configuration-files-between-projects-in-asp-net-core/)
-
-3. [Resolve Issue #8](https://github.com/kimcu-on-thenet/simple-microservices/issues/8)
-    - Define **InventoryApi**
-
-4. [Resolve Issue #10](https://github.com/kimcu-on-thenet/simple-microservices/issues/10)
-    - Integration between **ProductCatalog** and **Inventories**
-        - Create a **Product** in **ProductCatalog** also create a **Product** in **Inventories** context => Pub/Sub
-        - When retrieves Products from **ProductCatalog**, it also includes their assignments in **Inventories** context => Gateway
-
-5. [Resolve Issue #12](https://github.com/kimcu-on-thenet/simple-microservices/issues/12)
-    - Write `Dockerfile` for services: ProductCatalog, Inventories and GraphQL
-    - Separating `docker-compose-dev.yaml` in order to work with development mode
-    - Re-write `docker-compose.yaml` and write new `docker-compose-deploy.yaml` for container orchestrating purpose
-    - Notes:
-        - Use **mcr.microsoft.com/dotnet/core/sdk:3.1.201-alpine3.11** for build stage
-        - Use **mcr.microsoft.com/dotnet/core/aspnet:3.1.3-alpine3.11** for runtime
- 
+- Please see the [guide](Helm/README.md)
 
 ## Notes
 
