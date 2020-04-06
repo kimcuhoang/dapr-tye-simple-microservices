@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Options;
 using SimpleStore.ProductCatalogApi.GraphQL.ObjectTypes;
@@ -46,8 +45,6 @@ namespace SimpleStore.ProductCatalogApi
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOptionsMonitor<ServiceOptions> optionsAccessor)
         {
-            app.Listen(optionsAccessor.CurrentValue.ProductCatalogApi);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

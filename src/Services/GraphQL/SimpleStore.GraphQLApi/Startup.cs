@@ -9,10 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SimpleStore.GraphQLApi.Options;
-using SimpleStore.Infrastructure.Common;
+using SimpleStore.Infrastructure.Common.Extensions;
 using System;
 using System.Threading.Tasks;
-using SimpleStore.Infrastructure.Common.Extensions;
 
 namespace SimpleStore.GraphQLApi
 {
@@ -40,7 +39,7 @@ namespace SimpleStore.GraphQLApi
             services.AddHttpClient(this._serviceOptions.InventoriesApi.ServiceName, (sp, client) =>
                 {
                     client.BaseAddress = new Uri($"{this._serviceOptions.InventoriesApi.RestUri}/graphql");
-                }); ;
+                });
 
             services
                 .AddGraphQLSubscriptions()
@@ -55,8 +54,6 @@ namespace SimpleStore.GraphQLApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.Listen(this._serviceOptions.GraphQLApi);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
