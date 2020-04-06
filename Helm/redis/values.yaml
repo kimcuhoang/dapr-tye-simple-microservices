@@ -1,11 +1,11 @@
-# Default values for inventories-api.
+# Default values for redis.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: simplestore-inventories:dev
+  repository: redis:latest
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -14,11 +14,7 @@ fullnameOverride: ""
 
 service:
   type: ClusterIP
-  port: 5102
+  port: 6379
 
-services:
-  graphql: "http://graphql:5100"
-  
-database:
-  server: "simplestore-sqlserver"
-  password: "P@ssword"
+ingress:
+  enabled: false

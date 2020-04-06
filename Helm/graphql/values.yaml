@@ -19,3 +19,5 @@ service:
 services:
   productcatalog: "http://product-catalog-api:5101"
   inventories: "http://inventories-api:5102"
+  # productcatalog: "http://localhost:5101"
+  # inventories: "http://localhost:5102"

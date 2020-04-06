@@ -16,7 +16,7 @@ spec:
       annotations:
         dapr.io/enabled: "true"
         dapr.io/id: {{ .Chart.Name | quote }}
-        dapr.io/port: {{ .Values.service.port | quote }}
+        dapr.io/port: "80"
         dapr.io/config: "tracing"
         dapr.io/log-level: "debug"
     spec:
@@ -26,7 +26,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: 80
               protocol: TCP
           env:
           - name: ASPNETCORE__ENVIRONMENT
@@ -35,5 +35,3 @@ spec:
             value: {{ .Values.services.productcatalog | quote }}
           - name: Services__InventoriesApi__RestUri
             value: {{ .Values.services.inventories | quote }}
-          - name: Services__GraphQLApi__RestUri
-            value: "http://{{ .Chart.Name }}:{{ .Values.service.port }}"
