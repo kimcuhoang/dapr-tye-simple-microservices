@@ -19,22 +19,7 @@ If you liked this project or if it helped you, please give a star :star: for thi
 
 ## Starting from local with Dapr Cli
 
-### Step 1
-
-```cmd
-docker-compose -f docker-compose-dev.yml up -d
-```
-
-_To see the logs_
-
-```cmd
-docker-compose -f docker-compose-dev.yml logs -f
-```
-
-To exit the interactive mode use `Ctrl + C`
-
-
-### Step 2: Init Dapr
+### Step 1: Init Dapr
 
 - Follow [this link](https://github.com/dapr/docs/blob/master/getting-started/environment-setup.md#installing-dapr-cli) to install [Dapr](https://dapr.io/)
 - Start initializing Dapr
@@ -53,37 +38,45 @@ To exit the interactive mode use `Ctrl + C`
 
 ### Step 2
 
+- We may want to change the sqlserver information in the following `appsettings.json`
+
+    - `.\src\Services\ProductCatalog\SimpleStore.ProductCatalogApi\appsettings.json`
+    - `.\src\Services\Inventories\SimpleStore.InventoriesApi\appsettings.json`
+
+### Step 3
+
 #### Starting ProductCatalog Api
 
-    ```powershell
-    cd .\src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
-    ```
+```powershell
+cd .\src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
+```
 
-    ```powershell
-    dapr run --app-id product-catalog-api --app-port 5001 dotnet run
-    ```
+
+```powershell
+dapr run --app-id product-catalog-api --app-port 5001 dotnet run
+```
 
 #### Starting Inventories Api
 
-    ```powershell
-    cd .\src\Services\Inventories\SimpleStore.InventoriesApi
-    ```
+```powershell
+cd .\src\Services\Inventories\SimpleStore.InventoriesApi
+```
 
-    ```powershell
-    dapr run --app-id inventories-api --app-port 5002 dotnet run
-    ```
+```powershell
+dapr run --app-id inventories-api --app-port 5002 dotnet run
+```
 
 #### Starting GraphQL Api
 
-    ```powershell
-    cd .\src\Services\GraphQL\SimpleStore.GraphQLApi
-    ```
+```powershell
+cd .\src\Services\GraphQL\SimpleStore.GraphQLApi
+```
 
-    ```powershell
-    dapr run --app-id graphql-api --app-port 5000 dotnet run
-    ```
+```powershell
+dapr run --app-id graphql-api --app-port 5000 dotnet run
+```
 
-### Step 3
+### Step 4
 
 - Go to `http://localhost:5000`
 - Then use the examples at [Queries and Mutations](QueriesAndMutations.md)
@@ -91,7 +84,7 @@ To exit the interactive mode use `Ctrl + C`
 ## Cleanup
 
 ```powershell
-dapr uninstall
+dapr uninstall --all
 ```
 
 ## Deploy to Kubernetes
