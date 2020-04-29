@@ -22,7 +22,6 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
         {
             services
                 .Configure<ServiceOptions>(configuration.GetSection("Services"))
-                .Configure<DaprOptions>(configuration.GetSection("Dapr"))
                 .AddEfCore<ProductCatalogDbContext>(configuration, Assembly.GetExecutingAssembly())
                 .AddAutoMapper(Assembly.GetExecutingAssembly())
                 .AddMediatR(Assembly.GetExecutingAssembly())

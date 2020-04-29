@@ -24,6 +24,6 @@ spec:
           - name: SA_PASSWORD
             value: {{ .Values.database.password | quote }}
           ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
+            - name: mssql
+              containerPort: 1433
               protocol: TCP

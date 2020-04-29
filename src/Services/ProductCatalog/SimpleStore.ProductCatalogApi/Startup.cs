@@ -12,14 +12,18 @@ using SimpleStore.ProductCatalog.Infrastructure.EfCore;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Options;
 using SimpleStore.ProductCatalogApi.GraphQL.ObjectTypes;
 using System.Threading.Tasks;
+using SimpleStore.Infrastructure.Common.Extensions;
 
 namespace SimpleStore.ProductCatalogApi
 {
     public class Startup
     {
+        private readonly ServiceOptions _serviceOptions;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            this._serviceOptions = this.Configuration.GetOptions<ServiceOptions>("Services");
         }
 
         public IConfiguration Configuration { get; }
@@ -48,6 +52,7 @@ namespace SimpleStore.ProductCatalogApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.Listen(this._serviceOptions.ProductCatalogApi);
             }
 
             //In order to run our server we now just have to add the middleware.

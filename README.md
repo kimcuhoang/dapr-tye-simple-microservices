@@ -33,25 +33,66 @@ docker-compose -f docker-compose-dev.yml logs -f
 
 To exit the interactive mode use `Ctrl + C`
 
+
+### Step 2: Init Dapr
+
+- Follow [this link](https://github.com/dapr/docs/blob/master/getting-started/environment-setup.md#installing-dapr-cli) to install [Dapr](https://dapr.io/)
+- Start initializing Dapr
+
+    ```powershell
+    λ  dapr init
+    ```
+
+    ```powershell
+    Making the jump to hyperspace...
+    WARNING: could not delete run data file
+    Downloading binaries and setting up components...
+    Installing Dapr to c:\dapr
+    Success! Dapr is up and running. To get started, go here: https://aka.ms/dapr-getting-started
+    ```
+
 ### Step 2
 
-```cmd
-dotnet run -p .\src\Services\ProductCatalog\SimpleStore.ProductCatalogApi\SimpleStore.ProductCatalogApi.csproj
-```
+#### Starting ProductCatalog Api
 
-```cmd
-dotnet run -p .\src\Services\Inventories\SimpleStore.InventoriesApi\SimpleStore.InventoriesApi.csproj
-```
+    ```powershell
+    cd .\src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
+    ```
 
-```cmd
-dotnet run -p .\src\Services\GraphQL\SimpleStore.GraphQLApi\SimpleStore.GraphQLApi.csproj
-```
+    ```powershell
+    dapr run --app-id product-catalog-api --app-port 5001 dotnet run
+    ```
+
+#### Starting Inventories Api
+
+    ```powershell
+    cd .\src\Services\Inventories\SimpleStore.InventoriesApi
+    ```
+
+    ```powershell
+    dapr run --app-id inventories-api --app-port 5002 dotnet run
+    ```
+
+#### Starting GraphQL Api
+
+    ```powershell
+    cd .\src\Services\GraphQL\SimpleStore.GraphQLApi
+    ```
+
+    ```powershell
+    dapr run --app-id graphql-api --app-port 5000 dotnet run
+    ```
 
 ### Step 3
 
 - Go to `http://localhost:5000`
 - Then use the examples at [Queries and Mutations](QueriesAndMutations.md)
 
+## Cleanup
+
+```powershell
+dapr uninstall
+```
 
 ## Deploy to Kubernetes
 

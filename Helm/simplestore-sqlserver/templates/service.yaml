@@ -8,8 +8,8 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: http
+      targetPort: mssql
       protocol: TCP
-      name: http
+      name: mssql
   selector:
     {{- include "simplestore-sqlserver.selectorLabels" . | nindent 4 }}

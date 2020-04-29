@@ -14,7 +14,7 @@ fullnameOverride: ""
 
 service:
   type: LoadBalancer
-  port: 1433
+  port: 14333
 
 database:
   password: "P@ssword"
