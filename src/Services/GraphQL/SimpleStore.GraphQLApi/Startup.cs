@@ -57,6 +57,7 @@ namespace SimpleStore.GraphQLApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.Listen(this._serviceOptions.GraphQLApi);
             }
             
             app.UseGraphQL("/graphql");

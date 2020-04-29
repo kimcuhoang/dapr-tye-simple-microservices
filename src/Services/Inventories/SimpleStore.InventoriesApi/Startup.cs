@@ -16,14 +16,18 @@ using SimpleStore.InventoriesApi.Controllers;
 using SimpleStore.InventoriesApi.GraphQL.Objects;
 using System.Text.Json;
 using System.Threading.Tasks;
+using SimpleStore.Infrastructure.Common.Extensions;
 
 namespace SimpleStore.InventoriesApi
 {
     public class Startup
     {
+        private readonly ServiceOptions _serviceOptions;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            this._serviceOptions = this.Configuration.GetOptions<ServiceOptions>("Services");
         }
 
         public IConfiguration Configuration { get; }
@@ -55,6 +59,7 @@ namespace SimpleStore.InventoriesApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.Listen(this._serviceOptions.InventoriesApi);
             }
 
             //In order to run our server we now just have to add the middleware.
