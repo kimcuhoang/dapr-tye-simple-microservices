@@ -1,7 +1,48 @@
-Commands:
+***************************************************************
+Dapr Commands:
+***************************************************************
 
 dapr run --app-id graphql-api --app-port 5000 dotnet run
 
 dapr run --app-id product-catalog-api --app-port 5001 dotnet run
 
 dapr run --app-id inventories-api --app-port 5002 dotnet run
+
+
+***************************************************************
+EntityFramework Commands:
+***************************************************************
+
+1. ProductCatalog
+
+	- Use with PackageManger Console
+		
+		Add-Migration [Migration-Name] -Project src\Services\ProductCatalog\SimpleStore.ProductCatalog.Infrastructure.EfCore -StartupProject src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
+
+	- Use with dotnet ef tool
+		
+		dotnet ef migrations add [Migration-Name] --project src\Services\ProductCatalog\SimpleStore.ProductCatalog.Infrastructure.EfCore --startup-project src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
+
+
+2. Inventories
+
+	- Use with PackageManger Console
+		
+		Add-Migration [Migration-Name] -Project src\Services\Inventories\SimpleStore.Inventories.Infrastructure.EfCore -StartupProject src\Services\Inventories\SimpleStore.InventoriesApi
+
+	- Use with dotnet ef tool
+
+		dotnet ef migrations add [Migration-Name] --project src\Services\Inventories\SimpleStore.Inventories.Infrastructure.EfCore --startup-project src\Services\Inventories\SimpleStore.InventoriesApi
+
+
+***************************************************************
+Docker Commands:
+***************************************************************
+
+1. Remove un-tagged images
+
+	docker images | ConvertFrom-String | where {$_.P2 -eq "<none>"} | % { docker rmi $_.P3 -f}
+
+2. Remove all images of **simplestore**
+
+	docker images --format "{{.ID}}\t{{.Repository}}" | ConvertFrom-String | where { $_.P2 -match 'simplestore-' } | % { docker rmi $_.P1 }

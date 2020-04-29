@@ -1,9 +1,8 @@
 # simple-microservices
 
-![price](https://github.com/kimcu-on-thenet/simple-microservices/blob/master/LICENSE)
-![ci](https://github.com/kimcu-on-thenet/simple-microservices/workflows/ci-simple-microservices/badge.svg)
-
 An example of building micro-services by .NET Core
+
+![ci](https://github.com/kimcu-on-thenet/simple-microservices/workflows/ci-simple-microservices/badge.svg)
 
 ## Business Rules
 
@@ -56,62 +55,10 @@ dotnet run -p .\src\Services\GraphQL\SimpleStore.GraphQLApi\SimpleStore.GraphQLA
 
 ## Deploy to Kubernetes
 
-- Please see the [guide](Helm/README.md)
+- These services can be also deployed to Kubernetes by following [this guide](Helm/README.md)
 
-## Notes
-
-### Add migration for EntityFrameworkCore
-
-1. Via **Package Manager Console**
-
-- For Product Catalog
-
-    ```powershell
-    Add-Migration Init_DB -Project src\Services\ProductCatalog\SimpleStore.ProductCatalog.Infrastructure.EfCore -StartupProject src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
-    ```
-
-- For Inventories
-
-    ```powershell
-    Add-Migration Init_DB -Project src\Services\Inventories\SimpleStore.Inventories.Infrastructure.EfCore -StartupProject src\Services\Inventories\SimpleStore.InventoriesApi
-    ```
-
-2. Via dotnet ef cli
-
-- For Product Catalog
-
-    ```cmd
-    dotnet ef migrations add Init_DB --project src\Services\ProductCatalog\SimpleStore.ProductCatalog.Infrastructure.EfCore --startup-project src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
-    ```
-
-- For Inventories
-
-    ```cmd
-    dotnet ef migrations add Init_DB --project src\Services\Inventories\SimpleStore.Inventories.Infrastructure.EfCore --startup-project src\Services\Inventories\SimpleStore.InventoriesApi
-    ```
-
-3. Resources
-
-- [Entity Framework Core tools reference - Package Manager Console in Visual Studio](https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/powershell)
-
-### How to use IHttpClientFactory
+## Resources
 
 - [HttpClientFactory .NET Core 2.1](https://danieldonbavand.com/httpclientfactory-net-core-2-1/)
-
-### Some useful docker commands
-
-1. Remove un-tagged images
-
-```powershell
-docker images | ConvertFrom-String | where {$_.P2 -eq "<none>"} | % { docker rmi $_.P3 -f}
-```
-
-2. Remove all images of **simplestore**
-
-```powershell
-docker images --format "{{.ID}}\t{{.Repository}}" | ConvertFrom-String | where { $_.P2 -match 'simplestore-' } | % { docker rmi $_.P1 }
-```
-
-### Issue: Globalization Invariant Mode is not supported
-
-- EntityFramework Core has this issue while working with dotnet core alpine images. See the solution at [here](https://github.com/dotnet/efcore/issues/18025)
+- [Issue: Globalization Invariant Mode is not supported while using EntityFramework Core with dotnet core alpine images](https://github.com/dotnet/efcore/issues/18025)
+- [Github Actions Documentation](https://help.github.com/en/actions)
