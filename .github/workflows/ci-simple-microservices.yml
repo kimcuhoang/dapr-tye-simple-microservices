@@ -1,0 +1,40 @@
+name: ci-simple-microservices
+
+# Trigger the workflow on push or pull request, but only for the master branch
+on:
+  push:
+    branches: 
+        - master
+    paths-ignore:
+        - README.md
+        - assets/**
+        - Helm/**
+  pull_request:
+    branches: 
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout step
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.201
+
+    - name: Install dependencies
+      run: dotnet restore simple-microservices.sln
+
+    - name: Build SimpleStore.ProductCatalogApi
+      run: dotnet build ./src/Services/ProductCatalog/SimpleStore.ProductCatalogApi/SimpleStore.ProductCatalogApi.csproj --configuration Release --no-restore
+
+    - name: Build SimpleStore.InventoriesApi
+      run: dotnet build ./src/Services/Inventories/SimpleStore.InventoriesApi/SimpleStore.InventoriesApi.csproj --configuration Release --no-restore
+
+    - name: Build SimpleStore.GraphQL
+      run: dotnet build ./src/Services/GraphQL/SimpleStore.GraphQLApi/SimpleStore.GraphQLApi.csproj --configuration Release --no-restore

@@ -1,5 +1,8 @@
 # simple-microservices
 
+![price](https://github.com/kimcu-on-thenet/simple-microservices/blob/master/LICENSE)
+![ci](https://github.com/kimcu-on-thenet/simple-microservices/workflows/ci-simple-microservices/badge.svg)
+
 An example of building micro-services by .NET Core
 
 ## Business Rules
