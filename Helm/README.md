@@ -90,26 +90,10 @@ component.dapr.io/statestore created
 λ  helm install simplestore-sqlserver .\simplestore-sqlserver\
 ```
 
-```powershell
-NAME: simplestore-sqlserver
-LAST DEPLOYED: Mon Apr  6 16:52:38 2020
-NAMESPACE: default
-STATUS: deployed
-REVISION: 1
-```
-
 ### Install ProductCatalogApi
 
 ```powershell
 λ  helm install product-catalog-api .\product-catalog-api\
-```
-
-```powershell
-NAME: product-catalog-api
-LAST DEPLOYED: Mon Apr  6 16:38:42 2020
-NAMESPACE: default
-STATUS: deployed
-REVISION: 1
 ```
 
 ### Install InventoriesApi
@@ -118,26 +102,10 @@ REVISION: 1
 λ  helm install inventories-api .\inventories-api\
 ```
 
-```powershell
-NAME: inventories-api
-LAST DEPLOYED: Mon Apr  6 16:14:22 2020
-NAMESPACE: default
-STATUS: deployed
-REVISION: 1
-```
-
 ### Install GraphQLApi
 
 ```powershell
 λ  helm install graphql .\graphql\
-```
-
-```powershell
-NAME: graphql
-LAST DEPLOYED: Mon Apr  6 16:40:08 2020
-NAMESPACE: default
-STATUS: deployed
-REVISION: 1
 ```
 
 ## Verify Installation

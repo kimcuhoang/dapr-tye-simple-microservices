@@ -17,5 +17,5 @@ services:
   inventories: "http://inventories-api:5102"
 
 database:
-  server: "simplestore-sqlserver"
+  server: "simplestore-sqlserver,14333"
   password: "P@ssword"
