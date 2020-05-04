@@ -1,22 +1,18 @@
-using CloudNative.CloudEvents;
 using HotChocolate;
 using HotChocolate.AspNetCore;
 using HotChocolate.AspNetCore.Playground;
 using HotChocolate.Execution.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.Inventories.Infrastructure.EfCore;
 using SimpleStore.Inventories.Infrastructure.EfCore.Options;
-using SimpleStore.InventoriesApi.Controllers;
 using SimpleStore.InventoriesApi.GraphQL.Objects;
-using System.Text.Json;
 using System.Threading.Tasks;
-using SimpleStore.Infrastructure.Common.Extensions;
 
 namespace SimpleStore.InventoriesApi
 {
@@ -35,7 +31,7 @@ namespace SimpleStore.InventoriesApi
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddControllers(opts => { opts.InputFormatters.Insert(0, new CloudEventJsonInputFormatter()); });
+                .AddControllers();
 
             services
                 .AddSingleton(this.Configuration)
@@ -73,6 +69,7 @@ namespace SimpleStore.InventoriesApi
             });
 
             app.UseRouting();
+            app.UseCloudEvents();
 
             app.UseEndpoints(endpoints =>
             {
@@ -81,13 +78,7 @@ namespace SimpleStore.InventoriesApi
                     context.Response.Redirect("/playground");
                     return Task.CompletedTask;
                 });
-                endpoints.MapGet("/dapr/subscribe", async context =>
-                {
-                    var channels = new[] { nameof(ProductController.ProductCreated) };
-                    var toJson = JsonSerializer.Serialize(channels);
-                    context.Response.ContentType = "application/json";
-                    await context.Response.WriteAsync(toJson);
-                });
+                endpoints.MapSubscribeHandler();
                 endpoints.MapControllers();
             });
         }

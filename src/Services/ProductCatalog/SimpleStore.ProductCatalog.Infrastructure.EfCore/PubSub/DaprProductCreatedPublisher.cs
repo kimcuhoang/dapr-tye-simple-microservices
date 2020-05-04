@@ -8,14 +8,14 @@ using Microsoft.Extensions.Logging;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.PubSub
 {
-    public class DaprPublisher
+    public class DaprProductCreatedPublisher
     {
         private readonly HttpClient _httpClient;
-        private readonly ILogger<DaprPublisher> _logger;
+        private readonly ILogger<DaprProductCreatedPublisher> _logger;
 
         private const string Channel = "ProductCreated";
 
-        public DaprPublisher(HttpClient httpClient, ILogger<DaprPublisher> logger)
+        public DaprProductCreatedPublisher(HttpClient httpClient, ILogger<DaprProductCreatedPublisher> logger)
         {
             this._httpClient = httpClient;
             this._logger = logger;
@@ -28,7 +28,7 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.PubSub
                 PropertyNameCaseInsensitive = true
             });
 
-            this._logger.LogInformation($"[{nameof(DaprPublisher)}] - Prepare to publish: {jsonContent}");
+            this._logger.LogInformation($"[{nameof(DaprProductCreatedPublisher)}] - Prepare to publish: {jsonContent}");
 
             var requestStringContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
@@ -36,7 +36,7 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.PubSub
 
             response.EnsureSuccessStatusCode();
 
-            this._logger.LogInformation($"[{nameof(DaprPublisher)}] - Published: {jsonContent}");
+            this._logger.LogInformation($"[{nameof(DaprProductCreatedPublisher)}] - Published: {jsonContent}");
         }
     }
 }

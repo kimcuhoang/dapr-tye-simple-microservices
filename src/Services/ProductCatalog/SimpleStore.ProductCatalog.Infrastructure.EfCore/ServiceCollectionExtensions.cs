@@ -36,7 +36,7 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
             });
             
-            services.AddHttpClient<DaprPublisher>((provider, client) =>
+            services.AddHttpClient<DaprProductCreatedPublisher>((provider, client) =>
             {
                 var daprPort = Environment.GetEnvironmentVariable("DAPR_HTTP_PORT") ?? "3500";
                 var baseAddress = $"http://localhost:{daprPort}";

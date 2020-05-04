@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.PubSub
 {
-    public class DomainEventNotificationPublishHandler : INotificationHandler<DomainEventNotification>
+    public class ProductCreatedNotificationHandler : INotificationHandler<DomainEventNotification>
     {
-        private readonly ILogger<DomainEventNotificationPublishHandler> _logger;
-        private readonly DaprPublisher _daprPublisher;
+        private readonly ILogger<ProductCreatedNotificationHandler> _logger;
+        private readonly DaprProductCreatedPublisher _daprPublisher;
 
-        public DomainEventNotificationPublishHandler(ILogger<DomainEventNotificationPublishHandler> logger, DaprPublisher daprPublisher)
+        public ProductCreatedNotificationHandler(ILogger<ProductCreatedNotificationHandler> logger, DaprProductCreatedPublisher daprPublisher)
         {
             this._logger = logger;
             this._daprPublisher = daprPublisher;
@@ -26,7 +26,7 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.PubSub
 
             await this._daprPublisher.Publish(notification.DomainEvent, cancellationToken);
 
-            this._logger.LogInformation($"[{nameof(DomainEventNotificationPublishHandler)}]: Published notification - {notification}");
+            this._logger.LogInformation($"[{nameof(ProductCreatedNotificationHandler)}]: Published notification - {notification}");
         }
 
         #endregion
