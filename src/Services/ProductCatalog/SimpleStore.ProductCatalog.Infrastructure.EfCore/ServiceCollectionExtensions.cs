@@ -29,17 +29,16 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
                 .AddCustomRequestValidation()
                 .AddDomainEventDispatcher();
 
-            services.AddHttpClient<InventoriesGateway>((provider, client) =>
-            {
-                var serviceOptions = provider.GetRequiredService<IOptions<ServiceOptions>>();
-                client.BaseAddress = new Uri(serviceOptions.Value.InventoriesApi.RestUri, UriKind.Absolute);
-                client.DefaultRequestHeaders.Add("Accept", "application/json");
-            });
-            
+
+            var daprPort = Environment.GetEnvironmentVariable("DAPR_HTTP_PORT") ?? "3500";
+            var baseAddress = $"http://localhost:{daprPort}";
+
             services.AddHttpClient<DaprProductCreatedPublisher>((provider, client) =>
             {
-                var daprPort = Environment.GetEnvironmentVariable("DAPR_HTTP_PORT") ?? "3500";
-                var baseAddress = $"http://localhost:{daprPort}";
+                client.BaseAddress = new Uri(baseAddress);
+            });
+            services.AddHttpClient<DaprInventoriesGateway>((provider, client) =>
+            {
                 client.BaseAddress = new Uri(baseAddress);
             });
 
