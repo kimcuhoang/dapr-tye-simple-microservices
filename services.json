@@ -1,15 +1,15 @@
 {
   "Services": {
     "GraphQLApi": {
-      "ServiceName": "graphql_api",
+      "ServiceName": "graphql",
       "RestUri": "http://localhost:5000"
     },
     "ProductCatalogApi": {
-      "ServiceName": "product_catalog_api",
+      "ServiceName": "product-catalog",
       "RestUri": "http://localhost:5001"
     },
     "InventoriesApi": {
-      "ServiceName": "inventories_api",
+      "ServiceName": "inventories",
       "RestUri": "http://localhost:5002"
     }
   }

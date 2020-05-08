@@ -7,16 +7,11 @@ namespace SimpleStore.ProductCatalogApi.GraphQL.InputObjects
 {
     public class GetProductsRequestType : InputObjectType<GetProductsRequest>
     {
-        private readonly ServiceOptions _serviceOptions;
-
-        public GetProductsRequestType(IOptions<ServiceOptions> serviceOptions)
-            => this._serviceOptions = serviceOptions.Value;
-
         #region Overrides of InputObjectType<GetProductsRequest>
 
         protected override void Configure(IInputObjectTypeDescriptor<GetProductsRequest> descriptor)
         {
-            descriptor.Name($"{this._serviceOptions.ProductCatalogApi.ServiceName}_{nameof(GetProductsRequest)}");
+            descriptor.Name($"{nameof(ServiceOptions.ProductCatalogApi)}_{nameof(GetProductsRequest)}");
         }
 
         #endregion

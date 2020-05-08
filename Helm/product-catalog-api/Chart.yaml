@@ -1,5 +1,5 @@
 apiVersion: v2
-name: product-catalog-api
+name: product-catalog
 description: A Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
