@@ -125,7 +125,7 @@ query getInventories($request: GetInventoriesRequestInput) {
 ## Query
 
 ```js
-query getProductsInCatalog($request: ProductCatalogApi_CreateProductRequest!) {
+query getProductsInCatalog($request: ProductCatalogApi_GetProductsRequest!) {
   ProductCatalogApi_GetProducts(request: $request) {
     totalOfProducts,
     products {

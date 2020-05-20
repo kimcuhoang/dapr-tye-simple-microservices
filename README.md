@@ -45,6 +45,16 @@ If you liked this project or if it helped you, please give a star :star: for thi
 
 ### Step 3
 
+#### Starting GraphQL Api
+
+```powershell
+cd .\src\Services\GraphQL\SimpleStore.GraphQLApi
+```
+
+```powershell
+dapr run --app-id graphql --app-port 5000 dotnet run
+```
+
 #### Starting ProductCatalog Api
 
 ```powershell
@@ -53,7 +63,7 @@ cd .\src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
 
 
 ```powershell
-dapr run --app-id product-catalog-api --app-port 5001 dotnet run
+dapr run --app-id product-catalog --app-port 5001 dotnet run
 ```
 
 #### Starting Inventories Api
@@ -63,17 +73,7 @@ cd .\src\Services\Inventories\SimpleStore.InventoriesApi
 ```
 
 ```powershell
-dapr run --app-id inventories-api --app-port 5002 dotnet run
-```
-
-#### Starting GraphQL Api
-
-```powershell
-cd .\src\Services\GraphQL\SimpleStore.GraphQLApi
-```
-
-```powershell
-dapr run --app-id graphql-api --app-port 5000 dotnet run
+dapr run --app-id inventories --app-port 5002 dotnet run
 ```
 
 ### Step 4
