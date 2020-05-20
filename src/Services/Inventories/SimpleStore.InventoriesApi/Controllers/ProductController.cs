@@ -1,10 +1,9 @@
-﻿using MediatR;
+﻿using Dapr;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Text.Json;
-using System.Threading.Tasks;
-using CloudNative.CloudEvents;
 using SimpleStore.Inventories.Infrastructure.EfCore.UseCases.CreateProduct;
+using System.Threading.Tasks;
 
 namespace SimpleStore.InventoriesApi.Controllers
 {
@@ -20,16 +19,11 @@ namespace SimpleStore.InventoriesApi.Controllers
             this._logger = logger;
         }
 
-        [HttpPost(nameof(ProductCreated))]
-        public async Task<IActionResult> ProductCreated(CloudEvent request)
+        [Topic("ProductCreated")]
+        [HttpPost("ProductCreated")]
+        public async Task<IActionResult> CreateProduct([FromBody]CreateProductRequest request)
         {
-            var createProductRequest = JsonSerializer.Deserialize<CreateProductRequest>(request.Data.ToString(), new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-                AllowTrailingCommas = true
-            });
-
-            var result =  await this._mediator.Send(createProductRequest);
+            var result =  await this._mediator.Send(request);
 
             this._logger.LogInformation($"[{nameof(ProductController)}] - Create a new product : {result.ProductId}");
 

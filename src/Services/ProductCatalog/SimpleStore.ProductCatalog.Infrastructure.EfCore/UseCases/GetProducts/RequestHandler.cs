@@ -18,9 +18,9 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.UseCases.GetProducts
     {
         private readonly IMapper _mapper;
         private readonly DbContext _dbContext;
-        private readonly InventoriesGateway _inventoriesGateway;
+        private readonly DaprInventoriesGateway _inventoriesGateway;
 
-        public RequestHandler(DbContext dbContext, IMapper mapper, InventoriesGateway inventoriesGateway)
+        public RequestHandler(DbContext dbContext, IMapper mapper, DaprInventoriesGateway inventoriesGateway)
         {
             this._dbContext = dbContext;
             this._mapper = mapper;

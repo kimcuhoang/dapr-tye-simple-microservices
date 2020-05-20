@@ -32,11 +32,11 @@ namespace SimpleStore.GraphQLApi
         {
             services.AddHttpContextAccessor();
 
-            services.AddHttpClient(this._serviceOptions.ProductCatalogApi.ServiceName, (sp, client) =>
+            services.AddHttpClient(nameof(ServiceOptions.ProductCatalogApi), (sp, client) =>
                 {
                     client.BaseAddress = new Uri($"{this._serviceOptions.ProductCatalogApi.RestUri}/graphql");
                 }); 
-            services.AddHttpClient(this._serviceOptions.InventoriesApi.ServiceName, (sp, client) =>
+            services.AddHttpClient(nameof(ServiceOptions.InventoriesApi), (sp, client) =>
                 {
                     client.BaseAddress = new Uri($"{this._serviceOptions.InventoriesApi.RestUri}/graphql");
                 });
@@ -45,10 +45,8 @@ namespace SimpleStore.GraphQLApi
                 .AddGraphQLSubscriptions()
                 .AddStitchedSchema(stitchingBuilder =>
                     stitchingBuilder
-                        .AddSchemaFromHttp(this._serviceOptions.ProductCatalogApi.ServiceName)
-                        .AddSchemaFromHttp(this._serviceOptions.InventoriesApi.ServiceName));
-
-            
+                        .AddSchemaFromHttp(nameof(ServiceOptions.ProductCatalogApi))
+                        .AddSchemaFromHttp(nameof(ServiceOptions.InventoriesApi)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

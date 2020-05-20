@@ -125,8 +125,8 @@ query getInventories($request: GetInventoriesRequestInput) {
 ## Query
 
 ```js
-query getProductsInCatalog($request: product_catalog_api_GetProductsRequest!) {
-  product_catalog_api_GetProducts(request: $request) {
+query getProductsInCatalog($request: ProductCatalogApi_GetProductsRequest!) {
+  ProductCatalogApi_GetProducts(request: $request) {
     totalOfProducts,
     products {
       productId, 
@@ -150,7 +150,7 @@ query getProductsInCatalog($request: product_catalog_api_GetProductsRequest!) {
 ```json
 {
   "data": {
-    "product_catalog_api_GetProducts": {
+    "ProductCatalogApi_GetProducts": {
       "totalOfProducts": 3,
       "products": [
         {
@@ -241,8 +241,8 @@ query getProductsInCatalog($request: product_catalog_api_GetProductsRequest!) {
 ## Mutation
 
 ```js
-mutation createProductInCatalog($request: product_catalog_api_CreateProductRequest!){
-  product_catalog_api_CreateProduct(request:$request){
+mutation createProductInCatalog($request: ProductCatalogApi_CreateProductRequest!){
+  ProductCatalogApi_CreateProduct(request:$request){
     productId,
     name,
     code
@@ -255,7 +255,7 @@ mutation createProductInCatalog($request: product_catalog_api_CreateProductReque
 ```json
 {
   "data": {
-    "product_catalog_api_CreateProduct": {
+    "ProductCatalogApi_CreateProduct": {
       "productId": "b1bdfa34-3fa2-4314-89be-52b671039c47",
       "name": "New Product - 4",
       "code": "N-PRD-4"
