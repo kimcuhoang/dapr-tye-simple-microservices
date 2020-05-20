@@ -29,7 +29,7 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways
 
             var requestStringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
-            var response = await this._httpClient.PostAsync($"/v1.0/invoke/{this._serviceOptions.InventoriesApi.ServiceName}/method/inventories", requestStringContent);
+            var response = await this._httpClient.PostAsync($"/v1.0/invoke/{this._serviceOptions.InventoriesApi.ServiceName}/method/get-list", requestStringContent);
 
             response.EnsureSuccessStatusCode();
 
