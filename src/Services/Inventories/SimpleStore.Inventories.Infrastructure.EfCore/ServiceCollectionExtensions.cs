@@ -8,6 +8,7 @@ using SimpleStore.Infrastructure.EfCore;
 using SimpleStore.Inventories.Infrastructure.EfCore.Options;
 using SimpleStore.Inventories.Infrastructure.EfCore.Persistence;
 using System.Reflection;
+using SimpleStore.Infrastructure.Common.Dapr;
 
 namespace SimpleStore.Inventories.Infrastructure.EfCore
 {
@@ -23,7 +24,8 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore
                 .AddMediatR(Assembly.GetExecutingAssembly())
                 .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
                 .AddCustomRequestValidation()
-                .AddDomainEventDispatcher();
+                .AddDomainEventDispatcher()
+                .AddCustomDapr();
 
             return services;
         }

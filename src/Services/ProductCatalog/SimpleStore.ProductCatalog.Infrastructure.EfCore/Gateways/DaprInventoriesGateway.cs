@@ -1,41 +1,35 @@
-﻿using SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways.Models;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using Dapr.Client;
+using Dapr.Client.Http;
 using Microsoft.Extensions.Options;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways.Models;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Options;
+using System.Threading.Tasks;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways
 {
     public class DaprInventoriesGateway
     {
-        private readonly HttpClient _httpClient;
         private readonly ServiceOptions _serviceOptions;
+        private readonly DaprClient _daprClient;
 
-        public DaprInventoriesGateway(HttpClient httpClient, IOptions<ServiceOptions> serviceOptions)
+        public DaprInventoriesGateway(DaprClient daprClient, IOptions<ServiceOptions> serviceOptions)
         {
-            this._httpClient = httpClient;
+            this._daprClient = daprClient;
             this._serviceOptions = serviceOptions.Value;
         } 
 
         public async Task<GetInventoriesResponse> GetInventories(GetInventoriesRequest request)
         {
-            var content = JsonSerializer.Serialize(request, new JsonSerializerOptions
+            var httpExtension = new HTTPExtension
             {
-                PropertyNameCaseInsensitive = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
+                Verb = HTTPVerb.Post
+            };
 
-            var requestStringContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var appId = this._serviceOptions.InventoriesApi.ServiceName;
 
-            var response = await this._httpClient.PostAsync($"/v1.0/invoke/{this._serviceOptions.InventoriesApi.ServiceName}/method/get-list", requestStringContent);
+            var response = await this._daprClient.InvokeMethodAsync<GetInventoriesRequest, GetInventoriesResponse>(appId, "get-list", request, httpExtension);
 
-            response.EnsureSuccessStatusCode();
-
-            var result = await response.Content.ReadAsStringAsync();
-
-            return JsonSerializer.Deserialize<GetInventoriesResponse>(result, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            return response;
         }
     }
 }

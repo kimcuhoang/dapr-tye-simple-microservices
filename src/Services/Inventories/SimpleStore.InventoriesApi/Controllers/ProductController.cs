@@ -23,6 +23,8 @@ namespace SimpleStore.InventoriesApi.Controllers
         [HttpPost("ProductCreated")]
         public async Task<IActionResult> CreateProduct([FromBody]CreateProductRequest request)
         {
+            this._logger.LogInformation($"Received Product - {request.ProductId}");
+
             var result =  await this._mediator.Send(request);
 
             this._logger.LogInformation($"[{nameof(ProductController)}] - Create a new product : {result.ProductId}");

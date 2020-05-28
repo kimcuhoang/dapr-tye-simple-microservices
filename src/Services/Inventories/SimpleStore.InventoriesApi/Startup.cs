@@ -31,7 +31,8 @@ namespace SimpleStore.InventoriesApi
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddControllers();
+                .AddControllers()
+                .AddDapr();
 
             services
                 .AddSingleton(this.Configuration)
