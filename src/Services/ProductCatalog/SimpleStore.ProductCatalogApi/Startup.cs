@@ -8,11 +8,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Options;
 using SimpleStore.ProductCatalogApi.GraphQL.ObjectTypes;
 using System.Threading.Tasks;
-using SimpleStore.Infrastructure.Common.Extensions;
 
 namespace SimpleStore.ProductCatalogApi
 {
@@ -52,7 +52,7 @@ namespace SimpleStore.ProductCatalogApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.Listen(this._serviceOptions.ProductCatalogApi);
+                app.Listen(this.Configuration, this._serviceOptions.ProductCatalogApi);
             }
 
             //In order to run our server we now just have to add the middleware.

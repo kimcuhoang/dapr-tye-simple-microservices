@@ -56,7 +56,7 @@ namespace SimpleStore.InventoriesApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.Listen(this._serviceOptions.InventoriesApi);
+                app.Listen(this.Configuration, this._serviceOptions.InventoriesApi);
             }
 
             //In order to run our server we now just have to add the middleware.

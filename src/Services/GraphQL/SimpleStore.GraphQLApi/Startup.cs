@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SimpleStore.GraphQLApi.Options;
 using SimpleStore.Infrastructure.Common.Extensions;
+using SimpleStore.Infrastructure.Common.Options;
+using SimpleStore.Infrastructure.Common.Tye;
 using System;
 using System.Threading.Tasks;
 
@@ -27,19 +29,28 @@ namespace SimpleStore.GraphQLApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
 
+            // C# 8.0, this is local function
+            Uri GetGraphQLUri(ServiceConfig service)
+            {
+                var graphqlUri = new Uri("graphql", UriKind.Relative);
+                var serviceUri = this.Configuration.GetCustomServiceUri(service);
+
+                return new Uri(serviceUri, graphqlUri);
+            }
+            // End of local function
+
             services.AddHttpClient(nameof(ServiceOptions.ProductCatalogApi), (sp, client) =>
-                {
-                    client.BaseAddress = new Uri($"{this._serviceOptions.ProductCatalogApi.RestUri}/graphql");
-                }); 
+            {
+                client.BaseAddress = GetGraphQLUri(this._serviceOptions.ProductCatalogApi);
+            }); 
             services.AddHttpClient(nameof(ServiceOptions.InventoriesApi), (sp, client) =>
-                {
-                    client.BaseAddress = new Uri($"{this._serviceOptions.InventoriesApi.RestUri}/graphql");
-                });
+            {
+                client.BaseAddress = GetGraphQLUri(this._serviceOptions.InventoriesApi);
+            });
 
             services
                 .AddGraphQLSubscriptions()
@@ -49,13 +60,12 @@ namespace SimpleStore.GraphQLApi
                         .AddSchemaFromHttp(nameof(ServiceOptions.InventoriesApi)));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.Listen(this._serviceOptions.GraphQLApi);
+                app.Listen(this.Configuration, this._serviceOptions.GraphQLApi);
             }
             
             app.UseGraphQL("/graphql");
