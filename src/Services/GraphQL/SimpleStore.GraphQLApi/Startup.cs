@@ -1,6 +1,4 @@
 using HotChocolate;
-using HotChocolate.AspNetCore;
-using HotChocolate.AspNetCore.Playground;
 using HotChocolate.AspNetCore.Subscriptions;
 using HotChocolate.Stitching;
 using Microsoft.AspNetCore.Builder;
@@ -10,10 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SimpleStore.GraphQLApi.Options;
 using SimpleStore.Infrastructure.Common.Extensions;
+using SimpleStore.Infrastructure.Common.GraphQL;
 using SimpleStore.Infrastructure.Common.Options;
 using SimpleStore.Infrastructure.Common.Tye;
 using System;
-using System.Threading.Tasks;
 
 namespace SimpleStore.GraphQLApi
 {
@@ -67,22 +65,8 @@ namespace SimpleStore.GraphQLApi
                 app.UseDeveloperExceptionPage();
                 app.Listen(this.Configuration, this._serviceOptions.GraphQLApi);
             }
-            
-            app.UseGraphQL("/graphql");
-            app.UsePlayground(new PlaygroundOptions
-            {
-                QueryPath = "/graphql",
-                Path = "/playground",
-            });
-            app.UseRouting();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", context =>
-                {
-                    context.Response.Redirect("/playground");
-                    return Task.CompletedTask;
-                });
-            });
+
+            app.UseCustomGraphQL();
         }
     }
 }
