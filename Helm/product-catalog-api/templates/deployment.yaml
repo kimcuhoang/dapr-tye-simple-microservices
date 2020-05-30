@@ -35,7 +35,3 @@ spec:
             value: {{ .Values.database.server }}
           - name: DatabaseInformation__AccountPassword
             value: {{ .Values.database.password }}
-          - name: Services__GraphQLApi__RestUri
-            value: {{ .Values.services.graphql | quote}}
-          - name: Services__InventoriesApi__RestUri
-            value: {{ .Values.services.inventories | quote }}

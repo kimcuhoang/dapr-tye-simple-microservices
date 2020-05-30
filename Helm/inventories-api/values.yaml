@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: simplestore-inventories:dev
+  repository: simplestore-inventoriesapi:dev
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -14,11 +14,8 @@ fullnameOverride: ""
 
 service:
   type: ClusterIP
-  port: 5102
+  port: 5002
 
-services:
-  graphql: "http://graphql:5100"
-  
 database:
   server: "simplestore-sqlserver,14333"
   password: "P@ssword"

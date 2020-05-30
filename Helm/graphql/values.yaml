@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: simplestore-graphql:dev
+  repository: simplestore-graphqlapi:dev
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -14,8 +14,8 @@ fullnameOverride: ""
 
 service:
   type: LoadBalancer
-  port: 5100
+  port: 5000
 
 services:
-  productcatalog: "http://product-catalog-api:5101"
-  inventories: "http://inventories-api:5102"
+  productcatalog: "http://simplestore-productcatalogapi:5001"
+  inventories: "http://simplestore-inventoriesapi:5002"

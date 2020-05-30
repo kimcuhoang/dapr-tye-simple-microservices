@@ -2,15 +2,15 @@
   "EnabledTye": false, 
   "Services": {
     "GraphQLApi": {
-      "ServiceName": "simplestore.graphqlapi",
+      "ServiceName": "simplestore-graphqlapi",
       "RestUri": "http://localhost:5000"
     },
     "ProductCatalogApi": {
-      "ServiceName": "simplestore.productcatalogapi",
+      "ServiceName": "simplestore-productcatalogapi",
       "RestUri": "http://localhost:5001"
     },
     "InventoriesApi": {
-      "ServiceName": "simplestore.inventoriesapi",
+      "ServiceName": "simplestore-inventoriesapi",
       "RestUri": "http://localhost:5002"
     }
   }

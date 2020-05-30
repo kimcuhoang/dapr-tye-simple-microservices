@@ -5,16 +5,12 @@
 replicaCount: 1
 
 image:
-  repository: simplestore-productcatalog:dev
+  repository: simplestore-productcatalogapi:dev
   pullPolicy: Never
 
 service:
   type: ClusterIP
-  port: 5101
-
-services:
-  graphql: "http://graphql:5100"
-  inventories: "http://inventories-api:5102"
+  port: 5001
 
 database:
   server: "simplestore-sqlserver,14333"
