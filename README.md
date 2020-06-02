@@ -28,14 +28,6 @@ If you liked this project or if it helped you, please give a star :star: for thi
     λ  dapr init
     ```
 
-    ```powershell
-    Making the jump to hyperspace...
-    WARNING: could not delete run data file
-    Downloading binaries and setting up components...
-    Installing Dapr to c:\dapr
-    Success! Dapr is up and running. To get started, go here: https://aka.ms/dapr-getting-started
-    ```
-
 ### Step 2
 
 - We may want to change the sqlserver information in the following `appsettings.json`
@@ -45,16 +37,6 @@ If you liked this project or if it helped you, please give a star :star: for thi
 
 ### Step 3
 
-#### Starting GraphQL Api
-
-```powershell
-cd .\src\Services\GraphQL\SimpleStore.GraphQLApi
-```
-
-```powershell
-dapr run --app-id graphql --app-port 5000 dotnet run
-```
-
 #### Starting ProductCatalog Api
 
 ```powershell
@@ -63,7 +45,7 @@ cd .\src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
 
 
 ```powershell
-dapr run --app-id product-catalog --app-port 5001 dotnet run
+dapr run --app-id simplestore-productcatalogapi --app-port 5001 dotnet run
 ```
 
 #### Starting Inventories Api
@@ -73,13 +55,23 @@ cd .\src\Services\Inventories\SimpleStore.InventoriesApi
 ```
 
 ```powershell
-dapr run --app-id inventories --app-port 5002 dotnet run
+dapr run --app-id simplestore-inventoriesapi --app-port 5002 dotnet run
+```
+
+#### Starting GraphQL Api
+
+```powershell
+cd .\src\Services\GraphQL\SimpleStore.GraphQLApi
+```
+
+```powershell
+dapr run --app-id simplestore-graphqlapi --app-port 5000 dotnet run
 ```
 
 ### Step 4
 
 - Go to `http://localhost:5000`
-- Then use the examples at [Queries and Mutations](QueriesAndMutations.md)
+- Then, use the examples at [Queries and Mutations](QueriesAndMutations.md)
 
 ## Cleanup
 

@@ -2,11 +2,11 @@
 Dapr Commands:
 ***************************************************************
 
-dapr run --app-id simplestore.graphqlapi --app-port 5000 dotnet run
+dapr run --app-id simplestore-productcatalogapi --app-port 5001 dotnet run
 
-dapr run --app-id simplestore.productcatalogapi --app-port 5001 dotnet run
+dapr run --app-id simplestore-inventoriesapi --app-port 5002 dotnet run
 
-dapr run --app-id simplestore.inventoriesapi --app-port 5002 dotnet run
+dapr run --app-id simplestore-graphqlapi --app-port 5000 dotnet run
 
 
 ***************************************************************

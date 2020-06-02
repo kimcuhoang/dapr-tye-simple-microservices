@@ -15,9 +15,27 @@
 
 4. Install [Helm 3 (currently is 3.1.2)](https://get.helm.sh/helm-v3.1.2-windows-amd64.zip)
 
-    ```powershell
-    λ  helm version
-    ```
+    1. For Windows
+        - Download [Helm 3.1.2](https://get.helm.sh/helm-v3.1.2-windows-amd64.zip)
+        - Extract to desire location, i.e. `C:\Dev\Helm-3.1.2`; add to **PATH**
+        - Verify **helm**
+
+            ```powershell
+            λ  helm version
+            ```
+    
+    2. For Linux
+
+        ```bash
+        curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+
+        chmod 700 get_helm.sh
+
+        ./get_helm.sh
+
+        helm version
+        ```
+
 
 ## Build docker images for Apis
 
