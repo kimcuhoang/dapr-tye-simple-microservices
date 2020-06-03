@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 namespace SimpleStore.InventoriesApi.Controllers
 {
     [ApiController]
-    public class ProductController : ControllerBase
+    public class InventorySubscriberController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ILogger<ProductController> _logger;
+        private readonly ILogger<InventorySubscriberController> _logger;
 
-        public ProductController(IMediator mediator, ILogger<ProductController> logger)
+        public InventorySubscriberController(IMediator mediator, ILogger<InventorySubscriberController> logger)
         {
             this._mediator = mediator;
             this._logger = logger;
@@ -27,7 +27,7 @@ namespace SimpleStore.InventoriesApi.Controllers
 
             var result =  await this._mediator.Send(request);
 
-            this._logger.LogInformation($"[{nameof(ProductController)}] - Create a new product : {result.ProductId}");
+            this._logger.LogInformation($"[{nameof(InventorySubscriberController)}] - Create a new product : {result.ProductId}");
 
             return Ok();
         }
