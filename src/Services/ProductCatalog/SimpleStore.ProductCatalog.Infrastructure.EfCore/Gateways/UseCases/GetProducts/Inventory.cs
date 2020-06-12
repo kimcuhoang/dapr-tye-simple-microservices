@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways.Models
+namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways.UseCases.GetProducts
 {
     public class Inventory
     {
         public Guid InventoryId { get; set; }
         public string Name { get; set; }
         public string Location { get; set; }
-        public IEnumerable<ProductInventory> Products { get; set; }
+        public int Quantity { get; set; }
+        public bool CanPurchase { get; set; }
     }
 }

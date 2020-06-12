@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SimpleStore.ProductCatalog.Domain.Models;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Dto;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways;
-using SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways.Models;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways.UseCases.GetProductsByIds;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,51 +41,26 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.UseCases.GetProducts
 
             var totalOfProducts = await this._dbContext.Set<Product>().CountAsync(cancellationToken: cancellationToken);
 
-            var inventoriesResponse = await this._inventoriesGateway.GetInventories(new GetInventoriesRequest());
-
-            var inventories = inventoriesResponse?.Inventories;
-
-            var temp = inventoriesResponse?.Inventories?.SelectMany(inventory =>
+            var productsFromInventories = await this._inventoriesGateway.GetProductsByIds(new GetProductsByIdsRequest
             {
-                return inventory.Products.Select(product => new
-                    {
-                        ProductId = product.ProductId,
-                        Quantity = product.Quantity,
-                        CanPurchase = product.CanPurchase,
-                        InventoryId = inventory.InventoryId,
-                        InventoryName = inventory.Name,
-                        InventoryLocation = inventory.Location
-                    })
-                    .Cast<dynamic>()
-                    .ToList();
-            }).ToList();
-
-            var temp1 = temp.GroupBy(x => (Guid) x.ProductId)
-                .Select(x =>
-                {
-                    return new
-                    {
-                        ProductId = x.Key,
-                        Inventories = x.DefaultIfEmpty().Select(x => new InventoryDto
-                        {
-                            InventoryId = x.InventoryId,
-                            Location = x.InventoryLocation,
-                            Name = x.InventoryName,
-                            Quantity = x.Quantity,
-                            CanPurchase = x.CanPurchase
-                        })
-                    };
-                }).ToList();
-
-            var inventoriesByProducts = this.InventoriesPerProduct(inventoriesResponse?.Inventories);
-
-            products.ForEach(product =>
-            {
-                if (inventoriesByProducts != null && inventoriesByProducts.ContainsKey(product.ProductId))
-                {
-                    product.Inventories = inventoriesByProducts[product.ProductId];
-                }
+                ProductIds = products.Select(x => x.ProductId)
             });
+
+            foreach (var productInventory in productsFromInventories.Products)
+            {
+                var product = products.FirstOrDefault(x => x.ProductId == productInventory.Id);
+                if (product != null)
+                {
+                    product.Inventories = productInventory.Inventories?.Select(x => new InventoryDto
+                    {
+                        Name = x.Name,
+                        Location = x.Location,
+                        Quantity = x.Quantity,
+                        CanPurchase = x.CanPurchase,
+                        InventoryId = x.InventoryId
+                    });
+                }
+            }
 
             var result = new GetProductsResponse
             {
@@ -97,37 +72,5 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.UseCases.GetProducts
         }
 
         #endregion
-
-        private readonly Func<IEnumerable<Inventory>, Dictionary<Guid, IEnumerable<InventoryDto>>> InventoriesPerProduct 
-            = inventories => inventories.SelectMany(inventory =>
-                {
-                    return inventory.Products.Select(product => new
-                        {
-                            ProductId = product.ProductId,
-                            Quantity = product.Quantity,
-                            CanPurchase = product.CanPurchase,
-                            InventoryId = inventory.InventoryId,
-                            InventoryName = inventory.Name,
-                            InventoryLocation = inventory.Location
-                        })
-                        .Cast<dynamic>()
-                        .ToList();
-                })
-                .GroupBy(x => (Guid) x.ProductId)
-                .Select(x =>
-                {
-                    return new
-                    {
-                        ProductId = x.Key,
-                        Inventories = x.DefaultIfEmpty().Select(x => new InventoryDto
-                        {
-                            InventoryId = x.InventoryId,
-                            Location = x.InventoryLocation,
-                            Name = x.InventoryName,
-                            Quantity = x.Quantity,
-                            CanPurchase = x.CanPurchase
-                        })
-                    };
-                }).ToDictionary(x => x.ProductId, x => x.Inventories);
     }
 }

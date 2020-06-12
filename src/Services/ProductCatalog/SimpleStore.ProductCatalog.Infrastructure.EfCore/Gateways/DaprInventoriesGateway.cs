@@ -1,9 +1,11 @@
 ﻿using Dapr.Client;
 using Dapr.Client.Http;
 using Microsoft.Extensions.Options;
-using SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways.Models;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Options;
 using System.Threading.Tasks;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways.UseCases.GetInventories;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways.UseCases.GetProducts;
+using SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways.UseCases.GetProductsByIds;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways
 {
@@ -12,6 +14,13 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways
         private readonly ServiceOptions _serviceOptions;
         private readonly DaprClient _daprClient;
 
+        private string InventoryAppId => this._serviceOptions.InventoriesApi.ServiceName;
+
+        private HTTPExtension httpExtension => new HTTPExtension
+        {
+            Verb = HTTPVerb.Post
+        };
+
         public DaprInventoriesGateway(DaprClient daprClient, IOptions<ServiceOptions> serviceOptions)
         {
             this._daprClient = daprClient;
@@ -19,17 +28,12 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways
         } 
 
         public async Task<GetInventoriesResponse> GetInventories(GetInventoriesRequest request)
-        {
-            var httpExtension = new HTTPExtension
-            {
-                Verb = HTTPVerb.Post
-            };
+        => await this._daprClient.InvokeMethodAsync<GetInventoriesRequest, GetInventoriesResponse>(this.InventoryAppId, "get-inventories", request, this.httpExtension);
 
-            var appId = this._serviceOptions.InventoriesApi.ServiceName;
+        public async Task<GetProductsResponse> GetProducts(GetProductsRequest request)
+        => await this._daprClient.InvokeMethodAsync<GetProductsRequest, GetProductsResponse>(this.InventoryAppId, "get-products", request, this.httpExtension);
 
-            var response = await this._daprClient.InvokeMethodAsync<GetInventoriesRequest, GetInventoriesResponse>(appId, "get-list", request, httpExtension);
-
-            return response;
-        }
+        public async Task<GetProductsByIdsResponse> GetProductsByIds(GetProductsByIdsRequest request)
+        => await this._daprClient.InvokeMethodAsync<GetProductsByIdsRequest, GetProductsByIdsResponse>(this.InventoryAppId, "get-products-by-ids", request, this.httpExtension);
     }
 }

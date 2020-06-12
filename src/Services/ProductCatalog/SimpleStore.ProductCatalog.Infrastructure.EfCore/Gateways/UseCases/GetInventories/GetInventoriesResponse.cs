@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways.Models
+namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways.UseCases.GetInventories
 {
     public class GetInventoriesResponse
     {
