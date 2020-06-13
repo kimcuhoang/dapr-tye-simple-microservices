@@ -2,11 +2,22 @@
 Dapr Commands:
 ***************************************************************
 
-dapr run --app-id simplestore-productcatalogapi --app-port 5001 dotnet run
+dapr run --app-id simplestore-productcatalogapi --app-port 5001 `
+--log-level debug --components-path ./components `
+--config ./components/tracing.yaml `
+dotnet run dotnet -- -p src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
 
-dapr run --app-id simplestore-inventoriesapi --app-port 5002 dotnet run
 
-dapr run --app-id simplestore-graphqlapi --app-port 5000 dotnet run
+dapr run --app-id simplestore-inventoriesapi --app-port 5002 `
+--log-level debug --components-path ./components `
+--config ./components/tracing.yaml `
+dotnet run dotnet -- -p src\Services\Inventories\SimpleStore.I
+
+
+dapr run --app-id simplestore-graphqlapi --log-level debug --app-port 5000 `
+--log-level debug --components-path ./components `
+--config ./components/tracing.yaml `
+dotnet run dotnet -- -p src\Services\GraphQL\SimpleStore.GraphQLApi
 
 
 ***************************************************************

@@ -28,47 +28,49 @@ If you liked this project or if it helped you, please give a star :star: for thi
     λ  dapr init
     ```
 
-### Step 2
+### Step 2: Start zipkin
+
+```powershell
+docker-compose -f docker-compose-dev.yml up -d
+```
+
+### Step 3: Update configuration
 
 - We may want to change the sqlserver information in the following `appsettings.json`
 
     - `.\src\Services\ProductCatalog\SimpleStore.ProductCatalogApi\appsettings.json`
     - `.\src\Services\Inventories\SimpleStore.InventoriesApi\appsettings.json`
 
-### Step 3
+### Step 4: Firing Apis
 
 #### Starting ProductCatalog Api
 
 ```powershell
-cd .\src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
-```
-
-
-```powershell
-dapr run --app-id simplestore-productcatalogapi --app-port 5001 dotnet run
+dapr run --app-id simplestore-productcatalogapi --app-port 5001 `
+--log-level debug --components-path ./components `
+--config ./components/tracing.yaml `
+dotnet run dotnet -- -p src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
 ```
 
 #### Starting Inventories Api
 
 ```powershell
-cd .\src\Services\Inventories\SimpleStore.InventoriesApi
-```
-
-```powershell
-dapr run --app-id simplestore-inventoriesapi --app-port 5002 dotnet run
+dapr run --app-id simplestore-inventoriesapi --app-port 5002 `
+--log-level debug --components-path ./components `
+--config ./components/tracing.yaml `
+dotnet run dotnet -- -p src\Services\Inventories\SimpleStore.InventoriesApi
 ```
 
 #### Starting GraphQL Api
 
 ```powershell
-cd .\src\Services\GraphQL\SimpleStore.GraphQLApi
+dapr run --app-id simplestore-graphqlapi --log-level debug --app-port 5000 `
+--log-level debug --components-path ./components `
+--config ./components/tracing.yaml `
+dotnet run dotnet -- -p src\Services\GraphQL\SimpleStore.GraphQLApi
 ```
 
-```powershell
-dapr run --app-id simplestore-graphqlapi --app-port 5000 dotnet run
-```
-
-### Step 4
+### Step 5: Open browser and use
 
 - Go to `http://localhost:5000`
 - Then, use the examples at [Queries and Mutations](QueriesAndMutations.md)
@@ -77,6 +79,8 @@ dapr run --app-id simplestore-graphqlapi --app-port 5000 dotnet run
 
 ```powershell
 dapr uninstall --all
+
+docker-compose -f docker-compose-dev.yml down -v
 ```
 
 ## Deploy to Kubernetes
@@ -88,3 +92,5 @@ dapr uninstall --all
 - [HttpClientFactory .NET Core 2.1](https://danieldonbavand.com/httpclientfactory-net-core-2-1/)
 - [Issue: Globalization Invariant Mode is not supported while using EntityFramework Core with dotnet core alpine images](https://github.com/dotnet/efcore/issues/18025)
 - [Github Actions Documentation](https://help.github.com/en/actions)
+- [Dapr](https://github.com/dapr/dapr)
+    - [Darp Doc](https://github.com/dapr/docs)
