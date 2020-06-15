@@ -1,21 +1,11 @@
 # simple-microservices
 
-An example of building micro-services by .NET Core
-
 ![ci](https://github.com/kimcu-on-thenet/simple-microservices/workflows/ci-simple-microservices/badge.svg)
 
-## Business Rules
+An example of building micro-services by .NET Core
 
-1. Create a **Inventory** in **Inventories** context => `InventoryId` by using _GraphQL Mutation_
-2. Create a **Product** in **ProductCatalog** context => `ProductId` by using _GraphQL Mutation_
-    - By using **Domain Event** within **Publish Subscribe Pattern** and Redis Pub/Sub; it's going to create a **Product** in **Inventories** context automatically
-4. Assign **Product** to **Inventory** with `Quantity` and `CanPurchase` by using _GraphQL Mutation_
-5. Ability to retrieve all products in **ProductCatalog** within the **Inventories** that they've been assigned which can be retrieved from **Inventories** context
-    - Since we're developing microservices; the integration must be accomplished by Restful (communicate over HTTP protocol)
-
-## Give a Star! :star:
-
-If you liked this project or if it helped you, please give a star :star: for this repository. Thank you!!!
+- Utilize [Dapr](https://github.com/dapr/dapr) for [Pub/Sub](https://github.com/dapr/docs/blob/master/concepts/publish-subscribe-messaging/README.md) and [Service Invocation (aka Service Discovery)](https://github.com/dapr/docs/blob/master/concepts/service-invocation/README.md); combine with [Zipkin](https://zipkin.io/) to enable Distributed Tracing
+- Expose services via GraphQL and Restful
 
 ## Starting from local with Dapr Cli
 
@@ -46,27 +36,24 @@ docker-compose -f docker-compose-dev.yml up -d
 #### Starting ProductCatalog Api
 
 ```powershell
-dapr run --app-id simplestore-productcatalogapi --app-port 5001 `
---log-level debug --components-path ./components `
---config ./components/tracing.yaml `
+dapr run --app-id simplestore-productcatalogapi --app-port 5001 --log-level debug `
+--components-path .\components --config .\components\tracing.yaml `
 dotnet run dotnet -- -p src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
 ```
 
 #### Starting Inventories Api
 
 ```powershell
-dapr run --app-id simplestore-inventoriesapi --app-port 5002 `
---log-level debug --components-path ./components `
---config ./components/tracing.yaml `
+dapr run --app-id simplestore-inventoriesapi --app-port 5002 --log-level debug `
+--components-path .\components --config .\components\tracing.yaml `
 dotnet run dotnet -- -p src\Services\Inventories\SimpleStore.InventoriesApi
 ```
 
 #### Starting GraphQL Api
 
 ```powershell
-dapr run --app-id simplestore-graphqlapi --log-level debug --app-port 5000 `
---log-level debug --components-path ./components `
---config ./components/tracing.yaml `
+dapr run --app-id simplestore-graphqlapi --app-port 5000 --log-level debug `
+--components-path .\components --config .\components\tracing.yaml `
 dotnet run dotnet -- -p src\Services\GraphQL\SimpleStore.GraphQLApi
 ```
 
@@ -94,3 +81,7 @@ docker-compose -f docker-compose-dev.yml down -v
 - [Github Actions Documentation](https://help.github.com/en/actions)
 - [Dapr](https://github.com/dapr/dapr)
     - [Darp Doc](https://github.com/dapr/docs)
+
+## Give a Star! :star:
+
+If you liked this project or if it helped you, please give a star :star: for this repository. Thank you!!!
