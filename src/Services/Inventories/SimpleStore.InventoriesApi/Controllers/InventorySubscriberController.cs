@@ -20,7 +20,7 @@ namespace SimpleStore.InventoriesApi.Controllers
         }
 
         [Topic("ProductCreated")]
-        [HttpPost("ProductCreated")]
+        [HttpPost("create-product")]
         public async Task<IActionResult> CreateProduct([FromBody]CreateProductRequest request)
         {
             this._logger.LogInformation($"Received Product - {request.ProductId}");
