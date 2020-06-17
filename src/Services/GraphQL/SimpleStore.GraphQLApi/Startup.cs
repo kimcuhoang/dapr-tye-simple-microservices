@@ -12,6 +12,8 @@ using SimpleStore.Infrastructure.Common.GraphQL;
 using SimpleStore.Infrastructure.Common.Options;
 using SimpleStore.Infrastructure.Common.Tye;
 using System;
+using Serilog;
+using SimpleStore.Infrastructure.Common.Tracing;
 
 namespace SimpleStore.GraphQLApi
 {
@@ -56,6 +58,8 @@ namespace SimpleStore.GraphQLApi
                     stitchingBuilder
                         .AddSchemaFromHttp(nameof(ServiceOptions.ProductCatalogApi))
                         .AddSchemaFromHttp(nameof(ServiceOptions.InventoriesApi)));
+
+            services.AddCustomOpenTelemetry(this.Configuration, this._serviceOptions.GraphQLApi);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -65,7 +69,7 @@ namespace SimpleStore.GraphQLApi
                 app.UseDeveloperExceptionPage();
                 app.Listen(this.Configuration, this._serviceOptions.GraphQLApi);
             }
-
+            //app.UseSerilogRequestLogging();
             app.UseCustomGraphQL();
         }
     }

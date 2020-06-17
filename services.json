@@ -1,16 +1,28 @@
 {
-  "EnabledTye": false, 
+  "EnabledTye": false,
+  "Zipkin": {
+    "Enabled": false,
+    "EndpointUrl": "http://localhost:9411/api/v2/spans"
+  },
+  "Serilog": {
+    "WriteTo": [
+      {
+        "Name": "Seq",
+        "Args": { "serverUrl": "http://localhost:5340" }
+      }
+    ]
+  },
   "Services": {
     "GraphQLApi": {
-      "ServiceName": "simplestore-graphqlapi",
+      "ServiceName": "simplestore-graphql-api",
       "RestUri": "http://localhost:5000"
     },
     "ProductCatalogApi": {
-      "ServiceName": "simplestore-productcatalogapi",
+      "ServiceName": "simplestore-productcatalog-api",
       "RestUri": "http://localhost:5001"
     },
     "InventoriesApi": {
-      "ServiceName": "simplestore-inventoriesapi",
+      "ServiceName": "simplestore-inventories-api",
       "RestUri": "http://localhost:5002"
     }
   }

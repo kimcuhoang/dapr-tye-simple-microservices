@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Serilog;
+using SimpleStore.Infrastructure.Common.Extensions;
+using SimpleStore.Inventories.Infrastructure.EfCore.Options;
+using System.Diagnostics;
 
 namespace SimpleStore.InventoriesApi
 {
@@ -9,41 +10,15 @@ namespace SimpleStore.InventoriesApi
     {
         public static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .CreateLogger();
-
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                    webBuilder.ConfigureAppConfiguration((webHostBuilderContext, configurationBuilder) =>
-                    {
-                        configurationBuilder
-                            .AddJsonFile("appsettings.json")
-                            .AddJsonFile($"appsettings.{webHostBuilderContext.HostingEnvironment.EnvironmentName}.json", optional: true)
-                            .AddJsonFile("services.json", optional: true)
-                            .AddEnvironmentVariables();
-
-                        if (!webHostBuilderContext.HostingEnvironment.IsDevelopment()) return;
-
-                        var contentRootPath = webHostBuilderContext.HostingEnvironment.ContentRootPath;
-                        var servicesJson = System.IO.Path.Combine(contentRootPath, "..", "..", "..", "..", "services.json");
-                        configurationBuilder.AddJsonFile(servicesJson, optional: true);
-
-                    });
-                    webBuilder.CaptureStartupErrors(true);
-                })
-                .UseDefaultServiceProvider((context, options) =>
-                {
-                    //options.ValidateScopes = context.HostingEnvironment.IsDevelopment();
-                    options.ValidateOnBuild = true;
-                })
-                .UseSerilog();
+        public static IHostBuilder CreateHostBuilder(string[] args)
+            => Host.CreateDefaultBuilder(args).CustomConfigure(typeof(Startup), configuration =>
+            {
+                var serviceOptions = configuration.GetOptions<ServiceOptions>("Services");
+                return serviceOptions.InventoriesApi;
+            });
     }
 }

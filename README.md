@@ -4,8 +4,12 @@
 
 An example of building micro-services by .NET Core
 
-- Utilize [Dapr](https://github.com/dapr/dapr) for [Pub/Sub](https://github.com/dapr/docs/blob/master/concepts/publish-subscribe-messaging/README.md) and [Service Invocation (aka Service Discovery)](https://github.com/dapr/docs/blob/master/concepts/service-invocation/README.md); combine with [Zipkin](https://zipkin.io/) to enable Distributed Tracing
+- Utilize [Dapr](https://github.com/dapr/dapr) for [Pub/Sub](https://github.com/dapr/docs/blob/master/concepts/publish-subscribe-messaging/README.md) and [Service Invocation (aka Service Discovery)](https://github.com/dapr/docs/blob/master/concepts/service-invocation/README.md); 
 - Expose services via GraphQL and Restful
+- Oservability
+    - Logging: Use [serilog](https://serilog.net/) and [seq](https://datalust.co/seq)
+    - Tracing: Use [Zipkin](https://zipkin.io/) 
+    - Metric: [TBD]
 
 ## Starting from local with Dapr Cli
 
@@ -18,11 +22,14 @@ An example of building micro-services by .NET Core
     λ  dapr init
     ```
 
-### Step 2: Start zipkin
+### Step 2: Install & Run tye
 
-```powershell
-docker-compose -f docker-compose-dev.yml up -d
-```
+- [Install dotnet tye](https://github.com/dotnet/tye/blob/master/docs/getting_started.md)
+- Run `tye` command
+
+    ```powershell
+    tye run --dtrace zipkin=http://localhost:9411 --logs seq=http://localhost:5340
+    ```
 
 ### Step 3: Update configuration
 
@@ -36,7 +43,7 @@ docker-compose -f docker-compose-dev.yml up -d
 #### Starting ProductCatalog Api
 
 ```powershell
-dapr run --app-id simplestore-productcatalogapi --app-port 5001 --log-level debug `
+dapr run --app-id simplestore-productcatalog-api --app-port 5001 --log-level debug `
 --components-path .\components --config .\components\tracing.yaml `
 dotnet run dotnet -- -p src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
 ```
@@ -44,7 +51,7 @@ dotnet run dotnet -- -p src\Services\ProductCatalog\SimpleStore.ProductCatalogAp
 #### Starting Inventories Api
 
 ```powershell
-dapr run --app-id simplestore-inventoriesapi --app-port 5002 --log-level debug `
+dapr run --app-id simplestore-inventories-api --app-port 5002 --log-level debug `
 --components-path .\components --config .\components\tracing.yaml `
 dotnet run dotnet -- -p src\Services\Inventories\SimpleStore.InventoriesApi
 ```
@@ -52,7 +59,7 @@ dotnet run dotnet -- -p src\Services\Inventories\SimpleStore.InventoriesApi
 #### Starting GraphQL Api
 
 ```powershell
-dapr run --app-id simplestore-graphqlapi --app-port 5000 --log-level debug `
+dapr run --app-id simplestore-graphql-api --app-port 5000 --log-level debug `
 --components-path .\components --config .\components\tracing.yaml `
 dotnet run dotnet -- -p src\Services\GraphQL\SimpleStore.GraphQLApi
 ```
@@ -66,8 +73,6 @@ dotnet run dotnet -- -p src\Services\GraphQL\SimpleStore.GraphQLApi
 
 ```powershell
 dapr uninstall --all
-
-docker-compose -f docker-compose-dev.yml down -v
 ```
 
 ## Deploy to Kubernetes
@@ -81,6 +86,7 @@ docker-compose -f docker-compose-dev.yml down -v
 - [Github Actions Documentation](https://help.github.com/en/actions)
 - [Dapr](https://github.com/dapr/dapr)
     - [Darp Doc](https://github.com/dapr/docs)
+- [Serilog Best Practices](https://benfoster.io/blog/serilog-best-practices/)
 
 ## Give a Star! :star:
 

@@ -41,10 +41,11 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.UseCases.GetProducts
 
             var totalOfProducts = await this._dbContext.Set<Product>().CountAsync(cancellationToken: cancellationToken);
 
-            var productsFromInventories = await this._inventoriesGateway.GetProductsByIds(new GetProductsByIdsRequest
+            var getProductsByIdsRequest = new GetProductsByIdsRequest
             {
                 ProductIds = products.Select(x => x.ProductId)
-            });
+            };
+            var productsFromInventories = await this._inventoriesGateway.GetProductsByIds(getProductsByIdsRequest, cancellationToken);
 
             foreach (var productInventory in productsFromInventories.Products)
             {
