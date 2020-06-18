@@ -69,7 +69,7 @@ namespace SimpleStore.GraphQLApi
                 app.UseDeveloperExceptionPage();
                 app.Listen(this.Configuration, this._serviceOptions.GraphQLApi);
             }
-            //app.UseSerilogRequestLogging();
+            app.UseSerilogRequestLogging();
             app.UseCustomGraphQL();
         }
     }

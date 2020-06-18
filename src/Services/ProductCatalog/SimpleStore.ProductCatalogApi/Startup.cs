@@ -47,7 +47,7 @@ namespace SimpleStore.ProductCatalogApi
                 app.UseDeveloperExceptionPage();
                 app.Listen(this.Configuration, this._serviceOptions.ProductCatalogApi);
             }
-            //app.UseSerilogRequestLogging();
+            app.UseSerilogRequestLogging();
             app.UseCustomGraphQL();
         }
     }

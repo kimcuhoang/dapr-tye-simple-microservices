@@ -51,7 +51,7 @@ namespace SimpleStore.InventoriesApi
                 app.Listen(this.Configuration, this._serviceOptions.InventoriesApi);
             }
 
-            //app.UseSerilogRequestLogging();
+            app.UseSerilogRequestLogging();
             app.UseCloudEvents();
 
             app.UseCustomGraphQL(endpoints =>

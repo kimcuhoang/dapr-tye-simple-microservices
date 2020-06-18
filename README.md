@@ -88,6 +88,8 @@ dapr uninstall --all
     - [Darp Doc](https://github.com/dapr/docs)
 - [Serilog Best Practices](https://benfoster.io/blog/serilog-best-practices/)
 
+https://thecodebuzz.com/header-propagation-middleware-net-core/
+
 ## Give a Star! :star:
 
 If you liked this project or if it helped you, please give a star :star: for this repository. Thank you!!!
