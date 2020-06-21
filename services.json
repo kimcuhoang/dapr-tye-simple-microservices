@@ -8,22 +8,22 @@
     "WriteTo": [
       {
         "Name": "Seq",
-        "Args": { "serverUrl": "http://localhost:5340" }
+        "Args": { "serverUrl": "http://localhost:5341" }
       }
     ]
   },
   "Services": {
     "GraphQLApi": {
       "ServiceName": "simplestore-graphql-api",
-      "RestUri": "http://localhost:5000"
+      "ServiceUrl": "http://localhost:5000"
     },
     "ProductCatalogApi": {
       "ServiceName": "simplestore-productcatalog-api",
-      "RestUri": "http://localhost:5001"
+      "ServiceUrl": "http://localhost:5001"
     },
     "InventoriesApi": {
       "ServiceName": "simplestore-inventories-api",
-      "RestUri": "http://localhost:5002"
+      "ServiceUrl": "http://localhost:5002"
     }
   }
 }

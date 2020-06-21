@@ -87,6 +87,7 @@ dapr uninstall --all
 - [Dapr](https://github.com/dapr/dapr)
     - [Darp Doc](https://github.com/dapr/docs)
 - [Serilog Best Practices](https://benfoster.io/blog/serilog-best-practices/)
+- [5 ways to set the URLs for an ASP.NET Core app](https://andrewlock.net/5-ways-to-set-the-urls-for-an-aspnetcore-app/)
 
 https://thecodebuzz.com/header-propagation-middleware-net-core/
 

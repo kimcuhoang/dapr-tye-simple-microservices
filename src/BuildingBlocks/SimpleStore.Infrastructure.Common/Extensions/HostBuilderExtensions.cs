@@ -2,15 +2,17 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using System;
 using SimpleStore.Infrastructure.Common.Options;
+using SimpleStore.Infrastructure.Common.Tye;
+using System;
+using System.Net;
 
 namespace SimpleStore.Infrastructure.Common.Extensions
 {
     public static class HostBuilderExtensions
     {
         public static IHostBuilder CustomConfigure(this IHostBuilder hostBuilder, Type startupType, Func<IConfiguration, ServiceConfig> getServiceConfigFn)
-            => hostBuilder
+        => hostBuilder
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup(startupType);
@@ -29,6 +31,21 @@ namespace SimpleStore.Infrastructure.Common.Extensions
                         configurationBuilder.AddJsonFile(servicesJson, optional: true);
                     });
                     webBuilder.CaptureStartupErrors(true);
+                    webBuilder.ConfigureKestrel((webHostBuilderContext, kestrelOptions) =>
+                    {
+                        var configuration = webHostBuilderContext.Configuration;
+                        var hostEnvironment = webHostBuilderContext.HostingEnvironment;
+
+                        if (!configuration.EnabledTye())
+                        {
+                            var serviceConfig = getServiceConfigFn.Invoke(configuration);
+                            var uri = new Uri(serviceConfig.ServiceUrl);
+                            kestrelOptions.ListenAnyIP(uri.Port, options =>
+                            {
+                                options.UseConnectionLogging();
+                            });
+                        }
+                    });
                 })
                 .UseDefaultServiceProvider((context, options) =>
                 {
@@ -45,5 +62,6 @@ namespace SimpleStore.Infrastructure.Common.Extensions
                         .WriteTo.Console()
                         .ReadFrom.Configuration(context.Configuration);
                 });
+            
     }
 }

@@ -26,7 +26,7 @@ namespace SimpleStore.Infrastructure.Common.Tracing
                             options.ServiceName = serviceConfig.ServiceName;
                             options.Endpoint = new Uri(zipkinConfig.EndpointUrl);
                         })
-                        .SetSampler(new ProbabilitySampler(0.1))
+                        .SetSampler(new AlwaysOnSampler())
                         .AddRequestInstrumentation()
                         .AddDependencyInstrumentation();
 

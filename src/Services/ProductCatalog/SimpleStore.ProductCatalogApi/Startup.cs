@@ -1,10 +1,8 @@
-using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Serilog;
 using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.Infrastructure.Common.GraphQL;
@@ -40,12 +38,11 @@ namespace SimpleStore.ProductCatalogApi
                 .AddCustomOpenTelemetry(this.Configuration, this._serviceOptions.ProductCatalogApi);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOptionsMonitor<ServiceOptions> optionsAccessor)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.Listen(this.Configuration, this._serviceOptions.ProductCatalogApi);
             }
             app.UseSerilogRequestLogging();
             app.UseCustomGraphQL();

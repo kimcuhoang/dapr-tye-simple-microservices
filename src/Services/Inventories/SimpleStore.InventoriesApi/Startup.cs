@@ -48,7 +48,6 @@ namespace SimpleStore.InventoriesApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.Listen(this.Configuration, this._serviceOptions.InventoriesApi);
             }
 
             app.UseSerilogRequestLogging();

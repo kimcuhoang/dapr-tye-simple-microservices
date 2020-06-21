@@ -67,7 +67,6 @@ namespace SimpleStore.GraphQLApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.Listen(this.Configuration, this._serviceOptions.GraphQLApi);
             }
             app.UseSerilogRequestLogging();
             app.UseCustomGraphQL();

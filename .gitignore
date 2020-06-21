@@ -352,3 +352,6 @@ MigrationBackup/
 
 # tye
 .tye/
+
+# seq
+.logs/

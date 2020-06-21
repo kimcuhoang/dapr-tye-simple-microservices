@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using SimpleStore.Infrastructure.Common.Options;
+using System;
 
 namespace SimpleStore.Infrastructure.Common.Tye
 {
@@ -10,8 +10,13 @@ namespace SimpleStore.Infrastructure.Common.Tye
             => Convert.ToBoolean(configuration["EnabledTye"]);
 
         public static Uri GetCustomServiceUri(this IConfiguration configuration, ServiceConfig serviceConfig)
-            => configuration.EnabledTye()
+        {
+            var uri = configuration.EnabledTye()
                 ? configuration.GetServiceUri(serviceConfig.ServiceName)
-                : new Uri(serviceConfig.RestUri);
+                : new Uri(serviceConfig.ServiceUrl);
+            
+            return uri;
+        }
+            
     }
 }

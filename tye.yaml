@@ -5,29 +5,8 @@
 #    https://aka.ms/AA7q20u
 #
 name: simple-microservices
-extensions:
-  # - name: dapr
-  #   log-level: debug
-  - name: zipkin
-  # - name: seq
-  #   logPath: ./.logs
 
 services:
-# - name: simplestore-productcatalog-api
-#   project: src/Services/ProductCatalog/SimpleStore.ProductCatalogApi/SimpleStore.ProductCatalogApi.csproj
-# - name: simplestore-graphql-api
-#   project: src/Services/GraphQL/SimpleStore.GraphQLApi/SimpleStore.GraphQLApi.csproj
-# - name: simplestore-inventories-api
-#   project: src/Services/Inventories/SimpleStore.InventoriesApi/SimpleStore.InventoriesApi.csproj
-
-# - name: redis
-#   image: redis
-#   bindings:
-#     - port: 6379
-
-# - name: simplestore-productcatalog-api
-#   executable: start-process powershell.exe -argument -nologo -noprofile -executionpolicy bypass -command dapr run --app-id simplestore-productcatalog-api --app-port 5001 --log-level debug --components-path .\components --config .\components\tracing.yaml dotnet run dotnet -- -p src\Services\ProductCatalog\SimpleStore.ProductCatalogApi'
-
 - name: zipkin
   image: openzipkin/zipkin
   bindings:
