@@ -29,7 +29,7 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways
 
         public async Task<GetProductsByIdsResponse> GetProductsByIds(GetProductsByIdsRequest request, CancellationToken cancellationToken = default(CancellationToken))
             => await this._daprClient.InvokeMethodAsync<GetProductsByIdsRequest, GetProductsByIdsResponse>(this.InventoryAppId, 
-                                                                                                            "get-products-by-ids", 
+                                                                                                            "api/products/get-by-ids", 
                                                                                                             request, 
                                                                                                             this.httpExtension, 
                                                                                                             cancellationToken);

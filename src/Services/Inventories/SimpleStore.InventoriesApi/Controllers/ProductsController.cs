@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace SimpleStore.InventoriesApi.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public ProductsController(IMediator mediator)
-            => this._mediator = mediator;
+        public ProductsController(IMediator mediator) => this._mediator = mediator;
 
-        [HttpPost("get-products")]
-        public async Task<IActionResult> GetProducts([FromBody] GetProductsRequest request)
+        [HttpGet]
+        public async Task<IActionResult> GetProducts([FromQuery] GetProductsRequest request)
         {
             var result = await this._mediator.Send(request);
             return Ok(result);
         }
 
-        [HttpPost("get-products-by-ids")]
+        [HttpPost("get-by-ids")]
         public async Task<IActionResult> GetProductsByIds([FromBody] GetProductsByIdsRequest request)
         {
             var result = await this._mediator.Send(request);

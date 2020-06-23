@@ -26,6 +26,8 @@ namespace SimpleStore.ProductCatalogApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+
             services
                 .AddSingleton(this.Configuration)
                 .AddCustomInfrastructure(this.Configuration)
@@ -42,8 +44,13 @@ namespace SimpleStore.ProductCatalogApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseRouting();
             app.UseSerilogRequestLogging();
-            app.UseCustomGraphQL();
+            app.UseCustomGraphQL(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

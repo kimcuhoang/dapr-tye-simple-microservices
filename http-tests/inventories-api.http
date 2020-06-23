@@ -1,12 +1,19 @@
-@url=http://localhost:5002
+@url=http://localhost:63937
 
-### Retrieve inventories
-POST {{url}}/get-inventories HTTP/1.1
+
+### Get inventories
+GET {{url}}/api/inventories?pageIndex=1&pageSize=10 HTTP/1.1
+
+
+### Get Products
+GET {{url}}/api/products?pageIndex=1&pageSize=100 HTTP/1.1
+
+
+### Create Inventory
+POST {{url}}/api/inventory HTTP/1.1
 Content-Type: application/json
 
 {
-    "request": {
-        "pageIndex":1,
-        "pageSize":10
-    }
+    "name": "Test",
+    "location": "HELELELELE"
 }

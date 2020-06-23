@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace SimpleStore.InventoriesApi.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
     public class InventorySubscriberController : ControllerBase
     {
@@ -20,8 +21,8 @@ namespace SimpleStore.InventoriesApi.Controllers
         }
 
         [Topic("ProductCreated")]
-        [HttpPost("create-product")]
-        public async Task<IActionResult> CreateProduct([FromBody]CreateProductRequest request)
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequest request)
         {
             this._logger.LogInformation($"Received Product - {request.ProductId}");
 

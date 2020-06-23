@@ -1,3 +1,5 @@
+using System.Text.Json;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,9 +28,7 @@ namespace SimpleStore.InventoriesApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddControllers()
-                .AddDapr();
+            services.AddControllers();
 
             services
                 .AddSingleton(this.Configuration)
@@ -47,6 +47,7 @@ namespace SimpleStore.InventoriesApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseRouting();
             app.UseSerilogRequestLogging();
             app.UseCloudEvents();
 

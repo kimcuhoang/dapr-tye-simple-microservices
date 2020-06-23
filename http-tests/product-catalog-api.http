@@ -1,3 +1,15 @@
-@url = http://localhost:5001
+@url = http://localhost:63935
 
-### 
+### Get Products
+GET {{url}}/api/products?pageIndex=1&pageSize=100 HTTP/1.1
+
+
+### Create Product
+POST {{url}}/api/product HTTP/1.1
+Content-Type: application/json
+
+{
+    "productName": "Test-New-Product-04",
+    "productCode": "NEW-PRD-04"
+}
+
