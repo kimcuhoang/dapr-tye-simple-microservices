@@ -1,5 +1,5 @@
 {
-  "EnabledTye": false,
+  "EnabledTye": true,
   "Zipkin": {
     "Enabled": false,
     "EndpointUrl": "http://localhost:9411/api/v2/spans"

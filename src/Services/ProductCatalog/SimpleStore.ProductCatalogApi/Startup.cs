@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.Infrastructure.Common.GraphQL;
-using SimpleStore.Infrastructure.Common.Tracing;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Options;
 using SimpleStore.ProductCatalogApi.GraphQL.ObjectTypes;
@@ -34,8 +33,7 @@ namespace SimpleStore.ProductCatalogApi
                 {
                     cfg.RegisterQueryType<QueryType>();
                     cfg.RegisterMutationType<MutationType>();
-                })
-                .AddCustomOpenTelemetry(this.Configuration, this._serviceOptions.ProductCatalogApi);
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

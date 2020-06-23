@@ -14,7 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__", "__", "{99204373-D893-
 		QueriesAndMutations.md = QueriesAndMutations.md
 		README.md = README.md
 		services.json = services.json
-		tye.yaml = tye.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{29B464BE-4F99-402E-AD7F-5201DD0732D6}"

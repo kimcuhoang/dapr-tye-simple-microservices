@@ -3,9 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using SimpleStore.Infrastructure.Common.Options;
-using SimpleStore.Infrastructure.Common.Tye;
 using System;
-using System.Net;
+using SimpleStore.Infrastructure.Common.Tye;
 
 namespace SimpleStore.Infrastructure.Common.Extensions
 {
@@ -34,15 +33,14 @@ namespace SimpleStore.Infrastructure.Common.Extensions
                     webBuilder.ConfigureKestrel((webHostBuilderContext, kestrelOptions) =>
                     {
                         var configuration = webHostBuilderContext.Configuration;
-                        var hostEnvironment = webHostBuilderContext.HostingEnvironment;
-
                         if (!configuration.EnabledTye())
                         {
                             var serviceConfig = getServiceConfigFn.Invoke(configuration);
-                            var uri = new Uri(serviceConfig.ServiceUrl);
-                            kestrelOptions.ListenAnyIP(uri.Port, options =>
+                            var serviceUri = configuration.GetServiceUri(serviceConfig.ServiceName);
+
+                            kestrelOptions.ListenAnyIP(serviceUri.Port, listenOptions =>
                             {
-                                options.UseConnectionLogging();
+                                listenOptions.UseConnectionLogging();
                             });
                         }
                     });
@@ -57,9 +55,9 @@ namespace SimpleStore.Infrastructure.Common.Extensions
                     var serviceConfig = getServiceConfigFn.Invoke(context.Configuration);
 
                     loggerConfiguration
-                        .Enrich.FromLogContext()
-                        .Enrich.WithProperty("ServiceName", serviceConfig.ServiceName)
                         .WriteTo.Console()
+                        .Enrich.FromLogContext()
+                        .Enrich.WithProperty("Service", serviceConfig.ServiceName)
                         .ReadFrom.Configuration(context.Configuration);
                 });
             

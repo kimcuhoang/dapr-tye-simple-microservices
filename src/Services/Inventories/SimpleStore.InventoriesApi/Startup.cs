@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.Infrastructure.Common.GraphQL;
-using SimpleStore.Infrastructure.Common.Tracing;
 using SimpleStore.Inventories.Infrastructure.EfCore;
 using SimpleStore.Inventories.Infrastructure.EfCore.Options;
 using SimpleStore.InventoriesApi.GraphQL.Objects;
@@ -39,8 +38,6 @@ namespace SimpleStore.InventoriesApi
                     cfg.RegisterQueryType<QueryInventories>();
                     cfg.RegisterMutationType<InventoryMutation>();
                 });
-
-            services.AddCustomOpenTelemetry(this.Configuration, this._serviceOptions.InventoriesApi);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
