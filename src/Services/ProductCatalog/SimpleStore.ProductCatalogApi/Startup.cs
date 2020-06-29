@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serilog;
 using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.Infrastructure.Common.GraphQL;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore;
@@ -46,7 +45,6 @@ namespace SimpleStore.ProductCatalogApi
             }
 
             app.UseRouting();
-            app.UseSerilogRequestLogging();
             app.UseCustomGraphQL(endpoints =>
             {
                 endpoints.MapControllers();

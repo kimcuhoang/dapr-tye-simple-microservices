@@ -1,17 +1,4 @@
 {
-  "EnabledTye": true,
-  "Zipkin": {
-    "Enabled": false,
-    "EndpointUrl": "http://localhost:9411/api/v2/spans"
-  },
-  "Serilog": {
-    "WriteTo": [
-      {
-        "Name": "Seq",
-        "Args": { "serverUrl": "http://localhost:5341" }
-      }
-    ]
-  },
   "Services": {
     "GraphQLApi": {
       "ServiceName": "simplestore-graphql-api",
