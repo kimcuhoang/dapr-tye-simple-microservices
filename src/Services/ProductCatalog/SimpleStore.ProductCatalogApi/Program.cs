@@ -1,8 +1,12 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Options;
 using System.Diagnostics;
+using System.IO;
+using ConfigurationExtensions = SimpleStore.Infrastructure.Common.Extensions.ConfigurationExtensions;
 
 namespace SimpleStore.ProductCatalogApi
 {
@@ -11,15 +15,26 @@ namespace SimpleStore.ProductCatalogApi
         public static void Main(string[] args)
         {
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
-            CreateHostBuilder(args).Build().Run();
+
+            var configuration = ConfigurationExtensions.BuildConfiguration(Directory.GetCurrentDirectory());
+
+            CreateHostBuilder(args, configuration).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args)
-            => Host.CreateDefaultBuilder(args).CustomConfigure(typeof(Startup), configuration =>
-            {
-                var serviceOptions = configuration.GetOptions<ServiceOptions>("Services");
-                return serviceOptions.ProductCatalogApi;
-            });
+        public static IHostBuilder CreateHostBuilder(string[] args, IConfiguration configuration)
+        {
+            var serviceOptions = new ServiceOptions();
 
+            var serviceOptionsSection = configuration.GetSection("Services");
+            serviceOptionsSection.Bind(serviceOptions);
+
+            return Host
+                .CreateDefaultBuilder(args)
+                .ConfigureServices((context, services) =>
+                {
+                    services.AddOptions<ServiceOptions>().Bind(serviceOptionsSection);
+                })
+                .CustomConfigWebHostFor(serviceOptions.ProductCatalogApi, typeof(Startup), configuration, serviceOptions);
+        }
     }
 }

@@ -1,25 +1,16 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.Infrastructure.Common.GraphQL;
 using SimpleStore.Inventories.Infrastructure.EfCore;
-using SimpleStore.Inventories.Infrastructure.EfCore.Options;
 using SimpleStore.InventoriesApi.GraphQL.Objects;
 
 namespace SimpleStore.InventoriesApi
 {
     public class Startup
     {
-        private readonly ServiceOptions _serviceOptions;
-
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-            this._serviceOptions = this.Configuration.GetOptions<ServiceOptions>("Services");
-        }
+        public Startup(IConfiguration configuration) => this.Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
@@ -28,7 +19,6 @@ namespace SimpleStore.InventoriesApi
             services.AddControllers();
 
             services
-                .AddSingleton(this.Configuration)
                 .AddCustomInfrastructure(this.Configuration)
                 .AddCustomGraphQL(cfg =>
                 {
@@ -37,21 +27,15 @@ namespace SimpleStore.InventoriesApi
                 });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
 
-            app.UseRouting();
-            app.UseCloudEvents();
-
-            app.UseCustomGraphQL(endpoints =>
-            {
-                endpoints.MapSubscribeHandler();
-                endpoints.MapControllers();
-            });
-        }
+        public void Configure(IApplicationBuilder app)
+            => app
+                .UseCustomApplicationBuilder()
+                .UseCloudEvents()
+                .UseCustomGraphQL(endpoints =>
+                {
+                    endpoints.MapSubscribeHandler();
+                    endpoints.MapControllers();
+                });
     }
 }

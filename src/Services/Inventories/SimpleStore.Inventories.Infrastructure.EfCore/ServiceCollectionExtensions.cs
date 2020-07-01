@@ -3,12 +3,11 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SimpleStore.Infrastructure.Common.Dapr;
 using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.Infrastructure.EfCore;
-using SimpleStore.Inventories.Infrastructure.EfCore.Options;
 using SimpleStore.Inventories.Infrastructure.EfCore.Persistence;
 using System.Reflection;
-using SimpleStore.Infrastructure.Common.Dapr;
 
 namespace SimpleStore.Inventories.Infrastructure.EfCore
 {
@@ -16,8 +15,6 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore
     {
         public static IServiceCollection AddCustomInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<ServiceOptions>(configuration.GetSection("Services"));
-
             services
                 .AddEfCore<InventoryDbContext>(configuration, Assembly.GetExecutingAssembly())
                 .AddAutoMapper(Assembly.GetExecutingAssembly())

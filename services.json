@@ -11,6 +11,11 @@
     "InventoriesApi": {
       "ServiceName": "simplestore-inventories-api",
       "ServiceUrl": "http://localhost:5002"
+    },
+    "Seq": {
+      "ServiceName": "seq",
+      "ServiceUrl": "http://localhost:5341"
     }
-  }
+  },
+  "EnabledTye": false 
 }

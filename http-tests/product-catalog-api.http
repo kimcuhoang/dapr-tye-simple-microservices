@@ -1,4 +1,4 @@
-@url = http://localhost:50539
+@url = http://localhost:5001
 
 ### Get Products
 GET {{url}}/api/products?pageIndex=1&pageSize=100 HTTP/1.1

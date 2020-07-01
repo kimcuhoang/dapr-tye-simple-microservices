@@ -2,27 +2,21 @@ using HotChocolate;
 using HotChocolate.AspNetCore.Subscriptions;
 using HotChocolate.Stitching;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using SimpleStore.GraphQLApi.Options;
 using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.Infrastructure.Common.GraphQL;
 using SimpleStore.Infrastructure.Common.Options;
+using SimpleStore.Infrastructure.Common.Tye;
 using System;
+using Microsoft.Extensions.Options;
 
 namespace SimpleStore.GraphQLApi
 {
     public class Startup
     {
-        private readonly ServiceOptions _serviceOptions;
-
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-            this._serviceOptions = this.Configuration.GetOptions<ServiceOptions>("Services");
-        }
+        public Startup(IConfiguration configuration) => this.Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
@@ -31,10 +25,14 @@ namespace SimpleStore.GraphQLApi
             services.AddHttpContextAccessor();
 
             // C# 8.0, this is local function
-            Uri GetGraphQLUri(ServiceConfig service)
+
+            Uri GetGraphQLUriFor(IServiceProvider serviceProvider, Func<ServiceOptions, ServiceConfig> getServiceConfigFn)
             {
+                var serviceOptions = serviceProvider.GetRequiredService<IOptions<ServiceOptions>>().Value;
+                var serviceConfig = getServiceConfigFn.Invoke(serviceOptions);
+
                 var graphqlUri = new Uri("graphql", UriKind.Relative);
-                var serviceUri = this.Configuration.GetServiceUri(service.ServiceName);
+                var serviceUri = this.Configuration.GetServiceUriFor(serviceConfig);
 
                 return new Uri(serviceUri, graphqlUri);
             }
@@ -42,11 +40,11 @@ namespace SimpleStore.GraphQLApi
 
             services.AddHttpClient(nameof(ServiceOptions.ProductCatalogApi), (sp, client) =>
             {
-                client.BaseAddress = GetGraphQLUri(this._serviceOptions.ProductCatalogApi);
+                client.BaseAddress = GetGraphQLUriFor(sp, serviceOptions => serviceOptions.ProductCatalogApi);
             }); 
             services.AddHttpClient(nameof(ServiceOptions.InventoriesApi), (sp, client) =>
             {
-                client.BaseAddress = GetGraphQLUri(this._serviceOptions.InventoriesApi);
+                client.BaseAddress = GetGraphQLUriFor(sp, serviceOptions => serviceOptions.InventoriesApi);
             });
 
             services
@@ -57,13 +55,7 @@ namespace SimpleStore.GraphQLApi
                         .AddSchemaFromHttp(nameof(ServiceOptions.InventoriesApi)));
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            app.UseCustomGraphQL();
-        }
+        public void Configure(IApplicationBuilder app)
+            => app.UseCustomApplicationBuilder().UseCustomGraphQL();
     }
 }

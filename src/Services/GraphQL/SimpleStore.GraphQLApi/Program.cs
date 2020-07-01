@@ -1,8 +1,12 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SimpleStore.GraphQLApi.Options;
 using SimpleStore.Infrastructure.Common.Extensions;
 using System.Diagnostics;
+using System.IO;
+using ConfigurationExtensions = SimpleStore.Infrastructure.Common.Extensions.ConfigurationExtensions;
 
 namespace SimpleStore.GraphQLApi
 {
@@ -11,15 +15,24 @@ namespace SimpleStore.GraphQLApi
         public static void Main(string[] args)
         {
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
-
-            CreateHostBuilder(args).Build().Run();
+            var configuration = ConfigurationExtensions.BuildConfiguration(Directory.GetCurrentDirectory());
+            CreateHostBuilder(args, configuration).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args)
-           => Host.CreateDefaultBuilder(args).CustomConfigure(typeof(Startup), configuration =>
-           {
-               var serviceOptions = configuration.GetOptions<ServiceOptions>("Services");
-               return serviceOptions.GraphQLApi;
-           });
+        public static IHostBuilder CreateHostBuilder(string[] args, IConfiguration configuration)
+        {
+            var serviceOptions = new ServiceOptions();
+
+            var serviceOptionsSection = configuration.GetSection("Services");
+            serviceOptionsSection.Bind(serviceOptions);
+
+            return Host
+                    .CreateDefaultBuilder(args)
+                    .ConfigureServices((context, services) =>
+                        {
+                            services.AddOptions<ServiceOptions>().Bind(serviceOptionsSection);
+                        })
+                    .CustomConfigWebHostFor(serviceOptions.GraphQLApi, typeof(Startup), configuration, serviceOptions);
+        }
     }
 }

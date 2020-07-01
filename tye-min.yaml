@@ -21,8 +21,6 @@ services:
       value: "Y"
   bindings:
     - name: ui
-      port: 5340
+      port: 5341
       protocol: http
       containerPort: 80
-    - name: internal
-      port: 5341
