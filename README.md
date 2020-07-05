@@ -39,11 +39,11 @@ An example of building .NET Core microservices with [Dapr](https://github.com/da
 
 There are **2 options** to start services
 
-1. [Starts Services with Tye](docs\start-service-with-tye.md) which is default mode
+1. [Starts Services with Tye](/docs/start_services_with_tye.md) which is default mode
 
     - In this mode, all of services has been started by [Tye](https://github.com/dotnet/tye). Also, we utilize the extensions which are supported out-of-the-box.
 
-1. [Starts Services with Darp](docs\start-service-with-dapr.md)
+1. [Starts Services with Darp](/docs/start_services_with_dapr.md)
 
     - By running this mode, we use **Tye** as **docker-compose** to start the infrastructure, i.e. zipkin and seq. Then, all services has been started by `dapr run` command.
 

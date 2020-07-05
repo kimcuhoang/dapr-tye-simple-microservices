@@ -14,7 +14,7 @@
     tye run .\tye-min.yaml --dashboard
     ```
 
-    ![Tye Dashboad](images\Tye-Min-Dashboard.png)
+    ![Tye Dashboad](images/Tye_Min_Dashboard.png)
 
 1. Run the following commands in separate Windows Powershell
 
@@ -42,7 +42,7 @@
         dotnet run dotnet -- -p src\Services\GraphQL\SimpleStore.GraphQLApi
         ```
 
-    ![Start Services with Dapr](images\Start-Services-with-Dapr.png)
+    ![Start Services with Dapr](images/Start_Services_with_Dapr.png)
 
 **Notes:**
 
@@ -56,9 +56,9 @@
 
 ## Experience our services via graphql
 
-- Now, let open the `graphql-api` by clicking on the link `http://localhost:63010` in the screenshot; then enjoy with some examples in [here](examples-graphql-query-mutation.md), for example
+- Now, let open the `graphql-api` by clicking on the link `http://localhost:63010` in the screenshot; then enjoy with some examples in [here](examples_graphql_query_mutation.md), for example
 
-    ![GraphQL Example](images\Dapr-GraphQL-Api.png)
+    ![GraphQL Example](images/Dapr_GraphQL_Api.png)
 
 ## For Observability
 
@@ -66,10 +66,10 @@
 
 - By clicking on the zipkin's address in dashboard - `http://localhost:9411`, we come to the zipkin's dashboard
 
-    ![Zipkin dashboard](images\Tye-Min-Zipkin-Dashboard.png)
+    ![Zipkin dashboard](images/Tye_Min_Zipkin_Dashboard.png)
 
 ### Logging
 
 - Open the seq's dashboard at - `http://localhost:9431`
 
-    ![Seq dashboard](images\Tye-Min-Seq-Dashboard.png)
+    ![Seq dashboard](images/Tye_Min_Seq_Dashboard.png)
