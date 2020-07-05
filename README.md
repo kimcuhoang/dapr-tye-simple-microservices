@@ -45,9 +45,21 @@ There are **2 options** to start services
 
 1. [Starts Services with Darp](docs\start-service-with-dapr.md)
 
-    - By running this mode, we use **Tye** as **docker-compose** to start the infrastructure, i.e. zipkin and seq. Then, all services has been started with `dapr run` command.
+    - By running this mode, we use **Tye** as **docker-compose** to start the infrastructure, i.e. zipkin and seq. Then, all services has been started by `dapr run` command.
 
+## Why do we need an option to start services with Dapr while Tye can start with only one command?
 
+Perhaps, this question maybe rise up when every one touch this repository. It just because this repo aims to apply purely Dapr before apply Tye in order to understand
+
+1. How Dapr works
+2. Without Tye
+    - We have to plug **serilog** and its extension for **seq** to implement **Distributed Logging**
+    - The services need to be predefined with specific port number
+3. If we apply Tye, we do not need to do the above stuffs, because [it simplify microservices development by making it easy to](https://github.com/dotnet/tye#project-tye):
+    > - Run many services with one command
+    > - Use dependencies in containers
+    > - Discover addresses of other services using simple conventions
+    
 
 ## Resources
 
@@ -58,6 +70,7 @@ There are **2 options** to start services
     - [Darp Doc](https://github.com/dapr/docs)
 - [Serilog Best Practices](https://benfoster.io/blog/serilog-best-practices/)
 - [5 ways to set the URLs for an ASP.NET Core app](https://andrewlock.net/5-ways-to-set-the-urls-for-an-aspnetcore-app/)
+- [Introduction Project Tye](https://devblogs.microsoft.com/aspnet/introducing-project-tye/)
 
 
 ## Give a Star! :star:
