@@ -2,7 +2,7 @@
 
 namespace SimpleStore.Inventories.Infrastructure.EfCore.Options
 {
-    public class ServiceOptions
+    public class ServiceOptions : CommonServiceOptions
     {
         public ServiceConfig InventoriesApi { get; set; }
     }

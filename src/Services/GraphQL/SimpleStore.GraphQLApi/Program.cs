@@ -1,7 +1,12 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serilog;
+using SimpleStore.GraphQLApi.Options;
+using SimpleStore.Infrastructure.Common.Extensions;
+using System.Diagnostics;
+using System.IO;
+using ConfigurationExtensions = SimpleStore.Infrastructure.Common.Extensions.ConfigurationExtensions;
 
 namespace SimpleStore.GraphQLApi
 {
@@ -9,40 +14,25 @@ namespace SimpleStore.GraphQLApi
     {
         public static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .CreateLogger();
-
-            CreateHostBuilder(args).Build().Run();
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            var configuration = ConfigurationExtensions.BuildConfiguration(Directory.GetCurrentDirectory());
+            CreateHostBuilder(args, configuration).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                    webBuilder.ConfigureAppConfiguration((webHostBuilderContext, configurationBuilder) =>
-                    {
-                        configurationBuilder
-                            .AddJsonFile("appsettings.json")
-                            .AddJsonFile($"appsettings.{webHostBuilderContext.HostingEnvironment.EnvironmentName}.json", optional: true)
-                            .AddJsonFile("services.json", optional: true)
-                            .AddEnvironmentVariables();
+        public static IHostBuilder CreateHostBuilder(string[] args, IConfiguration configuration)
+        {
+            var serviceOptions = new ServiceOptions();
 
-                        if (!webHostBuilderContext.HostingEnvironment.IsDevelopment()) return;
+            var serviceOptionsSection = configuration.GetSection("Services");
+            serviceOptionsSection.Bind(serviceOptions);
 
-                        var contentRootPath = webHostBuilderContext.HostingEnvironment.ContentRootPath;
-                        var servicesJson = System.IO.Path.Combine(contentRootPath, "..", "..", "..", "..", "services.json");
-                        configurationBuilder.AddJsonFile(servicesJson, optional: true);
-                    });
-                    webBuilder.CaptureStartupErrors(true);
-                })
-                .UseDefaultServiceProvider((context, options) =>
-                {
-                    options.ValidateScopes = context.HostingEnvironment.IsDevelopment();
-                    options.ValidateOnBuild = true;
-                })
-                .UseSerilog();
+            return Host
+                    .CreateDefaultBuilder(args)
+                    .ConfigureServices((context, services) =>
+                        {
+                            services.AddOptions<ServiceOptions>().Bind(serviceOptionsSection);
+                        })
+                    .CustomConfigWebHostFor(serviceOptions.GraphQLApi, typeof(Startup), configuration, serviceOptions);
+        }
     }
 }

@@ -1,45 +1,51 @@
 using HotChocolate;
-using HotChocolate.AspNetCore;
-using HotChocolate.AspNetCore.Playground;
 using HotChocolate.AspNetCore.Subscriptions;
 using HotChocolate.Stitching;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using SimpleStore.GraphQLApi.Options;
 using SimpleStore.Infrastructure.Common.Extensions;
+using SimpleStore.Infrastructure.Common.GraphQL;
+using SimpleStore.Infrastructure.Common.Options;
+using SimpleStore.Infrastructure.Common.Tye;
 using System;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace SimpleStore.GraphQLApi
 {
     public class Startup
     {
-        private readonly ServiceOptions _serviceOptions;
-
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-            this._serviceOptions = this.Configuration.GetOptions<ServiceOptions>("Services");
-        }
+        public Startup(IConfiguration configuration) => this.Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
 
+            // C# 8.0, this is local function
+
+            Uri GetGraphQLUriFor(IServiceProvider serviceProvider, Func<ServiceOptions, ServiceConfig> getServiceConfigFn)
+            {
+                var serviceOptions = serviceProvider.GetRequiredService<IOptions<ServiceOptions>>().Value;
+                var serviceConfig = getServiceConfigFn.Invoke(serviceOptions);
+
+                var graphqlUri = new Uri("graphql", UriKind.Relative);
+                var serviceUri = this.Configuration.GetServiceUriFor(serviceConfig);
+
+                return new Uri(serviceUri, graphqlUri);
+            }
+            // End of local function
+
             services.AddHttpClient(nameof(ServiceOptions.ProductCatalogApi), (sp, client) =>
-                {
-                    client.BaseAddress = new Uri($"{this._serviceOptions.ProductCatalogApi.RestUri}/graphql");
-                }); 
+            {
+                client.BaseAddress = GetGraphQLUriFor(sp, serviceOptions => serviceOptions.ProductCatalogApi);
+            }); 
             services.AddHttpClient(nameof(ServiceOptions.InventoriesApi), (sp, client) =>
-                {
-                    client.BaseAddress = new Uri($"{this._serviceOptions.InventoriesApi.RestUri}/graphql");
-                });
+            {
+                client.BaseAddress = GetGraphQLUriFor(sp, serviceOptions => serviceOptions.InventoriesApi);
+            });
 
             services
                 .AddGraphQLSubscriptions()
@@ -49,30 +55,7 @@ namespace SimpleStore.GraphQLApi
                         .AddSchemaFromHttp(nameof(ServiceOptions.InventoriesApi)));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.Listen(this._serviceOptions.GraphQLApi);
-            }
-            
-            app.UseGraphQL("/graphql");
-            app.UsePlayground(new PlaygroundOptions
-            {
-                QueryPath = "/graphql",
-                Path = "/playground",
-            });
-            app.UseRouting();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", context =>
-                {
-                    context.Response.Redirect("/playground");
-                    return Task.CompletedTask;
-                });
-            });
-        }
+        public void Configure(IApplicationBuilder app)
+            => app.UseCustomApplicationBuilder().UseCustomGraphQL();
     }
 }

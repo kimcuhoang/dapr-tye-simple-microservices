@@ -2,7 +2,7 @@
 
 namespace SimpleStore.GraphQLApi.Options
 {
-    internal class ServiceOptions
+    public class ServiceOptions : CommonServiceOptions
     {
         public ServiceConfig GraphQLApi { get; set; }
         public ServiceConfig ProductCatalogApi { get; set; }

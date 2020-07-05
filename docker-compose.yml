@@ -3,19 +3,19 @@ version: "3.7"
 services:
 
     simplestore-productcatalog:
-        image: simplestore-productcatalog:dev
+        image: simplestore-productcatalogapi:dev
         build:
             context: .
             dockerfile: src/Services/ProductCatalog/SimpleStore.ProductCatalogApi/Dockerfile
 
     simplestore-inventories:
-        image: simplestore-inventories:dev
+        image: simplestore-inventoriesapi:dev
         build:
             context: .
             dockerfile: src/Services/Inventories/SimpleStore.InventoriesApi/Dockerfile
 
     simplestore-graphql:
-        image: simplestore-graphql:dev
+        image: simplestore-graphqlapi:dev
         build:
             context: .
             dockerfile: src/Services/GraphQL/SimpleStore.GraphQLApi/Dockerfile

@@ -1,16 +1,21 @@
 {
   "Services": {
     "GraphQLApi": {
-      "ServiceName": "graphql",
-      "RestUri": "http://localhost:5000"
+      "ServiceName": "graphql-api",
+      "ServiceUrl": "http://localhost:5000"
     },
     "ProductCatalogApi": {
-      "ServiceName": "product-catalog",
-      "RestUri": "http://localhost:5001"
+      "ServiceName": "products-api",
+      "ServiceUrl": "http://localhost:5001"
     },
     "InventoriesApi": {
-      "ServiceName": "inventories",
-      "RestUri": "http://localhost:5002"
+      "ServiceName": "inventories-api",
+      "ServiceUrl": "http://localhost:5002"
+    },
+    "Seq": {
+      "ServiceName": "seq",
+      "ServiceUrl": "http://localhost:5341"
     }
-  }
+  },
+  "EnabledTye": false 
 }

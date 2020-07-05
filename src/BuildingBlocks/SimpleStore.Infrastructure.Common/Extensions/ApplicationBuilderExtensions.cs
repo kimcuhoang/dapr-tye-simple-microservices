@@ -1,19 +1,32 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SimpleStore.Infrastructure.Common.Options;
+using Microsoft.Extensions.Hosting;
+using Serilog;
+using SimpleStore.Infrastructure.Common.Tye;
 
 namespace SimpleStore.Infrastructure.Common.Extensions
 {
     public static class ApplicationBuilderExtensions
     {
-        public static IApplicationBuilder Listen(this IApplicationBuilder app, ServiceConfig serviceConfig)
+        public static IApplicationBuilder UseCustomApplicationBuilder(this IApplicationBuilder app)
         {
-            var serverFeatures = app.ApplicationServices.GetRequiredService<IServer>().Features;
-            var addresses = serverFeatures.Get<IServerAddressesFeature>().Addresses;
-            addresses.Clear();
-            addresses.Add(serviceConfig.RestUri);
+            var configuration =  app.ApplicationServices.GetRequiredService<IConfiguration>();
+
+            var environment = app.ApplicationServices.GetRequiredService<IHostEnvironment>();
+
+            if (environment.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            if (!configuration.IsTyeEnabled())
+            {
+                app.UseSerilogRequestLogging();
+            }
+
+            app.UseRouting();
+
             return app;
         }
     }

@@ -1,0 +1,37 @@
+# tye application configuration file
+# read all about it at https://github.com/dotnet/tye
+#
+# when you've given us a try, we'd love to know what you think:
+#    https://aka.ms/AA7q20u
+#
+name: simple-microservices
+extensions:
+  - name: zipkin
+
+  - name: dapr
+    log-level: debug
+    config: simplestore-config
+  
+  - name: seq
+    logPath: ./.logs
+
+services:
+  - name: graphql-api
+    project: src/Services/GraphQL/SimpleStore.GraphQLApi/SimpleStore.GraphQLApi.csproj
+    
+  - name: products-api
+    project: src/Services/ProductCatalog/SimpleStore.ProductCatalogApi/SimpleStore.ProductCatalogApi.csproj
+    
+  - name: inventories-api
+    project: src/Services/Inventories/SimpleStore.InventoriesApi/SimpleStore.InventoriesApi.csproj
+
+  - name: redis
+    image: redis
+    bindings:
+      - port: 6379
+      
+  - name: placement
+    image: daprio/dapr
+    args: ./placement
+    bindings:
+      - port: 50005 

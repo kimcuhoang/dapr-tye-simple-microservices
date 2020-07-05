@@ -2,11 +2,19 @@
 Dapr Commands:
 ***************************************************************
 
-dapr run --app-id graphql --app-port 5000 dotnet run
+dapr run --app-id products-api --app-port 5001 --log-level debug `
+--components-path .\components --config .\components\simplestore-config.yaml `
+dotnet run dotnet -- -p src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
 
-dapr run --app-id product-catalog --app-port 5001 dotnet run
 
-dapr run --app-id inventories --app-port 5002 dotnet run
+dapr run --app-id inventories-api --app-port 5002 --log-level debug `
+--components-path .\components --config .\components\simplestore-config.yaml `
+dotnet run dotnet -- -p src\Services\Inventories\SimpleStore.InventoriesApi
+
+
+dapr run --app-id graphql-api --app-port 5000 --log-level debug `
+--components-path .\components --config .\components\simplestore-config.yaml `
+dotnet run dotnet -- -p src\Services\GraphQL\SimpleStore.GraphQLApi
 
 
 ***************************************************************
@@ -46,3 +54,5 @@ Docker Commands:
 2. Remove all images of **simplestore**
 
 	docker images --format "{{.ID}}\t{{.Repository}}" | ConvertFrom-String | where { $_.P2 -match 'simplestore-' } | % { docker rmi $_.P1 }
+
+

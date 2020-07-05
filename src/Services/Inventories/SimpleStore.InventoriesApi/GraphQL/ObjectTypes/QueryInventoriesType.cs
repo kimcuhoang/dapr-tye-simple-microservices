@@ -22,6 +22,11 @@ namespace SimpleStore.InventoriesApi.GraphQL.ObjectTypes
                 .Field(x => x.GetProducts(default)).Type<GetProductsResponseType>()
                 .Argument("request", arg => arg.Type<NonNullType<GetProductsRequestType>>())
                 .Name($"{prefix}_{nameof(QueryInventories.GetProducts)}");
+
+            descriptor
+                .Field(x => x.GetProductsByIds(default)).Type<GetProductsByIdsResponseType>()
+                .Argument("request", arg => arg.Type<NonNullType<GetProductsByIdsRequestType>>())
+                .Name($"{prefix}_{nameof(QueryInventories.GetProductsByIds)}");
         }
 
         #endregion
