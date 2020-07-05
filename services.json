@@ -1,15 +1,15 @@
 {
   "Services": {
     "GraphQLApi": {
-      "ServiceName": "simplestore-graphql-api",
+      "ServiceName": "graphql-api",
       "ServiceUrl": "http://localhost:5000"
     },
     "ProductCatalogApi": {
-      "ServiceName": "simplestore-productcatalog-api",
+      "ServiceName": "products-api",
       "ServiceUrl": "http://localhost:5001"
     },
     "InventoriesApi": {
-      "ServiceName": "simplestore-inventories-api",
+      "ServiceName": "inventories-api",
       "ServiceUrl": "http://localhost:5002"
     },
     "Seq": {

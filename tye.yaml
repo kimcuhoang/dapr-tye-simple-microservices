@@ -16,13 +16,13 @@ extensions:
     logPath: ./.logs
 
 services:
-  - name: simplestore-graphql-api
+  - name: graphql-api
     project: src/Services/GraphQL/SimpleStore.GraphQLApi/SimpleStore.GraphQLApi.csproj
     
-  - name: simplestore-productcatalog-api
+  - name: products-api
     project: src/Services/ProductCatalog/SimpleStore.ProductCatalogApi/SimpleStore.ProductCatalogApi.csproj
     
-  - name: simplestore-inventories-api
+  - name: inventories-api
     project: src/Services/Inventories/SimpleStore.InventoriesApi/SimpleStore.InventoriesApi.csproj
 
   - name: redis
