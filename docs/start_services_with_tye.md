@@ -2,13 +2,6 @@
 
 ## Getting Started
 
-1. In this mode, we don't need to run `dapr init` before run `tye run`. Therefore, if we already init Dapr before, we have to uninstall first by `darp uninstall --all`.
-
-1. Then, copy the following files from `.\components` into `%UserProdfile%\.dapr\components` (create it manually if it has not existed yet).
-    - **pubsub.yaml**
-    - **statestore.yaml**
-    - **zipkin.yaml**
-
 1. Start with `tye run` command
 
     ```bash

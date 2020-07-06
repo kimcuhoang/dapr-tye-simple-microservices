@@ -31,6 +31,10 @@ An example of building .NET Core microservices with [Dapr](https://github.com/da
 1. Docker for desktop
 1. [Install Dapr](https://github.com/dapr/docs/blob/master/getting-started/environment-setup.md#installing-dapr-cli)
 1. [Install Tye](https://github.com/dotnet/tye/blob/master/docs/getting_started.md)
+1. Copy the following files from `.\components` into `%UserProdfile%\.dapr\components` (create it manually if it has not existed yet).
+    - **pubsub.yaml**
+    - **statestore.yaml**
+    - **zipkin.yaml**
 1. Change the database information in `appsettings.json` files at 
     - `.\src\Services\ProductCatalog\SimpleStore.ProductCatalogApi\appsettings.json`
     - `.\src\Services\Inventories\SimpleStore.InventoriesApi\appsettings.json`
