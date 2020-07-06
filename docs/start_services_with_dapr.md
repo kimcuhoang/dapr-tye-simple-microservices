@@ -56,7 +56,7 @@
 
 ## Experience our services via graphql
 
-- Now, let open the `graphql-api` by clicking on the link `http://localhost:63010` in the screenshot; then enjoy with some examples in [here](examples_graphql_query_mutation.md), for example
+- Now, let open the `graphql-api` by clicking on the link `http://localhost:5000` in the screenshot; then enjoy with some examples in [here](examples_graphql_query_mutation.md), for example
 
     ![GraphQL Example](images/Dapr_GraphQL_Api.png)
 
