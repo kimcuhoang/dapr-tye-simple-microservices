@@ -2,26 +2,35 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+using SimpleStore.Infrastructure.Common.Tye;
 using SimpleStore.Infrastructure.EfCore.HostedService;
 using SimpleStore.Infrastructure.EfCore.Persistence;
-using SimpleStore.Infrastructure.EfCore.SqlServer;
 using System.Reflection;
+using Microsoft.Extensions.Logging;
 
 namespace SimpleStore.Infrastructure.EfCore
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddEfCore<TDbContext>(this IServiceCollection services, IConfiguration configuration, Assembly fromAssembly) where TDbContext : DbContext
+        public static IServiceCollection AddEfCore<TDbContext>(this IServiceCollection services, 
+                                                    IConfiguration configuration, 
+                                                    Assembly fromAssembly) where TDbContext : DbContext
         {
-            services
-                .Configure<SqlServerConfig>(configuration.GetSection("DatabaseInformation"));
-            
+
             services
                 .AddDbContext<DbContext, TDbContext>((provider, opts) =>
-                    {
-                        var sqlServerConfig = provider.GetRequiredService<IOptions<SqlServerConfig>>()?.Value;
-                        opts.UseSqlServer(sqlServerConfig.ConnectionStrings, context =>
+                {
+                        var connectionString = configuration.GetConnectionString("default");
+                        
+                        if (configuration.IsTyeEnabled())
+                        {
+                            var databaseName = configuration.GetValue<string>("DatabaseName");
+                            connectionString = configuration.GetConnectionString("sqlserver");
+                            connectionString =
+                                $"{connectionString};Initial Catalog={databaseName}";
+                        }
+
+                        opts.UseSqlServer(connectionString, context =>
                         {
                             context.MigrationsAssembly(fromAssembly.GetName().Name);
                             context.EnableRetryOnFailure(maxRetryCount: 3);

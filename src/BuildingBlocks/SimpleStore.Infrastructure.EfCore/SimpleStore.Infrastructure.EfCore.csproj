@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SimpleStore.Domain\SimpleStore.Domain.csproj" />
+    <ProjectReference Include="..\SimpleStore.Infrastructure.Common\SimpleStore.Infrastructure.Common.csproj" />
   </ItemGroup>
 
 </Project>

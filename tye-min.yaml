@@ -24,3 +24,13 @@ services:
       port: 5341
       protocol: http
       containerPort: 80
+
+- name: sqlserver
+  image: mcr.microsoft.com/mssql/server:2019-latest
+  env:
+    - name: SA_PASSWORD
+      value: "P@ssword"
+    - name: ACCEPT_EULA
+      value: "Y"
+  bindings:
+    - port: 1433

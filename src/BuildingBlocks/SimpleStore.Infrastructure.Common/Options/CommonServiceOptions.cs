@@ -3,5 +3,7 @@
     public class CommonServiceOptions
     {
         public ServiceConfig Seq { get; set; }
+
+        public ServiceConfig Database { get; set; }
     }
 }
