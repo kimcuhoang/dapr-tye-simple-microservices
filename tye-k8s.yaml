@@ -1,0 +1,53 @@
+# tye application configuration file
+# read all about it at https://github.com/dotnet/tye
+#
+# when you've given us a try, we'd love to know what you think:
+#    https://aka.ms/AA7q20u
+#
+name: simple-microservices
+registry: kimcu
+extensions:
+  - name: zipkin
+
+  - name: dapr
+    log-level: debug
+    config: simplestore-dapr-config
+  
+  - name: seq
+
+services:
+  - name: graphql-api
+    project: src/Services/GraphQL/SimpleStore.GraphQLApi/SimpleStore.GraphQLApi.csproj
+    replicas: 1
+    buildProperties:
+      - name: Configuration
+        value: Release
+    env:
+      - name: ASPNETCORE_ENVIRONMENT
+        value: "Production"
+    
+  - name: products-api
+    project: src/Services/ProductCatalog/SimpleStore.ProductCatalogApi/SimpleStore.ProductCatalogApi.csproj
+    replicas: 1
+    buildProperties:
+      - name: Configuration
+        value: Release
+    env:
+      - name: ASPNETCORE__ENVIRONMENT
+        value: "Production"
+
+  - name: inventories-api
+    project: src/Services/Inventories/SimpleStore.InventoriesApi/SimpleStore.InventoriesApi.csproj
+    replicas: 1
+    buildProperties:
+      - name: Configuration
+        value: Release
+    env:
+      - name: ASPNETCORE__ENVIRONMENT
+        value: "Production"
+
+  - name: sqlserver
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    bindings:
+      - port: 1433
+        connectionString: Data Source=${host},${port};User Id=sa;Password=${env:SA_PASSWORD};MultipleActiveResultSets=True
