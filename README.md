@@ -39,7 +39,7 @@ An example of building .NET Core microservices with [Dapr](https://github.com/da
     - `.\src\Services\ProductCatalog\SimpleStore.ProductCatalogApi\appsettings.json`
     - `.\src\Services\Inventories\SimpleStore.InventoriesApi\appsettings.json`
 
-## Getting Started
+## Running Locally
 
 There are **2 options** to start services
 
@@ -51,7 +51,7 @@ There are **2 options** to start services
 
     - By running this mode, we use **Tye** as **docker-compose** to start the infrastructure, i.e. zipkin and seq. Then, all services has been started by `dapr run` command.
 
-## Why do we need an option to start services with Dapr while Tye can start with only one command?
+### Why do we need an option to start services with Dapr while Tye can start with only one command?
 
 Perhaps, this question maybe rise up when every one touch this repository. It just because this repo aims to apply purely Dapr before apply Tye in order to understand
 
@@ -63,7 +63,15 @@ Perhaps, this question maybe rise up when every one touch this repository. It ju
     > - Run many services with one command
     > - Use dependencies in containers
     > - Discover addresses of other services using simple conventions
-    
+
+## Deploy to Kubernetes
+
+After experience on locally and see how Tye is useful, then we may want to step up by deploy to Kubernetes, of course with Tye as well. [This guide](/.helm/README.md) is step-by-step of: 
+
+- Install infrastructure via Helm: SqlServer, Redis, Seq, Zipkin and even Dapr
+- Using `tye deploy` to deploy our micro-services to Kubernetes
+- Using **NGINX Ingress Controller** to avoid `kubectl port-forward`
+
 
 ## Resources
 
