@@ -7,7 +7,6 @@ using SimpleStore.Infrastructure.Common.Dapr;
 using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.Infrastructure.EfCore;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Gateways;
-using SimpleStore.ProductCatalog.Infrastructure.EfCore.Options;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore.PubSub;
 using System.Reflection;
@@ -20,7 +19,6 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
         public static IServiceCollection AddCustomInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services
-                .Configure<ServiceOptions>(configuration.GetSection("Services"))
                 .AddEfCore<ProductCatalogDbContext>(configuration, Assembly.GetExecutingAssembly())
                 .AddAutoMapper(Assembly.GetExecutingAssembly())
                 .AddMediatR(Assembly.GetExecutingAssembly())

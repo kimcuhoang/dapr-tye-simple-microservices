@@ -5,6 +5,7 @@
 #    https://aka.ms/AA7q20u
 #
 name: simple-microservices
+registry: kimcu
 extensions:
   - name: zipkin
 
@@ -13,34 +14,40 @@ extensions:
     config: simplestore-dapr-config
   
   - name: seq
-    logPath: ./.logs
-
-ingress:
-  - name: simplestore-ingress
-    bindings:
-      - port: 8080
-        protocol: http
-    rules:
-      - host: simplestore-graphql-api.local
-        service: graphql-api
 
 services:
   - name: graphql-api
     project: src/Services/GraphQL/SimpleStore.GraphQLApi/SimpleStore.GraphQLApi.csproj
+    replicas: 1
+    buildProperties:
+      - name: Configuration
+        value: Release
+    env:
+      - name: ASPNETCORE_ENVIRONMENT
+        value: "Production"
     
   - name: products-api
     project: src/Services/ProductCatalog/SimpleStore.ProductCatalogApi/SimpleStore.ProductCatalogApi.csproj
-    
+    replicas: 1
+    buildProperties:
+      - name: Configuration
+        value: Release
+    env:
+      - name: ASPNETCORE__ENVIRONMENT
+        value: "Production"
+
   - name: inventories-api
     project: src/Services/Inventories/SimpleStore.InventoriesApi/SimpleStore.InventoriesApi.csproj
+    replicas: 1
+    buildProperties:
+      - name: Configuration
+        value: Release
+    env:
+      - name: ASPNETCORE__ENVIRONMENT
+        value: "Production"
 
   - name: sqlserver
     image: mcr.microsoft.com/mssql/server:2019-latest
-    env:
-      - name: SA_PASSWORD
-        value: "P@ssword"
-      - name: ACCEPT_EULA
-        value: "Y"
     bindings:
       - port: 1433
         connectionString: Data Source=${host},${port};User Id=sa;Password=${env:SA_PASSWORD};MultipleActiveResultSets=True

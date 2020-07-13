@@ -1,12 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using SimpleStore.Infrastructure.EfCore.SqlServer;
 
 namespace SimpleStore.Infrastructure.EfCore.HostedService
 {
@@ -28,9 +26,8 @@ namespace SimpleStore.Infrastructure.EfCore.HostedService
             using var scope = this._serviceProvider.CreateScope();
 
             var dbContext = scope.ServiceProvider.GetRequiredService<DbContext>();
-
-            var sqlServerConfig = scope.ServiceProvider.GetRequiredService<IOptions<SqlServerConfig>>()?.Value;
-            this._logger.LogInformation($"{nameof(EfCoreMigrationHostedService)} - ConnectionString: {sqlServerConfig.ConnectionStrings}");
+            
+            this._logger.LogInformation($"{nameof(EfCoreMigrationHostedService)} - ConnectionString: {dbContext.Database.GetDbConnection().ConnectionString}");
 
             await dbContext.Database.MigrateAsync(cancellationToken);
         }

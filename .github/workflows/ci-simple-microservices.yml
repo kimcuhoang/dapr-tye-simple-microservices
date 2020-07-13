@@ -5,13 +5,13 @@ on:
   push:
     branches: 
         - master
-    paths-ignore:
-        - README.md
-        - assets/**
-        - Helm/**
+    paths:
+      - 'src/**'
   pull_request:
     branches: 
       - master
+    paths:
+      - 'src/**'
 
 jobs:
   build:
