@@ -83,6 +83,7 @@ After experience on locally and see how Tye is useful, then we may want to step 
 - [Serilog Best Practices](https://benfoster.io/blog/serilog-best-practices/)
 - [5 ways to set the URLs for an ASP.NET Core app](https://andrewlock.net/5-ways-to-set-the-urls-for-an-aspnetcore-app/)
 - [Introduction Project Tye](https://devblogs.microsoft.com/aspnet/introducing-project-tye/)
+- [MediatR Pipeline Behaviour in ASP.NET Core – Logging and Validation](https://www.codewithmukesh.com/blog/mediatr-pipeline-behaviour/)
 
 
 ## Give a Star! :star:

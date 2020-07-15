@@ -17,9 +17,10 @@ namespace SimpleStore.Infrastructure.Common.GraphQL
                     schemaConfiguration?.Invoke(cfg);
                 }), new QueryExecutionOptions
                 {
-                    IncludeExceptionDetails = true,
-                    TracingPreference = TracingPreference.Always
-                });
+                    IncludeExceptionDetails = false,
+                    TracingPreference = TracingPreference.OnDemand
+                })
+                .AddErrorFilter<ValidationErrorFilter>();
 
             return services;
         }
