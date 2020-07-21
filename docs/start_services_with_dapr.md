@@ -22,7 +22,7 @@
 
         ```powershell
         dapr run --app-id products-api --app-port 5001 --log-level debug `
-        --components-path .\components --config .\components\simplestore-config.yaml `
+        --components-path .\components --config .\components\simplestore-dapr-config.yaml `
         dotnet run dotnet -- -p src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
         ```
     
@@ -30,7 +30,7 @@
 
         ```powershell
         dapr run --app-id inventories-api --app-port 5002 --log-level debug `
-        --components-path .\components --config .\components\simplestore-config.yaml `
+        --components-path .\components --config .\components\simplestore-dapr-config.yaml `
         dotnet run dotnet -- -p src\Services\Inventories\SimpleStore.InventoriesApi
         ```
 
@@ -38,7 +38,7 @@
 
         ```powershell
         dapr run --app-id graphql-api --app-port 5000 --log-level debug `
-        --components-path .\components --config .\components\simplestore-config.yaml `
+        --components-path .\components --config .\components\simplestore-dapr-config.yaml `
         dotnet run dotnet -- -p src\Services\GraphQL\SimpleStore.GraphQLApi
         ```
 
@@ -64,7 +64,7 @@
 
 ### Tracing
 
-- By clicking on the zipkin's address in dashboard - `http://localhost:9411`, we come to the zipkin's dashboard
+- Open the browser at - `http://localhost:9411`
 
     ![Zipkin dashboard](images/Tye_Min_Zipkin_Dashboard.png)
 

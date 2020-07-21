@@ -7,13 +7,6 @@
 name: simple-microservices
 
 services:
-- name: zipkin
-  image: openzipkin/zipkin
-  bindings:
-    - port: 9411
-      containerPort: 9411
-      protocol: http
-
 - name: seq
   image: datalust/seq
   env:

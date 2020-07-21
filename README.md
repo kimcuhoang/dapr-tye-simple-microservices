@@ -49,7 +49,7 @@ There are **2 options** to start services
 
 1. [Starts Services with Darp](/docs/start_services_with_dapr.md)
 
-    - By running this mode, we use **Tye** as **docker-compose** to start the infrastructure, i.e. zipkin and seq. Then, all services has been started by `dapr run` command.
+    - By running this mode, we use **Tye** as **docker-compose** to start the infrastructure, i.e. **seq**. Then, all services will be started manually with `dapr run` command.
 
 ### Why do we need an option to start services with Dapr while Tye can start with only one command?
 
