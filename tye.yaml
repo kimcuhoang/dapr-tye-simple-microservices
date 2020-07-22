@@ -6,11 +6,11 @@
 #
 name: simple-microservices
 extensions:
-  - name: zipkin
 
   - name: dapr
     log-level: debug
     config: simplestore-dapr-config
+    components-path: ./components
   
   - name: seq
     logPath: ./.logs
