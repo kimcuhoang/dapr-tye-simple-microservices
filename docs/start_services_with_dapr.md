@@ -46,7 +46,7 @@
 
 **Notes:**
 
-- Running this mode, we just use **Tye** as **docker-compose** to start infrastructure, i.e. `zipkin` and `seq`
+- Running this mode, we just use **Tye** as **docker-compose** to start infrastructure, i.e. **seq** and **sqlserver**
 - All services, they are, `graphql-api`, `products-api`, `inventories-api` will be started with `dapr run` command with the predefined port as below
 
     - **graphql-api**: `http://localhost:5000`
