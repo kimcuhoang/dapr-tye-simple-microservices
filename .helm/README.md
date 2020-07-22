@@ -126,6 +126,8 @@ Open PowerShell at `D:\forks-netcore\tye\samples\dapr\helm\`
     - Logging: `http://seq.mydomain.com`
     - Tracing: `http://zipkin.mydomain.com`
     - Store Application: `http://simplestore-graphql-api.local`
+    - Dapr's dashboard: `http://localhost:8080`
+    
 
 2. To access sqlserver
 

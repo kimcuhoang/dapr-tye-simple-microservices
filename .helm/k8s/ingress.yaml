@@ -12,7 +12,13 @@ spec:
   - host: simplestore-graphql-api.local
     http:
       paths:
-      - backend:
+      - path: /
+        backend:
           serviceName: graphql-api
           servicePort: 80
-        path: /
+  - http:
+      paths:
+        - backend:
+            serviceName: dapr-dashboard
+            servicePort: 8080
+      
