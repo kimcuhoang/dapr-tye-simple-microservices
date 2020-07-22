@@ -5,7 +5,7 @@
 #    https://aka.ms/AA7q20u
 #
 name: simple-microservices
-registry: kimcu
+#registry: kimcu
 extensions:
   - name: zipkin
 
