@@ -6,17 +6,16 @@ using SimpleStore.Infrastructure.Common.Tye;
 using SimpleStore.Infrastructure.EfCore.HostedService;
 using SimpleStore.Infrastructure.EfCore.Persistence;
 using System.Reflection;
-using Microsoft.Extensions.Logging;
 
 namespace SimpleStore.Infrastructure.EfCore
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddEfCore<TDbContext>(this IServiceCollection services, 
+        public static IServiceCollection AddEfCore<TDbContext>(this IServiceCollection services,
+                                                    IHealthChecksBuilder healthChecksBuilder,
                                                     IConfiguration configuration, 
                                                     Assembly fromAssembly) where TDbContext : DbContext
         {
-
             services
                 .AddDbContext<DbContext, TDbContext>((provider, opts) =>
                 {
@@ -38,6 +37,8 @@ namespace SimpleStore.Infrastructure.EfCore
                     })
                 .AddHostedService<EfCoreMigrationHostedService>()
                 .AddScoped(typeof(IPipelineBehavior<,>), typeof(PersistenceBehavior<,>));
+
+            healthChecksBuilder.AddDbContextCheck<DbContext>();
 
             return services;
         }

@@ -21,23 +21,18 @@ An example of building .NET Core microservices with [Dapr](https://github.com/da
     - [Service Invocation (aka Service Discovery)](https://github.com/dapr/docs/blob/master/concepts/service-invocation/README.md)
         - Listing products at `products-api` within inventories information from `inventories-api`
         
-2. Observability
+1. Observability
     - [Distributed Tracing](https://github.com/dapr/samples/blob/master/8.observability/README.md) with [zipkin](https://zipkin.io/)
 
+1. [Ingress](https://github.com/dotnet/tye/blob/0.4/docs/recipes/ingress.md)
 
 ## Prerequisites
 
 1. .NET Core 3.1
 1. Docker for desktop
-1. [Install Dapr](https://github.com/dapr/docs/blob/master/getting-started/environment-setup.md#installing-dapr-cli)
-1. [Install Tye](https://github.com/dotnet/tye/blob/master/docs/getting_started.md)
-1. Copy the following files from `.\components` into `%UserProdfile%\.dapr\components` (create it manually if it has not existed yet).
-    - **pubsub.yaml**
-    - **statestore.yaml**
-    - **zipkin.yaml**
-1. Change the database information in `appsettings.json` files at 
-    - `.\src\Services\ProductCatalog\SimpleStore.ProductCatalogApi\appsettings.json`
-    - `.\src\Services\Inventories\SimpleStore.InventoriesApi\appsettings.json`
+1. [Install Dapr 0.9](https://github.com/dapr/docs/blob/master/getting-started/environment-setup.md#installing-dapr-cli)
+1. [Install Tye 0.4](https://github.com/dotnet/tye/blob/master/docs/getting_started.md)
+
 
 ## Running Locally
 
@@ -49,7 +44,7 @@ There are **2 options** to start services
 
 1. [Starts Services with Darp](/docs/start_services_with_dapr.md)
 
-    - By running this mode, we use **Tye** as **docker-compose** to start the infrastructure, i.e. zipkin and seq. Then, all services has been started by `dapr run` command.
+    - By running this mode, we use **Tye** as **docker-compose** to start the infrastructure, i.e. **seq** and **sqlserver**. Then, all services will be started manually with `dapr run` command.
 
 ### Why do we need an option to start services with Dapr while Tye can start with only one command?
 
@@ -83,6 +78,7 @@ After experience on locally and see how Tye is useful, then we may want to step 
 - [Serilog Best Practices](https://benfoster.io/blog/serilog-best-practices/)
 - [5 ways to set the URLs for an ASP.NET Core app](https://andrewlock.net/5-ways-to-set-the-urls-for-an-aspnetcore-app/)
 - [Introduction Project Tye](https://devblogs.microsoft.com/aspnet/introducing-project-tye/)
+- [MediatR Pipeline Behaviour in ASP.NET Core – Logging and Validation](https://www.codewithmukesh.com/blog/mediatr-pipeline-behaviour/)
 
 
 ## Give a Star! :star:

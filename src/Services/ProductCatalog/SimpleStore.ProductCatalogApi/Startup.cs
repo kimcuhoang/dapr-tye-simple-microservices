@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleStore.Infrastructure.Common.Extensions;
 using SimpleStore.Infrastructure.Common.GraphQL;
+using SimpleStore.Infrastructure.Common.HealthCheck;
 using SimpleStore.ProductCatalog.Infrastructure.EfCore;
 using SimpleStore.ProductCatalogApi.GraphQL.ObjectTypes;
 
@@ -15,14 +16,16 @@ namespace SimpleStore.ProductCatalogApi
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
 
+            var healthCheckBuilder = services.AddHealthChecks();
+
             services
-                .AddCustomInfrastructure(this.Configuration)
+                .AddCustomInfrastructure(this.Configuration, healthCheckBuilder)
                 .AddCustomGraphQL(cfg =>
                 {
                     cfg.RegisterQueryType<QueryType>();
@@ -31,9 +34,12 @@ namespace SimpleStore.ProductCatalogApi
         }
 
         public void Configure(IApplicationBuilder app)
-            => app.UseCustomApplicationBuilder().UseCustomGraphQL(endpoints =>
+            => app
+                .UseCustomApplicationBuilder()
+                .UseCustomGraphQL(endpoints =>
                 {
                     endpoints.MapControllers();
+                    endpoints.UseCustomMapHealthCheck();
                 });
     }
 }

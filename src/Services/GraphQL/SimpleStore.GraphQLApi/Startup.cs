@@ -11,6 +11,7 @@ using SimpleStore.Infrastructure.Common.Options;
 using SimpleStore.Infrastructure.Common.Tye;
 using System;
 using Microsoft.Extensions.Options;
+using SimpleStore.Infrastructure.Common.HealthCheck;
 
 namespace SimpleStore.GraphQLApi
 {
@@ -18,11 +19,12 @@ namespace SimpleStore.GraphQLApi
     {
         public Startup(IConfiguration configuration) => this.Configuration = configuration;
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
+            services.AddHealthChecks();
 
             // C# 8.0, this is local function
 
@@ -56,6 +58,11 @@ namespace SimpleStore.GraphQLApi
         }
 
         public void Configure(IApplicationBuilder app)
-            => app.UseCustomApplicationBuilder().UseCustomGraphQL();
+            => app
+                .UseCustomApplicationBuilder()
+                .UseCustomGraphQL(endpoints =>
+                {
+                    endpoints.UseCustomMapHealthCheck();
+                });
     }
 }

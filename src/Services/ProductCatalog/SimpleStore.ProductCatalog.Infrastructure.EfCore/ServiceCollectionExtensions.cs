@@ -16,10 +16,12 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCustomInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddCustomInfrastructure(this IServiceCollection services, 
+                                                                    IConfiguration configuration,
+                                                                    IHealthChecksBuilder healthChecksBuilder)
         {
             services
-                .AddEfCore<ProductCatalogDbContext>(configuration, Assembly.GetExecutingAssembly())
+                .AddEfCore<ProductCatalogDbContext>(healthChecksBuilder, configuration, Assembly.GetExecutingAssembly())
                 .AddAutoMapper(Assembly.GetExecutingAssembly())
                 .AddMediatR(Assembly.GetExecutingAssembly())
                 .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())

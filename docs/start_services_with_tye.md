@@ -18,17 +18,17 @@
 
     ![GraphQL Example](images/Tye_GraphQL_Api.png)
 
-- We also can start the browser at `http://simplestore-graphql-api.local` because we're using the **Ingress** feature, of course, from Tye (please note that we have to add this host to **hosts** file)
+- We also can start the browser at `http://localhost` since we're using the **Ingress** feature
 
     ```yaml
     ingress:
     - name: simplestore-ingress
-        bindings:
-        - port: 8080
-            protocol: http
-        rules:
-        - host: simplestore-graphql-api.local
-            service: graphql-api
+      bindings:
+        - port: 80
+          protocol: http
+      rules:
+        - path: /
+          service: graphql-api
     ```
 
 ## For Observability

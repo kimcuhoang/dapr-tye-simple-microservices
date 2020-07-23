@@ -15,36 +15,70 @@ extensions:
   
   - name: seq
 
+ingress:
+  - name: simplestore-ingress
+    bindings:
+      - port: 80
+        protocol: http
+    rules:
+      - host: simplestore-graphql-api.local
+        path: /
+        service: graphql-api
+
 services:
   - name: graphql-api
     project: src/Services/GraphQL/SimpleStore.GraphQLApi/SimpleStore.GraphQLApi.csproj
-    replicas: 1
     buildProperties:
       - name: Configuration
         value: Release
     env:
       - name: ASPNETCORE_ENVIRONMENT
         value: "Production"
+    replicas: 2
+    liveness:
+      http:
+        path: /lively
+      initialDelay: 1
+    readiness:
+      http:
+        path: /ready
+      initialDelay: 1
     
   - name: products-api
     project: src/Services/ProductCatalog/SimpleStore.ProductCatalogApi/SimpleStore.ProductCatalogApi.csproj
-    replicas: 1
     buildProperties:
       - name: Configuration
         value: Release
     env:
       - name: ASPNETCORE__ENVIRONMENT
         value: "Production"
+    replicas: 2
+    liveness:
+      http:
+        path: /lively
+      initialDelay: 1
+    readiness:
+      http:
+        path: /ready
+      initialDelay: 1
 
   - name: inventories-api
     project: src/Services/Inventories/SimpleStore.InventoriesApi/SimpleStore.InventoriesApi.csproj
-    replicas: 1
     buildProperties:
       - name: Configuration
         value: Release
     env:
       - name: ASPNETCORE__ENVIRONMENT
         value: "Production"
+    replicas: 2
+    liveness:
+      http:
+        path: /lively
+      initialDelay: 1
+    readiness:
+      http:
+        path: /ready
+      initialDelay: 1
 
   - name: sqlserver
     image: mcr.microsoft.com/mssql/server:2019-latest
