@@ -20,7 +20,8 @@ namespace SimpleStore.Infrastructure.Common.Extensions
             hostBuilder.ConfigureWebHostDefaults(webHostBuilder =>
             {
                 webHostBuilder
-                    .UseStartup(startupType).CaptureStartupErrors(true)
+                    .UseStartup(startupType)
+                    .CaptureStartupErrors(true)
                     .ConfigureAppConfiguration((context, configurationBuilder) =>
                     {
                         configurationBuilder.AddConfiguration(configuration);
