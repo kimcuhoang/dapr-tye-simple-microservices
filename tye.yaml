@@ -18,10 +18,10 @@ extensions:
 ingress:
   - name: simplestore-ingress
     bindings:
-      - port: 8080
+      - port: 80
         protocol: http
     rules:
-      - host: simplestore-graphql-api.local
+      - path: /
         service: graphql-api
 
 services:
