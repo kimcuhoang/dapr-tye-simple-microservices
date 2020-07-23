@@ -110,12 +110,8 @@ Open PowerShell at `D:\forks-netcore\tye\samples\dapr\helm\`
 1. Add hosts 
 
     ```text
-    127.0.0.1	seq.mydomain.com
-    127.0.0.1	ingestion.seq.mydomain.com
-
-    127.0.0.1	zipkin.mydomain.com
-    127.0.0.1	collector.zipkin.mydomain.com
-
+    127.0.0.1	seq.simplestore.com
+    127.0.0.1	zipkin.simplestore.com
     127.0.0.1	simplestore-graphql-api.local
     ```
 
@@ -123,10 +119,10 @@ Open PowerShell at `D:\forks-netcore\tye\samples\dapr\helm\`
 
 1. Open browser with the following addresses
 
-    - Logging: `http://seq.mydomain.com`
-    - Tracing: `http://zipkin.mydomain.com`
+    - Logging: `http://seq.simplestore.com`
+    - Tracing: `http://zipkin.simplestore.com`
     - Store Application: `http://simplestore-graphql-api.local`
-    - Dapr's dashboard: `http://localhost:8080`
+    - Dapr's dashboard: `http://localhost`
     
 
 2. To access sqlserver

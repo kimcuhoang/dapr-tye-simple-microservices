@@ -9,13 +9,6 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: simplestore-graphql-api.local
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: graphql-api
-          servicePort: 80
   - http:
       paths:
         - backend:

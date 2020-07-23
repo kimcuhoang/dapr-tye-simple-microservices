@@ -19,16 +19,16 @@ ingress:
       kubernetes.io/ingress.class: nginx
   
 ui:
-    ingress:
-        enabled: true
-        path: /
-        hosts:
-            - seq.mydomain.com
+  service:
+    port: 80
+  ingress:
+    enabled: true
+    path: /
+    hosts:
+      - seq.simplestore.com
+
 ingestion:
-    ingress:
-        enabled: true
-        path: /
-        hosts:
-            - ingestion.seq.mydomain.com
+  service:
+    port: 5341
 
 
