@@ -25,7 +25,7 @@ ui:
     enabled: true
     path: /
     hosts:
-      - seq.simplestore.com
+      - seq.simplestore.local
 
 ingestion:
   service:
