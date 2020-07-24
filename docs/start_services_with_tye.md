@@ -5,7 +5,7 @@
 1. Start with `tye run` command
 
     ```bash
-    tye run --dashboard
+    tye run .\tye.yaml --dashboard
     ```
 
 1. It'll open web browser automatically with the dashboard at `http://127.0.0.1:8000/`
@@ -14,7 +14,7 @@
 
 ## Experience our services via graphql
 
-- Now, let open the `graphql-api` by clicking on the link `http://localhost:63010` in the screenshot; then enjoy with some examples in [here](examples_graphql_query_mutation.md), for example
+- Now, let open the `graphql-api` by clicking on the link `http://localhost:58713` in the screenshot; then enjoy with some examples in [here](examples_graphql_query_mutation.md), for example
 
     ![GraphQL Example](images/Tye_GraphQL_Api.png)
 

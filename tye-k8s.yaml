@@ -21,9 +21,11 @@ ingress:
       - port: 80
         protocol: http
     rules:
-      - host: simplestore-graphql-api.local
-        path: /
+      - host: graphql.simplestore.local
         service: graphql-api
+      - host: product.simplestore.local
+        service: products-api
+      
 
 services:
   - name: graphql-api

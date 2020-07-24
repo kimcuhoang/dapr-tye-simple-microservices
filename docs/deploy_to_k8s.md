@@ -36,18 +36,12 @@ helm repo update
 
 ### Install Helm's charts
 
-Open PowerShell at `D:\forks-netcore\tye\samples\dapr\helm\`
+Open PowerShell at `.\.helm`
 
 1. Install MS SqlServer
 
     ```powershell
     helm install sqlserver stable/mssql-linux --version 0.11.2 -f .\sqlserver.dev.yaml
-    ```
-
-1. Install Redis
-
-    ```powershell
-    helm install redis bitnami/redis -f .\redis.dev.yaml
     ```
 
 1. Install NGINX Ingress Controller
@@ -68,7 +62,14 @@ Open PowerShell at `D:\forks-netcore\tye\samples\dapr\helm\`
     helm install zipkin carlosjgp/zipkin --version 0.2.0 -f .\zipkin.dev.yaml
     ```
 
+
 ### Install Dapr and its components
+
+1. Install Redis
+
+    ```powershell
+    helm install redis bitnami/redis -f .\redis.dev.yaml
+    ```
 
 1. Install Dapr on Kubernetes
 
@@ -101,28 +102,73 @@ Open PowerShell at `D:\forks-netcore\tye\samples\dapr\helm\`
     -  Enter the URI to use for service 'seq': 
         > http://seq:5341
 
-1. Deploy Ingress
-
-    ```powershell
-    kubectl apply -f .\k8s
-    ```
-
 1. Add hosts 
 
     ```text
-    127.0.0.1	seq.simplestore.com
-    127.0.0.1	zipkin.simplestore.com
-    127.0.0.1	simplestore-graphql-api.local
+    127.0.0.1	seq.simplestore.local
+    127.0.0.1	zipkin.simplestore.local
+    
+    127.0.0.1	product.simplestore.local
+    127.0.0.1	graphql.simplestore.local
     ```
+
+### Deploy chart
+
+#### Install Prometheus & Grafana
+
+1. Install Prometheus
+
+    ```powershell
+    helm install dapr-prom stable/prometheus
+    ```
+
+1. Install Grafana
+
+    ```powershell
+    helm install grafana stable/grafana -f .\grafana.dev.yaml
+    ```
+### Update hosts file
+
+```text
+127.0.0.1	chart.simplestore.local
+```
+
+### Configure data-source for Grafana
+
+1. Get password for **admin** account of Grafana
+
+    ```powershell
+    $password = kubectl get secret grafana -o jsonpath="{.data.admin-password}"; [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($password))
+    ```
+
+    ![Grafana admin password](images/Grafana_Admin_Password.png)
+
+1. Open browser at `http://chart.simplestore.local` with the following credential
+    - **Username**: admin
+    - **Password**: [get-from-previous-step]
+    > PLGTbcH6qOH0J99ls22V9rG6lNVAnxmbuO5Lf07O
+    
+1. Click Configuration Settings -> Data Sources
+
+    ![Add DataSource](images/Grafana_DataSource_Prometheus.png)
+
+1. Configure for Prometheus DataSource
+
+    ![Configure Prometheus Datasource](images/Grafana_DataSource_Prometheus_Settings.png)
+
+1. Import dashboard
+
+    ![Import Dashboard](images/Grafana_Import_Dashboard.png)
 
 ## How to use
 
 1. Open browser with the following addresses
 
-    - Logging: `http://seq.simplestore.com`
-    - Tracing: `http://zipkin.simplestore.com`
-    - Store Application: `http://simplestore-graphql-api.local`
-    - Dapr's dashboard: `http://localhost`
+    - Logging: `http://seq.simplestore.local`
+    - Tracing: `http://zipkin.simplestore.local`
+    - GraphQL Api: `http://graphql.simplestore.local`
+    - Products Api: `http://product.simplestore.local`
+    - Grafana: `http://chart.simplestore.local`
     
 
 2. To access sqlserver
@@ -141,7 +187,7 @@ Open PowerShell at `D:\forks-netcore\tye\samples\dapr\helm\`
 ```powershell
 tye undeploy ..\tye-k8s.yaml
 
-helm uninstall sqlserver redis seq zipkin nginx dapr
+helm uninstall sqlserver redis seq zipkin nginx dapr dapr-prom grafana
 
 kubectl delete -f .\components
 
