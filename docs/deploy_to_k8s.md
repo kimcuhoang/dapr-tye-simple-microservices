@@ -162,16 +162,15 @@ Open PowerShell at `.\.helm`
 
 ## How to use
 
-1. Open browser with the following addresses
+1. View Logging at `http://seq.simplestore.local`
 
-    - Logging: `http://seq.simplestore.local`
-    - Tracing: `http://zipkin.simplestore.local`
-    - GraphQL Api: `http://graphql.simplestore.local`
-    - Products Api: `http://product.simplestore.local`
-    - Grafana: `http://chart.simplestore.local`
-    
+1. View Tracing at `http://zipkin.simplestore.local`
 
-2. To access sqlserver
+1. View Charts at `http://chart.simplestore.local`
+
+1. Open `http://graphql.simplestore.local`; then use some examples in [here](examples_graphql_query_mutation.md)
+
+1. To access sqlserver
 
     - Forward port **1433**
         ```powershell
@@ -191,5 +190,4 @@ helm uninstall sqlserver redis seq zipkin nginx dapr dapr-prom grafana
 
 kubectl delete -f .\components
 
-kubectl delete -f .\k8s
 ```
