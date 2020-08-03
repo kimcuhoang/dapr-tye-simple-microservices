@@ -8,7 +8,7 @@ name: simple-microservices
 
 services:
 - name: seq
-  image: datalust/seq
+  image: datalust/seq:2020.1
   env:
     - name: ACCEPT_EULA
       value: "Y"

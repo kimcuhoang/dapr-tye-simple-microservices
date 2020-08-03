@@ -61,7 +61,7 @@ namespace SimpleStore.Infrastructure.EfCore.Persistence
         {
             var entities = ChangeTracker.Entries().Select(e => e.Entity);
 
-            var aggregateRoots = entities.Where(IsAggregateRoot).OfType<IAggregateRoot>();
+            var aggregateRoots = entities.Where(x => x is IAggregateRoot).OfType<IAggregateRoot>();
 
             foreach (var aggregateRoot in aggregateRoots)
             {
@@ -72,12 +72,6 @@ namespace SimpleStore.Infrastructure.EfCore.Persistence
 
                 aggregateRoot.ClearUncommittedEvents();
             }
-        }
-
-        private bool IsAggregateRoot(object obj)
-        {
-            var memberInfo = obj.GetType().BaseType;
-            return memberInfo != null && (!memberInfo.IsGenericType && typeof(IAggregateRoot).IsAssignableFrom(memberInfo));
         }
     }
 }
