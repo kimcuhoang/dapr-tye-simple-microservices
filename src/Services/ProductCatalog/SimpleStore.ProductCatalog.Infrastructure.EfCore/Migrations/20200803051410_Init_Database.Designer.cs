@@ -10,21 +10,20 @@ using SimpleStore.ProductCatalog.Infrastructure.EfCore.Persistence;
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(ProductCatalogDbContext))]
-    [Migration("20200326101450_Init_DB")]
-    partial class Init_DB
+    [Migration("20200803051410_Init_Database")]
+    partial class Init_Database
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2")
+                .HasAnnotation("ProductVersion", "3.1.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("SimpleStore.ProductCatalog.Domain.Models.Product", b =>
                 {
-                    b.Property<Guid>("ProductId")
-                        .HasColumnName("Id")
+                    b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
@@ -33,26 +32,26 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ProductId");
+                    b.HasKey("Id");
 
                     b.ToTable("Product");
 
                     b.HasData(
                         new
                         {
-                            ProductId = new Guid("4a2abe51-e895-49be-878a-0729535ba92e"),
+                            Id = new Guid("4a2abe51-e895-49be-878a-0729535ba92e"),
                             Code = "PRD-1",
                             Name = "Product-1"
                         },
                         new
                         {
-                            ProductId = new Guid("1d250f1d-1546-47f3-92d2-31fbf87a3511"),
+                            Id = new Guid("1d250f1d-1546-47f3-92d2-31fbf87a3511"),
                             Code = "PRD-2",
                             Name = "Product-2"
                         },
                         new
                         {
-                            ProductId = new Guid("4012d62c-2bea-42eb-9e64-d7b22185c4f0"),
+                            Id = new Guid("4012d62c-2bea-42eb-9e64-d7b22185c4f0"),
                             Code = "PRD-3",
                             Name = "Product-3"
                         });

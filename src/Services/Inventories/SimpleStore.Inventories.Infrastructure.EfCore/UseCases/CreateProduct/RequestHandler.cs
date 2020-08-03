@@ -23,7 +23,7 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.UseCases.CreateProduct
 
             var response = new CreateProductResponse
             {
-                ProductId = entry.Entity.ProductId,
+                ProductId = entry.Entity.Id,
                 Code = entry.Entity.Code
             };
 

@@ -8,6 +8,6 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Dto
     {
         public ProductMappingProfile()
             => CreateMap<Product, ProductDto>()
-                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => (Guid) src.ProductId));
+                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => (Guid) src.Id));
     }
 }

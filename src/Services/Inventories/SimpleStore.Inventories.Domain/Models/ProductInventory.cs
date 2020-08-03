@@ -3,10 +3,8 @@ using SimpleStore.Domain.Models;
 
 namespace SimpleStore.Inventories.Domain.Models
 {
-    public class ProductInventory : EntityBase
+    public class ProductInventory : EntityBase<ProductInventoryId>
     {
-        public ProductInventoryId ProductInventoryId => (ProductInventoryId) this.Id;
-
         public int Quantity { get; private set; }
         public bool CanPurchase { get; private set; }
 

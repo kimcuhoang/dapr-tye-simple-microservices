@@ -24,7 +24,7 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.UseCases.AddOrUpdateProd
             var inventoryQuery = this._dbContext.Set<Inventory>();
             
             var inventory =
-                await inventoryQuery.SingleOrDefaultAsync(x => x.InventoryId == request.InventoryId, cancellationToken);
+                await inventoryQuery.SingleOrDefaultAsync(x => x.Id == request.InventoryId, cancellationToken);
 
             if (inventory == null)
             {
@@ -32,7 +32,7 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.UseCases.AddOrUpdateProd
             }
 
             var product = await this._dbContext.Set<Product>()
-                .SingleOrDefaultAsync(x => x.ProductId == request.ProductId, cancellationToken);
+                .SingleOrDefaultAsync(x => x.Id == request.ProductId, cancellationToken);
 
             if (product == null)
             {
@@ -56,8 +56,8 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.UseCases.AddOrUpdateProd
 
             return new AddOrUpdateProductInventoryResponse
             {
-                ProductId = product.ProductId,
-                InventoryId = inventory.InventoryId,
+                ProductId = product.Id,
+                InventoryId = inventory.Id,
                 Code = product.Code,
                 InventoryName = inventory.Name,
                 Quantity = productInventory.Quantity,

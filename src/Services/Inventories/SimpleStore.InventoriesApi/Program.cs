@@ -16,13 +16,12 @@ namespace SimpleStore.InventoriesApi
         {
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
 
-            var configuration = ConfigurationExtensions.BuildConfiguration(Directory.GetCurrentDirectory());
-
-            CreateHostBuilder(args, configuration).Build().Run();
+            CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args, IConfiguration configuration)
+        public static IHostBuilder CreateHostBuilder(string[] args)
         {
+            var configuration = ConfigurationExtensions.BuildConfiguration(Directory.GetCurrentDirectory());
             var serviceOptions = new ServiceOptions();
 
             var serviceOptionsSection = configuration.GetSection("Services");

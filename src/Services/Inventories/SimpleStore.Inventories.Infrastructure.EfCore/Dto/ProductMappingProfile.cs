@@ -10,10 +10,10 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Dto
         {
             CreateMap<Product, ProductDto>()
                 .ForMember(dest => dest.ProductId,
-                    arg => arg.MapFrom(src => (Guid) src.ProductId));
+                    arg => arg.MapFrom(src => (Guid) src.Id));
 
             CreateMap<ProductInventory, InventoryProductDto>()
-                .ForMember(dest => dest.InventoryId, arg => arg.MapFrom(src => (Guid)src.Inventory.InventoryId))
+                .ForMember(dest => dest.InventoryId, arg => arg.MapFrom(src => (Guid)src.Inventory.Id))
                 .ForMember(dest => dest.Name, arg => arg.MapFrom(src => src.Inventory.Name))
                 .ForMember(dest => dest.Location, arg => arg.MapFrom(src => src.Inventory.Location));
         }

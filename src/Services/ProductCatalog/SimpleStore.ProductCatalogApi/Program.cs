@@ -16,14 +16,13 @@ namespace SimpleStore.ProductCatalogApi
         {
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
 
-            var configuration = ConfigurationExtensions.BuildConfiguration(Directory.GetCurrentDirectory());
-
-            CreateHostBuilder(args, configuration).Build().Run();
+            CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args, IConfiguration configuration)
+        public static IHostBuilder CreateHostBuilder(string[] args)
         {
             var serviceOptions = new ServiceOptions();
+            var configuration = ConfigurationExtensions.BuildConfiguration(Directory.GetCurrentDirectory());
 
             var serviceOptionsSection = configuration.GetSection("Services");
             serviceOptionsSection.Bind(serviceOptions);

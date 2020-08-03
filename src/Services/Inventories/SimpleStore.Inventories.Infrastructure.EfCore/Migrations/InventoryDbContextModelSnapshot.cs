@@ -15,14 +15,13 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2")
+                .HasAnnotation("ProductVersion", "3.1.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("SimpleStore.Inventories.Domain.Models.Inventory", b =>
                 {
-                    b.Property<Guid>("InventoryId")
-                        .HasColumnName("Id")
+                    b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Location")
@@ -31,26 +30,26 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("InventoryId");
+                    b.HasKey("Id");
 
                     b.ToTable("Inventory");
 
                     b.HasData(
                         new
                         {
-                            InventoryId = new Guid("8481c547-5c86-4ab0-9b1d-feca5f83dc50"),
+                            Id = new Guid("a6e22a9f-286f-4767-9b5c-3a2be7d6e596"),
                             Location = "Inventory-1-Location",
                             Name = "Inventory-1"
                         },
                         new
                         {
-                            InventoryId = new Guid("3cc932b6-30e2-49ae-81be-8e60fbd2d099"),
+                            Id = new Guid("1730b960-4e6f-4d4f-9baf-be57fc4678e9"),
                             Location = "Inventory-2-Location",
                             Name = "Inventory-2"
                         },
                         new
                         {
-                            InventoryId = new Guid("6312e285-4ddf-49f1-bb48-748cf0007f8f"),
+                            Id = new Guid("df6f5b85-a625-4f23-a08f-8daed0636ecc"),
                             Location = "Inventory-3-Location",
                             Name = "Inventory-3"
                         });
@@ -58,38 +57,37 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Migrations
 
             modelBuilder.Entity("SimpleStore.Inventories.Domain.Models.Product", b =>
                 {
-                    b.Property<Guid>("ProductId")
-                        .HasColumnName("Id")
+                    b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ProductId");
+                    b.HasKey("Id");
 
                     b.ToTable("Product");
 
                     b.HasData(
                         new
                         {
-                            ProductId = new Guid("4a2abe51-e895-49be-878a-0729535ba92e"),
+                            Id = new Guid("4a2abe51-e895-49be-878a-0729535ba92e"),
                             Code = "PRD-1"
                         },
                         new
                         {
-                            ProductId = new Guid("1d250f1d-1546-47f3-92d2-31fbf87a3511"),
+                            Id = new Guid("1d250f1d-1546-47f3-92d2-31fbf87a3511"),
                             Code = "PRD-2"
                         },
                         new
                         {
-                            ProductId = new Guid("4012d62c-2bea-42eb-9e64-d7b22185c4f0"),
+                            Id = new Guid("4012d62c-2bea-42eb-9e64-d7b22185c4f0"),
                             Code = "PRD-3"
                         });
                 });
 
             modelBuilder.Entity("SimpleStore.Inventories.Domain.Models.ProductInventory", b =>
                 {
-                    b.Property<Guid>("ProductInventoryId")
+                    b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("CanPurchase")
@@ -104,7 +102,7 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductInventoryId");
+                    b.HasKey("Id");
 
                     b.HasIndex("InventoryId");
 
@@ -115,49 +113,49 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Migrations
                     b.HasData(
                         new
                         {
-                            ProductInventoryId = new Guid("82165589-744e-46fe-9262-3fd9c4d150d8"),
+                            Id = new Guid("45b1c74d-7175-4de8-a41f-b02d48728745"),
                             CanPurchase = true,
-                            InventoryId = new Guid("8481c547-5c86-4ab0-9b1d-feca5f83dc50"),
+                            InventoryId = new Guid("a6e22a9f-286f-4767-9b5c-3a2be7d6e596"),
                             ProductId = new Guid("4a2abe51-e895-49be-878a-0729535ba92e"),
                             Quantity = 10
                         },
                         new
                         {
-                            ProductInventoryId = new Guid("54da83c1-978f-4486-906a-04a292513c43"),
+                            Id = new Guid("2d289c08-5b3d-44a1-b498-dd306702660d"),
                             CanPurchase = true,
-                            InventoryId = new Guid("8481c547-5c86-4ab0-9b1d-feca5f83dc50"),
+                            InventoryId = new Guid("a6e22a9f-286f-4767-9b5c-3a2be7d6e596"),
                             ProductId = new Guid("4012d62c-2bea-42eb-9e64-d7b22185c4f0"),
                             Quantity = 5
                         },
                         new
                         {
-                            ProductInventoryId = new Guid("e7404688-e264-4276-9053-a83650637dc6"),
+                            Id = new Guid("6c82fd1d-238a-41d4-8957-06be16773531"),
                             CanPurchase = true,
-                            InventoryId = new Guid("3cc932b6-30e2-49ae-81be-8e60fbd2d099"),
+                            InventoryId = new Guid("1730b960-4e6f-4d4f-9baf-be57fc4678e9"),
                             ProductId = new Guid("4a2abe51-e895-49be-878a-0729535ba92e"),
                             Quantity = 3
                         },
                         new
                         {
-                            ProductInventoryId = new Guid("f7d9408b-adf3-4b92-ae9a-f08f1fa50f11"),
+                            Id = new Guid("75adb09b-37de-4a56-9ae9-4abab87578fc"),
                             CanPurchase = true,
-                            InventoryId = new Guid("3cc932b6-30e2-49ae-81be-8e60fbd2d099"),
+                            InventoryId = new Guid("1730b960-4e6f-4d4f-9baf-be57fc4678e9"),
                             ProductId = new Guid("1d250f1d-1546-47f3-92d2-31fbf87a3511"),
                             Quantity = 1
                         },
                         new
                         {
-                            ProductInventoryId = new Guid("17ff10f9-8bb3-4467-8265-f1018c7c4748"),
+                            Id = new Guid("a6b9f7f8-821a-4b61-802b-497d452f2a63"),
                             CanPurchase = true,
-                            InventoryId = new Guid("6312e285-4ddf-49f1-bb48-748cf0007f8f"),
+                            InventoryId = new Guid("df6f5b85-a625-4f23-a08f-8daed0636ecc"),
                             ProductId = new Guid("1d250f1d-1546-47f3-92d2-31fbf87a3511"),
                             Quantity = 9
                         },
                         new
                         {
-                            ProductInventoryId = new Guid("4ae132f8-c42f-4d2a-be63-68f3346e51a3"),
+                            Id = new Guid("b356a1c0-26a4-4af6-ad25-6db86ca21fb7"),
                             CanPurchase = true,
-                            InventoryId = new Guid("6312e285-4ddf-49f1-bb48-748cf0007f8f"),
+                            InventoryId = new Guid("df6f5b85-a625-4f23-a08f-8daed0636ecc"),
                             ProductId = new Guid("4012d62c-2bea-42eb-9e64-d7b22185c4f0"),
                             Quantity = 8
                         });

@@ -48,9 +48,9 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Persistence
             //https://stackoverflow.com/questions/60040917/ef-core-seeding-mechanism-isnt-working-with-relationships
             .Select(x => new
             {
-                ProductInventoryId = x.ProductInventoryId,
-                ProductId = x.Product.ProductId,
-                InventoryId = x.Inventory.InventoryId,
+                Id = x.Id,
+                ProductId = x.Product.Id,
+                InventoryId = x.Inventory.Id,
                 Quantity = x.Quantity,
                 CanPurchase = x.CanPurchase
             });

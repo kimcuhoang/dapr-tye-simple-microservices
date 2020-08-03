@@ -10,11 +10,8 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.Mappings
 
         public void Configure(EntityTypeBuilder<ProductInventory> builder)
         {
-            builder.HasKey(x => x.ProductInventoryId);
-
             builder
-                .Property(x => x.ProductInventoryId)
-                .HasField("Id")
+                .Property(x => x.Id)
                 .UsePropertyAccessMode(PropertyAccessMode.Field)
                 .HasConversion(x => x.Id, id => (ProductInventoryId)id);
 
