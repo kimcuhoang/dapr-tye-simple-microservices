@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.Migrations
 {
-    public partial class Init_DB : Migration
+    public partial class Init_Database : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

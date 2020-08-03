@@ -25,7 +25,7 @@ namespace SimpleStore.ProductCatalog.Infrastructure.EfCore.UseCases.UpdateProduc
         public async Task<ProductDto> Handle(UpdateProductRequest request, CancellationToken cancellationToken)
         {
             var productDbSet = this._dbContext.Set<Product>();
-            var product = await productDbSet.SingleOrDefaultAsync(x => x.ProductId == request.ProductId, cancellationToken: cancellationToken);
+            var product = await productDbSet.SingleOrDefaultAsync(x => x.Id == request.ProductId, cancellationToken: cancellationToken);
 
             if (product == null)
             {

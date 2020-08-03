@@ -22,14 +22,14 @@ namespace SimpleStore.Inventories.Infrastructure.EfCore.UseCases.GetProductsById
             var products = await query.AsNoTracking()
                 .Include(p => p.Inventories)
                 .ThenInclude(x => x.Inventory)
-                .Where(p => request.ProductIds.Any(id => p.ProductId == id))
+                .Where(p => request.ProductIds.Any(id => p.Id == id))
                 .Select(x => new GetProductsByIdsResponse.ProductResult
                 {
-                    Id = x.ProductId,
+                    Id = x.Id,
                     Code = x.Code,
                     Inventories = x.Inventories.Select(i => new GetProductsByIdsResponse.ProductInventoryResult
                     {
-                        InventoryId = i.Inventory.InventoryId,
+                        InventoryId = i.Inventory.Id,
                         Name = i.Inventory.Name,
                         Location = i.Inventory.Location,
                         CanPurchase = i.CanPurchase,

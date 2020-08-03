@@ -2,13 +2,13 @@
 
 namespace SimpleStore.Domain.Models
 {
-    public abstract class EntityBase : IEquatable<EntityBase>
+    public abstract class EntityBase<TIdentity> : IEquatable<EntityBase<TIdentity>>
     {
-        protected IdentityBase Id;
+        public TIdentity Id { get; protected set; }
 
         #region Constructors
 
-        protected EntityBase(IdentityBase id) => this.Id = id;
+        protected EntityBase(TIdentity id) => this.Id = id;
 
         protected EntityBase() { }
 
@@ -16,7 +16,7 @@ namespace SimpleStore.Domain.Models
 
         #region Implementation of IEquatable<Entity>
 
-        public bool Equals(EntityBase other)
+        public bool Equals(EntityBase<TIdentity> other)
         {
             if (ReferenceEquals(null, other)) return false;
 
@@ -33,7 +33,7 @@ namespace SimpleStore.Domain.Models
 
             if (obj.GetType() != this.GetType()) return false;
 
-            return Equals((EntityBase)obj);
+            return Equals((EntityBase<TIdentity>)obj);
         }
 
         public override int GetHashCode() => this.GetType().GetHashCode() * 907 + this.Id.GetHashCode();
@@ -46,7 +46,7 @@ namespace SimpleStore.Domain.Models
 
         #endregion
 
-        public static bool operator ==(EntityBase a, EntityBase b)
+        public static bool operator ==(EntityBase<TIdentity> a, EntityBase<TIdentity> b)
         {
             if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
                 return true;
@@ -57,9 +57,6 @@ namespace SimpleStore.Domain.Models
             return a.Equals(b);
         }
 
-        public static bool operator !=(EntityBase a, EntityBase b)
-        {
-            return !(a == b);
-        }
+        public static bool operator !=(EntityBase<TIdentity> a, EntityBase<TIdentity> b) => !(a == b);
     }
 }

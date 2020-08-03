@@ -5,10 +5,8 @@ using SimpleStore.Domain.Models;
 
 namespace SimpleStore.Inventories.Domain.Models
 {
-    public class Inventory : AggregateRoot
+    public class Inventory : AggregateRoot<InventoryId>
     {
-        public InventoryId InventoryId => (InventoryId)this.Id;
-
         public string Location { get; private set; }
         public string Name { get; private set; }
 

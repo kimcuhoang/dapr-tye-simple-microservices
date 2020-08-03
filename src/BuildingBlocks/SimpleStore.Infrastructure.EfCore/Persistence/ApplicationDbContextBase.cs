@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -25,7 +26,7 @@ namespace SimpleStore.Infrastructure.EfCore.Persistence
             if (types?.Any() != true) return;
 
             var customModelBuilderTypes = 
-                types.Where(x => x != null && typeof(ICustomModelBuilder).IsAssignableFrom(x) && x != typeof(ICustomModelBuilder));
+                types.Where(x => typeof(ICustomModelBuilder).IsAssignableFrom(x) && x != typeof(ICustomModelBuilder));
 
             foreach (var builderType in customModelBuilderTypes)
             {
@@ -60,27 +61,17 @@ namespace SimpleStore.Infrastructure.EfCore.Persistence
         {
             var entities = ChangeTracker.Entries().Select(e => e.Entity);
 
-            var aggregateRoots = entities.Where(IsAggregateRoot)
-                                                        .Cast<AggregateRoot>()
-                                                        .ToList();
+            var aggregateRoots = entities.Where(x => x is IAggregateRoot).OfType<IAggregateRoot>();
 
             foreach (var aggregateRoot in aggregateRoots)
             {
-                var uncommittedEvents = aggregateRoot.UncommittedEvents;
-
-                foreach (var @event in uncommittedEvents)
+                foreach (var @event in aggregateRoot.UncommittedEvents)
                 {
                     this._domainEventDispatcher.Dispatch(@event);
                 }
 
                 aggregateRoot.ClearUncommittedEvents();
             }
-        }
-
-        private bool IsAggregateRoot(object obj)
-        {
-            var memberInfo = obj.GetType().BaseType;
-            return memberInfo != null && (!memberInfo.IsGenericType && obj is AggregateRoot);
         }
     }
 }

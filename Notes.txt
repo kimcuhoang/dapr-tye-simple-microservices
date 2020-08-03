@@ -29,7 +29,9 @@ EntityFramework Commands:
 
 	- Use with dotnet ef tool
 		
-		dotnet ef migrations add [Migration-Name] --project src\Services\ProductCatalog\SimpleStore.ProductCatalog.Infrastructure.EfCore --startup-project src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
+		dotnet ef migrations add [Migration-Name] `
+		--project src\Services\ProductCatalog\SimpleStore.ProductCatalog.Infrastructure.EfCore `
+		--startup-project src\Services\ProductCatalog\SimpleStore.ProductCatalogApi
 
 
 2. Inventories
@@ -40,7 +42,9 @@ EntityFramework Commands:
 
 	- Use with dotnet ef tool
 
-		dotnet ef migrations add [Migration-Name] --project src\Services\Inventories\SimpleStore.Inventories.Infrastructure.EfCore --startup-project src\Services\Inventories\SimpleStore.InventoriesApi
+		dotnet ef migrations add [Migration-Name] -v `
+		--project src\Services\Inventories\SimpleStore.Inventories.Infrastructure.EfCore `
+		--startup-project src\Services\Inventories\SimpleStore.InventoriesApi `
 
 
 ***************************************************************

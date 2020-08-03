@@ -7,12 +7,12 @@
   <ItemGroup>
     <PackageReference Include="Dapr.AspNetCore" Version="0.9.0-preview01" />
     <PackageReference Include="FluentValidation" Version="9.0.1" />
-    <PackageReference Include="HotChocolate.AspNetCore" Version="10.4.3" />
-    <PackageReference Include="HotChocolate.AspNetCore.Playground" Version="10.4.3" />
-    <PackageReference Include="MediatR" Version="8.0.2" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="10.5.2" />
+    <PackageReference Include="HotChocolate.AspNetCore.Playground" Version="10.5.2" />
+    <PackageReference Include="MediatR" Version="8.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
     <PackageReference Include="Microsoft.Tye.Extensions.Configuration" Version="0.4.0-alpha.20371.1" />
-    <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="4.0.0" />
   </ItemGroup>
 

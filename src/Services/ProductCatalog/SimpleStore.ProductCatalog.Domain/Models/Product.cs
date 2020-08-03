@@ -3,10 +3,8 @@ using SimpleStore.Domain.Models;
 
 namespace SimpleStore.ProductCatalog.Domain.Models
 {
-    public class Product : AggregateRoot
+    public class Product : AggregateRoot<ProductId>
     {
-        public ProductId ProductId => (ProductId)this.Id;
-
         public string Name { get; private set; }
 
         public string Code { get; private set; }
@@ -33,7 +31,7 @@ namespace SimpleStore.ProductCatalog.Domain.Models
         {
             this.AddUncommittedEvent(new ProductCreated
             {
-                ProductId = this.ProductId,
+                ProductId = this.Id,
                 ProductCode = this.Code
             });
         }
