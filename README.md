@@ -42,7 +42,7 @@ There are **2 options** to start services
 
     - In this mode, all of services has been started by [Tye](https://github.com/dotnet/tye). Also, we utilize the extensions which are supported out-of-the-box.
 
-1. [Starts Services with Darp](/docs/start_services_with_dapr.md)
+1. [Starts Services with Dapr](/docs/start_services_with_dapr.md)
 
     - By running this mode, we use **Tye** as **docker-compose** to start the infrastructure, i.e. **seq** and **sqlserver**. Then, all services will be started manually with `dapr run` command.
 
@@ -75,7 +75,7 @@ After experience on locally and see how Tye is useful, then we may want to step 
 - [Issue: Globalization Invariant Mode is not supported while using EntityFramework Core with dotnet core alpine images](https://github.com/dotnet/efcore/issues/18025)
 - [Github Actions Documentation](https://help.github.com/en/actions)
 - [Dapr](https://github.com/dapr/dapr)
-    - [Darp Doc](https://github.com/dapr/docs)
+    - [Dapr Doc](https://github.com/dapr/docs)
 - [Serilog Best Practices](https://benfoster.io/blog/serilog-best-practices/)
 - [5 ways to set the URLs for an ASP.NET Core app](https://andrewlock.net/5-ways-to-set-the-urls-for-an-aspnetcore-app/)
 - [Introduction Project Tye](https://devblogs.microsoft.com/aspnet/introducing-project-tye/)
